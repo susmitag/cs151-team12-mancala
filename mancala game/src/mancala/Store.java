@@ -1,5 +1,5 @@
 package mancala;
 
-public class Store {
+public class Store extends Hole {
 
 }
