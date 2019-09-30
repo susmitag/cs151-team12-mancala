@@ -10,7 +10,8 @@ public class Store extends Hole {
 	 * Constructs a default empty Store.
 	 */
 	public Store() {
-		marbleCount = 0;		// stores begin with zero marbles
+		int marbleCount = INITIAL_STORE_MARBLE_COUNT;		// stores begin with zero marbles
 	}
 
+	
 }
