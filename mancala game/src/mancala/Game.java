@@ -2,6 +2,7 @@ package mancala;
 
 /**
  * A Game object represents a single mancala game between two players.
+ * Currently incomplete due to GUI and network problems needed to solve first
  */
 public class Game {
 	public boolean gameOver = false; 
@@ -34,9 +35,7 @@ public class Game {
 	/**
      * Captures all marbles on player's side if the enemy does not have any more marbles
      */
-    @Override
-    public final void captureMarbles() {
-
+    public void captureMarbles(){
+		
 	}
-	
 }

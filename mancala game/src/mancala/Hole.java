@@ -6,7 +6,9 @@ package mancala;
  */
 public class Hole{
 
-    int marbleCount;
+	int marbleCount;
+	public static final int INITIAL_HOLE_MARBLE_COUNT = 4; //Sets intitial marble count to 4 for holes
+    public static final int INITIAL_STORE_MARBLE_COUNT = 0; //Sets intial marble count to 0 for stores
     
     // Contructs a default Hole with the marble count set to 4
 	public Hole() {
