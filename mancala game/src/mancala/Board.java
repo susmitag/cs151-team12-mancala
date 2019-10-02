@@ -48,7 +48,7 @@ public class Board {
     public Hole getNextHole(Hole h) {
         if (h.getIndex() == board.length - 1)       // if the Hole h is at the end of board array,
             return board[0];                        //  wrap around back to the beginning of board
-        return getHoleAt(h.getIndex + 1);
+        return getHoleAt(h.getIndex() + 1);
     }
 
     /**
@@ -57,7 +57,7 @@ public class Board {
      * @return true if parameter h is a Store, false otherwise
      */
     public boolean isStore(Hole h) {
-        index = h.getIndex();
+        int index = h.getIndex();
         return index == PLAYER1_STORE_INDEX || index == PLAYER2_STORE_INDEX;
     }
 
