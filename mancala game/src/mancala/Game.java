@@ -20,8 +20,8 @@ public class Game {
 	/**
 	 * Resets player's turn if they land on their own store
 	 */
-	private void landInStore(){
-
+	private boolean landInStore(){
+		return false;
 	}
 
 	/**

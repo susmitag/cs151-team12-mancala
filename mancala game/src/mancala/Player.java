@@ -2,13 +2,14 @@ package mancala;
 
 public class Player {
 
-    public boolean gameOver = false; 
+    public static boolean gameOver = false; 
+    public static int INITIAL_HOLE_MARBLE_COUNT = 4;
 
     /**
      * Keeps track of the amount of marbles in the player's hands (the amount they pick up)
      */
-    public void marblesInHand(){
-        
+    public int marblesInHand(){
+    	return INITIAL_HOLE_MARBLE_COUNT;
     }
 
     /**
