@@ -17,7 +17,13 @@ public class Player {
      * @return returns boolean value that's true if the player is a winner
      */
     public boolean winner(){
-        return gameOver;
+        if(gameOver != true)
+        {
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
     
