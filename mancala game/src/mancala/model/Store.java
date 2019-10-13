@@ -1,4 +1,4 @@
-package mancala;
+package mancala.model;
 
 /**
  * A store holds Marbles captured by a Player. Marbles can not be removed from a Store. 

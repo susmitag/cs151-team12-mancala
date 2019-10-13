@@ -1,4 +1,4 @@
-package mancala;
+package mancala.model;
 
 /**
  * A Hole stores Marbles and keeps count of how many are in it.

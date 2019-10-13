@@ -1,4 +1,4 @@
-package mancala;
+package mancala.model;
   
 /**
  * A board is constructed for each game. It consists of two rows of six Holes, and two Stores.

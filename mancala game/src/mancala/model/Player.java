@@ -1,4 +1,4 @@
-package mancala;
+package mancala.model;
 
 public class Player {
 

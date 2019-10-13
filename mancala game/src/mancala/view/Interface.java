@@ -1,4 +1,4 @@
-package mancala;
+package mancala.view;
 
 public class Interface {
 

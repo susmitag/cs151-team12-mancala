@@ -1,4 +1,4 @@
-package mancala;
+package mancala.model;
 /**
  * Marbles move from hole to hole
  */
