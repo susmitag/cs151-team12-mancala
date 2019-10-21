@@ -1,6 +1,4 @@
-package mancala.game;
-
-import mancala.model.Hole;
+package mancala.model;
 
 /**
  * A Game object represents a single mancala game between two players.
