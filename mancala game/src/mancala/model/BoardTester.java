@@ -1,13 +1,14 @@
 package mancala.model;
-  
-import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 class BoardTester {
 
     @Test
-    void testBoard() {
+    public void testBoard() {
         Board testBoard = new Board();
         Hole h = testBoard.getHoleAt(13);
         h = testBoard.getNextHole(h);
@@ -39,4 +40,19 @@ class BoardTester {
         assertEquals(testBoard.isStore(h), true); // should pass
     }
 
+    @Test
+    void testGetLast_hole_index() {
+        Board b = new Board();
+        int index = b.getLastHoleIndex();
+        assertTrue("Last index is less than 0", 0 < index);
+        assertTrue("Last index is greater than 13", 13 > index);
+    }
+
+    @Test
+    void testSetLastHoleIndex() {
+        Board b = new Board();
+        b.setLastHoleIndex(1);
+        int index = b.getLastHoleIndex();
+        assertEquals(1, index);
+    }
 }
