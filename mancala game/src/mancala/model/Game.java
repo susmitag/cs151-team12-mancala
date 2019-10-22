@@ -5,7 +5,9 @@ package mancala.model;
  * Currently incomplete due to GUI and network problems needed to solve first
  */
 public class Game {
-	public boolean gameOver = false; 
+	public boolean gameOver = false;
+
+	private Board board = new Board();
 
 	/**
 	 * Places all marbles in\
@@ -13,8 +15,20 @@ public class Game {
 	 * 
 	 * @param hole the hole to take the marbles from
 	 */
-	public void sow(Hole playerOneHole) {
-		
+	public boolean sow(Hole playerOneHole) {
+		if(playerOneHole.getMarblecount() > 0){
+			int numMarblesToSow = playerOneHole.getMarblecount();
+			playerOneHole.removeMarble();
+			int startSowHoleIndex = playerOneHole.getIndex();
+			for(int count = 0; count < numMarblesToSow; ++count){
+				int idx = (startSowHoleIndex + count) % board.getNumberOfHoles();
+				Hole dest = board.getHoleAt(idx);
+				dest.addMarble();
+				//TODO
+			}
+			return true;
+		}
+		return false;
 	}
 
 	/**

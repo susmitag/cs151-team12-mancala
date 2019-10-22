@@ -80,4 +80,10 @@ public class Board {
     public void setLastHoleIndex(int lastHoleIndex) {
         this.lastHoleIndex = lastHoleIndex;
     }
+
+    /**
+     * Get number of holes in the board
+     * @return AMOUNT_OF_HOLES
+     */
+    public int getNumberOfHoles() { return  AMOUNT_OF_HOLES; };
 }
