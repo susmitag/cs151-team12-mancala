@@ -1,4 +1,4 @@
-package mancala.model;
+package edu.sjsu.cs.cs151.mancala.model;
 
 /**
  * A store holds Marbles captured by a Player. Marbles can not be removed from a Store. 

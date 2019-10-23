@@ -1,4 +1,4 @@
-package mancala.game;
+package edu.sjsu.cs.cs151.mancala.game;
 
 public class Driver {
 

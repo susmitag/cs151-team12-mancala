@@ -1,4 +1,4 @@
-package mancala.model;
+package edu.sjsu.cs.cs151.mancala.model;
 
 /**
  * A Hole stores Marbles and keeps count of how many are in it.

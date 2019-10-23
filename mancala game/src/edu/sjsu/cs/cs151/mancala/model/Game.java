@@ -1,4 +1,4 @@
-package mancala.model;
+package edu.sjsu.cs.cs151.mancala.model;
 
 /**
  * A Game object represents a single mancala game between two players.

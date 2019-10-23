@@ -1,4 +1,4 @@
-package mancala.model;
+package edu.sjsu.cs.cs151.mancala.model;
   
 /**
  * A board is constructed for each game. It consists of two rows of six Holes, and two Stores.

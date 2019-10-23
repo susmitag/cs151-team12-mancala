@@ -1,4 +1,4 @@
-package mancala.model;
+package edu.sjsu.cs.cs151.mancala.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

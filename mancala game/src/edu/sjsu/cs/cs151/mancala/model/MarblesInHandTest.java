@@ -1,16 +1,16 @@
-package mancala.model;
+package edu.sjsu.cs.cs151.mancala.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class winnerTest {
+class MarblesInHandTest {
 
 	@Test
 	void test() {
 		Player test = new Player();
-		boolean output = test.winner();
-		assertEquals(false, output);
+		int output = test.marblesInHand();
+		assertEquals(4,output);
 	}
 
 }
