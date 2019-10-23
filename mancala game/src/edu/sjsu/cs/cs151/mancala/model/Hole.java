@@ -8,12 +8,12 @@ public class Hole{
     int index;
 	int marbleCount;
 	public static final int INITIAL_HOLE_INDEX = -1;
-	public static final int INITIAL_MARBLE_COUNT = 4; //Sets initial marble count to 4 for holes
-   // public static final int INITIAL_STORE_MARBLE_COUNT = 0; //Sets initial marble count to 0 for stores
+	public static final int INITIAL_HOLE_MARBLE_COUNT = 4; //Sets initial marble count to 4 for holes
+    public static final int INITIAL_STORE_MARBLE_COUNT = 0; //Sets initial marble count to 0 for stores
     
     // Constructs a default Hole with the marble count set to 4
 	public Hole() {
-		marbleCount = INITIAL_MARBLE_COUNT;
+		marbleCount = INITIAL_HOLE_MARBLE_COUNT;
 		index = INITIAL_HOLE_INDEX;
 	}
 	
