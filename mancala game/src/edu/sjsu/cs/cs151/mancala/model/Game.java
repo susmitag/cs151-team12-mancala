@@ -38,8 +38,9 @@ public class Game {
 	 *  selected hole into the next holes and stores according to mancala's rules.
 	 * 
 	 * @param hole the hole to take the marbles from
+	 * @return true if the last marble sowed ends in player's store (for free turn)
 	 */
-	public void sow(Hole hole, Store playerStore) throws MancalaException{
+	public boolean sow(Hole hole, Store playerStore) throws MancalaException{
 		if (Game.getGame().getBoard().isStore(hole)) {
 			throw new MancalaException("Error: can not sow marbles in from a store.");
 		}
@@ -53,6 +54,15 @@ public class Game {
 					hole.addMarble();
 					marbleCount--;
 			}
+		}
+		//checks if last marble placed was in their store (player goes again)
+		if (hole.equals(playerStore))
+			return true;
+		else {
+			if (hole.getMarblecount() == 1) { 				// if the hole has 1 marble, then it was previously empty and
+				board.captureOpposite(hole, playerStore);   //    the player captures all marbles in the opposite hole
+			}
+			return false;
 		}
 	}
 

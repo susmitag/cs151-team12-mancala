@@ -15,5 +15,12 @@ public class Store extends Hole {
 		marbleCount = INITIAL_STORE_MARBLE_COUNT;		// stores begin with zero marbles
 	}
 
+	/**
+	 * Adds multiple marbles to store
+	 * @param amount amount to add
+	 */
+	public void addMarbles(int amount) {
+		marbleCount += amount;
+	}
 	
 }

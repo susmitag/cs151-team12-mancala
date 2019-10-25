@@ -35,6 +35,52 @@ public class Board {
     }
 
     /**
+     * Removes all marbles from opposite hole and adds them to players store
+     * @param h hole to find opposite of
+     * @param playerStore store to add captured marbles to
+     */
+    public void captureOpposite(Hole h, Store playerStore) {
+    	Hole capturedHole = getOpposite(h);
+    	int capturedMarbles = capturedHole.removeMarbles();
+    	playerStore.addMarbles(capturedMarbles);
+    }
+    
+    /**
+     * Finds the Hole opposite of the given Hole
+     * @param h hole to find opposite of
+     * @return Hole opposite of h, null if passed store
+     */
+    private Hole getOpposite(Hole h) {
+    	switch (h.getIndex()) {
+    		case 0:
+    			return board[12];
+    		case 1:
+    			return board[11];
+    		case 2:
+    			return board[10];
+    		case 3:
+    			return board[9];
+    		case 4:
+    			return board[8];
+    		case 5:
+    			return board[7];
+    		case 7:
+    			return board[5];
+    		case 8:
+    			return board[4];
+    		case 9:
+    			return board[3];
+    		case 10:
+    			return board[2];
+    		case 11:
+    			return board[1];
+    		case 12:
+    			return board[0];
+    	}
+    	return null;
+    }
+    
+    /**
      * Given an index, returns the Hole at that index
      * @param i index of Hole to return
      * @return Hole at index i
