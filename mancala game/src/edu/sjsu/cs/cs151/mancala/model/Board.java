@@ -15,10 +15,8 @@ public class Board {
     private static final int AMOUNT_OF_HOLES = 14;
     private static final int PLAYER1_STORE_INDEX = 6;
     private static final int PLAYER2_STORE_INDEX = 13;
-    private int lastHoleIndex;
-
-
-
+    
+ //   private int lastHoleIndex;
     private Hole[] board = new Hole[14];
 
     /**
@@ -111,25 +109,26 @@ public class Board {
     }
 
     /**
-     * Get index of the hole in the board
-     * @return the value of the index of last hole where seed was placed
+     * Returns player1's store
+     * @return player1's store
      */
-    public int getLastHoleIndex() {
-        return lastHoleIndex;
+    public Store getPlayer1Store() {
+    	return (Store) board[PLAYER1_STORE_INDEX];
     }
 
-    /**
-     * Set index of the last hole where seed was placed
-     * @param the index of the last hole where seed was placed
+    /** 
+     * Returns player2's store
+     * @return player2's store
      */
-
-    public void setLastHoleIndex(int lastHoleIndex) {
-        this.lastHoleIndex = lastHoleIndex;
+    public Store getPlayer2Store() {
+    	return (Store) board[PLAYER2_STORE_INDEX];
     }
-
+    
     /**
      * Get number of holes in the board
      * @return AMOUNT_OF_HOLES
      */
-    public int getNumberOfHoles() { return  AMOUNT_OF_HOLES; };
+    public int getNumberOfHoles() { 
+    	return  AMOUNT_OF_HOLES;
+    }
 }
