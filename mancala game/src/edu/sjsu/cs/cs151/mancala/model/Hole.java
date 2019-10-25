@@ -58,7 +58,7 @@ public class Hole{
 	 * @return the count of marbles in the hole before the call
 	 * @precondition getMarblecount() > 0
 	 */
-	public int removeMarble() {
+	public int removeMarbles() {
 		int count = this.marbleCount;
 		this.marbleCount = 0;
 		return count;

@@ -11,13 +11,13 @@ class HoleTest {
 		Hole h = new Hole();
 		h.addMarble();
 		int marbleCount = h.getMarblecount();
-		assertEquals(1 + Hole.INITIAL_MARBLE_COUNT, marbleCount);
+		assertEquals(1 + Hole.INITIAL_HOLE_MARBLE_COUNT, marbleCount);
 	}
 	
 	@Test
 	void testRemoveMarble() {
 		Hole h = new Hole();
-		h.removeMarble();
+		h.removeMarbles();
 		int marbleCount = h.getMarblecount();
 		assertEquals(0, marbleCount);
 	}

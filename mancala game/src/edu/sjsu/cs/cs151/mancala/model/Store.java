@@ -6,6 +6,7 @@ package edu.sjsu.cs.cs151.mancala.model;
  */
 public class Store extends Hole {
 	
+	private int marbleCount;
 	
 	/**
 	 * Constructs a default empty Store.

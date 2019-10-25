@@ -1,4 +1,5 @@
 package edu.sjsu.cs.cs151.mancala.model;
+import edu.sjsu.cs.cs151.mancala.*;
 
 /**
  * A Game object represents a single mancala game between two players.
@@ -8,29 +9,61 @@ public class Game {
 	public boolean gameOver = false;
 
 	private Board board = new Board();
-
+	private static final Game instance = new Game();
+	
+	/**
+	 * Private constructor to prevent creation of multiple games
+	 */
+	private Game() {
+		// instance fields already constructed, nothing to do here
+	}
+	
+	/**
+	 * Returns reference to the Game
+	 * @return the Game object
+	 */
+	public static Game getGame() {
+		return instance;
+	}
+	
+	/**
+	 * Resets board to starting format
+	 */
+	public void reset() {
+		board = new Board();
+	}
+	
 	/**
 	 * Places all marbles in\
 	 *  selected hole into the next holes and stores according to mancala's rules.
 	 * 
 	 * @param hole the hole to take the marbles from
 	 */
-	public boolean sow(Hole playerOneHole) {
-		if(playerOneHole.getMarblecount() > 0){
-			int numMarblesToSow = playerOneHole.getMarblecount();
-			playerOneHole.removeMarble();
-			int startSowHoleIndex = playerOneHole.getIndex();
-			for(int count = 0; count < numMarblesToSow; ++count){
-				int idx = (startSowHoleIndex + count) % board.getNumberOfHoles();
-				Hole dest = board.getHoleAt(idx);
-				dest.addMarble();
-				//TODO
-			}
-			return true;
+	public void sow(Hole hole, Store playerStore) throws MancalaException{
+		if (Game.getGame().getBoard().isStore(hole)) {
+			throw new MancalaException("Error: can not sow marbles in from a store.");
 		}
-		return false;
+		int marbleCount = hole.removeMarbles();
+		Board board = Game.getGame().getBoard();
+		
+		while (marbleCount > 0) {
+			hole = board.getNextHole(hole);
+			// add marbles to the hole only if it is the calling player's store, or if it is a hole
+			if ((board.isStore(hole) && hole.equals(playerStore)) || !board.isStore(hole)) {
+					hole.addMarble();
+					marbleCount--;
+			}
+		}
 	}
 
+	/**
+	 * Accessor method for the Game's board
+	 * @return the current Game Board
+	 */
+	public Board getBoard() {
+		return board;
+	}
+	
 	/**
 	 * Resets player's turn if they land on their own store
 	 */

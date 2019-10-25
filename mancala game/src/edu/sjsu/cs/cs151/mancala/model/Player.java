@@ -1,4 +1,5 @@
 package edu.sjsu.cs.cs151.mancala.model;
+import edu.sjsu.cs.cs151.mancala.*;
 
 public class Player {
 
@@ -23,6 +24,16 @@ public class Player {
     	return s.equals(store);
     }
 
+    public void selectHoleToSow(Hole start) {
+    	Game game = Game.getGame();
+    	try {
+			game.sow(start, store);
+    	}
+    	catch (MancalaException x) {
+    		System.out.println(x);
+    	}
+    }
+    
     /**
      * Keeps track of the amount of marbles in the player's hands (the amount they pick up)
      */
