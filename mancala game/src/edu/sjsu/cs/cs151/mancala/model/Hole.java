@@ -5,8 +5,8 @@ package edu.sjsu.cs.cs151.mancala.model;
  * Extends Marble class
  */
 public class Hole{
-    int index;
-	int marbleCount;
+    private int index;
+	private int marbleCount;
 	public static final int INITIAL_HOLE_INDEX = -1;
 	public static final int INITIAL_HOLE_MARBLE_COUNT = 4; //Sets initial marble count to 4 for holes
     public static final int INITIAL_STORE_MARBLE_COUNT = 0; //Sets initial marble count to 0 for stores
@@ -58,12 +58,21 @@ public class Hole{
 	 * @return the count of marbles in the hole before the call
 	 * @precondition getMarblecount() > 0
 	 */
-	
 	public int removeMarble() {
 		int count = this.marbleCount;
 		this.marbleCount = 0;
 		return count;
     }
 	
+	/**
+	 * Checks if two Holes are the same based on their index
+	 * @param h Hole to compare with
+	 * @return true if the Holes are the same
+	 */
+	public boolean equals(Hole h) {
+		if (this.index == h.getIndex())
+			return true;
+		return false;
+	}
 	
 }
