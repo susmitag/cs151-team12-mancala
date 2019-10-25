@@ -41,7 +41,7 @@ public class Game {
 	 * @return true if the last marble sowed ends in player's store (for free turn)
 	 */
 	public boolean sow(Hole hole, Store playerStore) throws MancalaException{
-		if (Game.getGame().getBoard().isStore(hole)) {
+		if (Game.getGame().getBoard().checkIfStore(hole)) {
 			throw new MancalaException("Error: can not sow marbles from a store.");
 		}
 		int marbleCount = hole.removeMarbles();
@@ -50,7 +50,7 @@ public class Game {
 		while (marbleCount > 0) {
 			hole = board.getNextHole(hole);
 			// add marbles to the hole only if it is the calling player's store, or if it is a hole
-			if ((board.isStore(hole) && hole.equals(playerStore)) || !board.isStore(hole)) {
+			if ((board.checkIfStore(hole) && hole.equals(playerStore)) || !board.checkIfStore(hole)) {
 					hole.addMarble();
 					marbleCount--;
 			}

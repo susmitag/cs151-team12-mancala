@@ -103,7 +103,7 @@ public class Board {
      * @param h Hole to check
      * @return true if parameter h is a Store, false otherwise
      */
-    public boolean isStore(Hole h) {
+    public boolean checkIfStore(Hole h) {
         int index = h.getIndex();
         return index == PLAYER1_STORE_INDEX || index == PLAYER2_STORE_INDEX;
     }

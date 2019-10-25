@@ -37,9 +37,11 @@ class BoardTester {
     void testIsStore() {
         Board testBoard = new Board();
         Hole h = testBoard.getHoleAt(6);
-        assertEquals(testBoard.isStore(h), true); // should pass
+        assertEquals(testBoard.checkIfStore(h), true); // should pass
     }
-
+    
+    //This functionality has been removed
+/*
     @Test
     void testGetLast_hole_index() {
         Board b = new Board();
@@ -55,4 +57,5 @@ class BoardTester {
         int index = b.getLastHoleIndex();
         assertEquals(1, index);
     }
+   */
 }
