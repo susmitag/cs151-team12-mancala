@@ -75,24 +75,10 @@ public class Game {
 	}
 	
 	/**
-	 * Resets player's turn if they land on their own store
-	 */
-	private boolean landInStore(){
-		return false;
-	}
-
-	/**
 	 * Checks for the current game's running status
 	 * @return returns a boolean value that's true if the game is over, false if the game is still going
 	 */
 	public boolean gameStatus(){
 		return gameOver;
-	}
-
-	/**
-     * Captures all marbles on player's side if the enemy does not have any more marbles
-     */
-    public void captureMarbles(){
-		
 	}
 }
