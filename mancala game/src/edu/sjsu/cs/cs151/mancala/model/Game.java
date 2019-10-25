@@ -42,7 +42,7 @@ public class Game {
 	 */
 	public boolean sow(Hole hole, Store playerStore) throws MancalaException{
 		if (Game.getGame().getBoard().isStore(hole)) {
-			throw new MancalaException("Error: can not sow marbles in from a store.");
+			throw new MancalaException("Error: can not sow marbles from a store.");
 		}
 		int marbleCount = hole.removeMarbles();
 		Board board = Game.getGame().getBoard();
