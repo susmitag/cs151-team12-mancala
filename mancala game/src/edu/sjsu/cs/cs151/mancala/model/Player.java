@@ -24,6 +24,10 @@ public class Player {
     	return s.equals(store);
     }
 
+    /**
+     * Selects Hole to sow marbles from and then sows them
+     * @param start Hole to sow marbles from
+     */
     public void selectHoleToSow(Hole start) {
     	Game game = Game.getGame();
     	try {
