@@ -27,15 +27,18 @@ public class Player {
     /**
      * Selects Hole to sow marbles from and then sows them
      * @param start Hole to sow marbles from
+     * @return free turn or not
      */
-    public void selectHoleToSow(Hole start) {
+    public boolean selectHoleToSow(Hole start) {
     	Game game = Game.getGame();
+    	boolean isFreeTurn = false;
     	try {
-			game.sow(start, store);
+			isFreeTurn = game.sow(start, store);
     	}
     	catch (MancalaException x) {
     		System.out.println(x);
     	}
+    	return isFreeTurn;
     }
     
     /**
