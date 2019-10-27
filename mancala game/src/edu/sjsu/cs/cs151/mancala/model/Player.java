@@ -48,6 +48,17 @@ public class Player {
     }
 
     /**
+     * Checks if two Players are the same based on their store
+     * @param p Player to compare with
+     * @return true if the Players are the same
+     */
+    public boolean equals(Player p) {
+        if (p.ownsStore(this.store))
+            return true;
+        return false;
+    }
+
+    /**
      * Determines whether or not the player is a winner
      * @return returns boolean value that's true if the player is a winner
      */
