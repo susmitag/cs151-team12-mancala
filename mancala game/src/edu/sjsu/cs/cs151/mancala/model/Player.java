@@ -3,7 +3,6 @@ import edu.sjsu.cs.cs151.mancala.*;
 
 public class Player {
 
-    public static boolean gameOver = false; 
     public static int INITIAL_HOLE_MARBLE_COUNT = 4;
     private Store store;
     
@@ -53,7 +52,8 @@ public class Player {
      * @return returns boolean value that's true if the player is a winner
      */
     public boolean winner(){
-        if(gameOver != true)
+        Game game = Game.getGame();
+        if(game.gameStatus() != true)
         {
             return false;
         }

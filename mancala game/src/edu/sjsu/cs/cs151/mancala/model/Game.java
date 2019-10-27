@@ -73,12 +73,34 @@ public class Game {
 	public Board getBoard() {
 		return board;
 	}
-	
+
+	/**
+	 * Checks if all holes on one side is empty
+	 * @return returns a boolean value that's true if all holes on one side is empty
+	 */
+	private boolean checkSideEmpty(int start, int end){
+		boolean isSideEmpty = true;
+		for(int i=start; i < end; ++i){
+			Hole h = board.getHoleAt(i);
+			if(board.checkIfStore(h)) continue;
+			if(h.getMarblecount() > 0) {
+				isSideEmpty = false;
+				break;
+			}
+		}
+		return isSideEmpty;
+	}
+
 	/**
 	 * Checks for the current game's running status
 	 * @return returns a boolean value that's true if the game is over, false if the game is still going
 	 */
 	public boolean gameStatus(){
+		int numberOfHoles = board.getNumberOfHoles();
+		if ((checkSideEmpty(0, numberOfHoles/2)) || (checkSideEmpty(numberOfHoles/2 + 1, numberOfHoles)))
+			gameOver = true;
+		else
+			gameOver = false;
 		return gameOver;
 	}
 }
