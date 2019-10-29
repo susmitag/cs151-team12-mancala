@@ -33,6 +33,31 @@ public class Board {
     }
 
     /**
+     * Displays the state of a side of the board by number of marbles per hole or store
+     * @param start hole of side
+     * @param end hole of side
+     * @param player whose side to display
+     */
+    private void displaySide(int start, int end, String player){
+        System.out.println(player + "'s side");
+        for (int i = start; i < end; ++i) {
+            if (i == PLAYER1_STORE_INDEX || i == PLAYER2_STORE_INDEX)
+                System.out.printf("[%d] ", board[i].getMarblecount());
+            else
+                System.out.printf("%d ", board[i].getMarblecount());
+        }
+        System.out.println();
+    }
+
+    /**
+     * Displays the state of the board by number of marbles per hole or store
+     */
+    public void displayBoard(){
+        displaySide(0, AMOUNT_OF_HOLES/2, "Player 1");
+        displaySide(AMOUNT_OF_HOLES/2 + 1, AMOUNT_OF_HOLES, "Player 2");
+    }
+
+    /**
      * Removes all marbles from opposite hole and adds them to players store
      * @param h hole to find opposite of
      * @param playerStore store to add captured marbles to
