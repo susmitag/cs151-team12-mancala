@@ -13,8 +13,8 @@ package edu.sjsu.cs.cs151.mancala.model;
  */
 public class Board {
     private static final int AMOUNT_OF_HOLES = 14;
-    private static final int PLAYER1_STORE_INDEX = 6;
-    private static final int PLAYER2_STORE_INDEX = 13;
+    public static final int PLAYER1_STORE_INDEX = 6;
+    public static final int PLAYER2_STORE_INDEX = 13;
     
  //   private int lastHoleIndex;
     private Hole[] board = new Hole[14];
@@ -42,9 +42,9 @@ public class Board {
         System.out.println(player + "'s side");
         for (int i = start; i < end; ++i) {
             if (i == PLAYER1_STORE_INDEX || i == PLAYER2_STORE_INDEX)
-                System.out.printf("[%d] ", board[i].getMarblecount());
+                System.out.printf("(%d, [%d]) ",i, board[i].getMarblecount());
             else
-                System.out.printf("%d ", board[i].getMarblecount());
+                System.out.printf("(%d, %d) ",i, board[i].getMarblecount());
         }
         System.out.println();
     }
@@ -54,7 +54,7 @@ public class Board {
      */
     public void displayBoard(){
         displaySide(0, AMOUNT_OF_HOLES/2, "Player 1");
-        displaySide(AMOUNT_OF_HOLES/2 + 1, AMOUNT_OF_HOLES, "Player 2");
+        displaySide(AMOUNT_OF_HOLES/2, AMOUNT_OF_HOLES, "Player 2");
     }
 
     /**

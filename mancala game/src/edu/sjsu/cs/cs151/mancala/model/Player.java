@@ -28,16 +28,9 @@ public class Player {
      * @param start Hole to sow marbles from
      * @return free turn or not
      */
-    public boolean selectHoleToSow(Hole start) {
+    public boolean selectHoleToSow(Hole start) throws MancalaException{
     	Game game = Game.getGame();
-    	boolean isFreeTurn = false;
-    	try {
-			isFreeTurn = game.sow(start, store);
-    	}
-    	catch (MancalaException x) {
-    		System.out.println(x);
-    	}
-    	return isFreeTurn;
+    	return game.sow(start, store);
     }
     
     /**
@@ -63,14 +56,15 @@ public class Player {
      * @return returns boolean value that's true if the player is a winner
      */
     public boolean winner(){
-        Game game = Game.getGame();
-        if(game.gameStatus() != true)
-        {
-            return false;
-        }
-        else{
-            return true;
-        }
+    	Game game = Game.getGame();
+    	if (!game.gameStatus())
+    		return false;
+        boolean player1 = false;
+        if (game.getBoard().getHoleAt(Board.PLAYER1_STORE_INDEX).equals(store))
+        	player1 = true;
+        if (player1)
+        	return store.getMarblecount() > game.getBoard().getHoleAt(Board.PLAYER2_STORE_INDEX).getMarblecount();
+		return store.getMarblecount() > game.getBoard().getHoleAt(Board.PLAYER1_STORE_INDEX).getMarblecount();
     }
 
     

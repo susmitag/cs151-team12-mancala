@@ -3,10 +3,12 @@ package edu.sjsu.cs.cs151.mancala.game;
 import edu.sjsu.cs.cs151.mancala.model.*;
 import edu.sjsu.cs.cs151.mancala.game.*;
 import edu.sjsu.cs.cs151.mancala.view.*;
+import edu.sjsu.cs.cs151.mancala.*;
 
 import java.util.Scanner;
 
 public class Driver {
+
 	/**
 	 * Checks who is the current player and displays a message.
 	 * @param p is the current player
@@ -26,28 +28,36 @@ public class Driver {
 		Player player1 = new Player(board.getPlayer1Store());
 		Player player2 = new Player(board.getPlayer2Store());
 		Player playerWithTurn = player1;
-		while(true){
+		Scanner sc = new Scanner(System.in);
+		while(!game.gameStatus()){
 			System.out.println("State of the board (stores shown as []) : ");
 			board.displayBoard();
 			displayForPlayer(playerWithTurn, player1,"Turn for Player");
-			Scanner sc = new Scanner(System.in);
 			int index = sc.nextInt();
 			Hole h = board.getHoleAt(index);
-			boolean haveFreeTurn = playerWithTurn.selectHoleToSow(h);
-			System.out.println("State of the board after sow (stores shown as []) : ");
-			board.displayBoard();
-			if(playerWithTurn.winner()){
-				displayForPlayer(playerWithTurn, player1, "Winner is Player");
-				break;
+			try {
+				boolean haveFreeTurn = playerWithTurn.selectHoleToSow(h);
+				System.out.println("State of the board after sow (stores shown as []) : ");
+				board.displayBoard();
+				if(!haveFreeTurn){
+					if(playerWithTurn.equals(player1))
+						playerWithTurn = player2;
+					else
+						playerWithTurn = player1;
+				}else{
+					displayForPlayer(playerWithTurn, player1, "Free turn for Player");
+				}
 			}
-			if(!haveFreeTurn){
-				if(playerWithTurn.equals(player1))
-					playerWithTurn = player2;
-				else
-					playerWithTurn = player1;
-			}else{
-				displayForPlayer(playerWithTurn, player1, "Free turn for Player");
+			catch (MancalaException msg) {
+				System.out.println(msg);
 			}
 		}
+		if (player1.winner())
+			displayForPlayer(player1, player1, "Winner is Player");
+		else if (player2.winner())
+			displayForPlayer(player2, player1, "Winner is Player");
+		else
+			System.out.println("It's a tie!");
+		sc.close();
 	}
 }
