@@ -13,8 +13,8 @@ package edu.sjsu.cs.cs151.mancala.model;
  */
 public class Board {
     private static final int AMOUNT_OF_HOLES = 14;
-    public static final int PLAYER1_STORE_INDEX = 6;
-    public static final int PLAYER2_STORE_INDEX = 13;
+    private static final int PLAYER1_STORE_INDEX = 6;
+    private static final int PLAYER2_STORE_INDEX = 13;
     
  //   private int lastHoleIndex;
     private Hole[] board = new Hole[14];

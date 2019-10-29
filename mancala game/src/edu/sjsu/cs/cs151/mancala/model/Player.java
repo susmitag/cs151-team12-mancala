@@ -3,7 +3,7 @@ import edu.sjsu.cs.cs151.mancala.*;
 
 public class Player {
 
-    public static int INITIAL_HOLE_MARBLE_COUNT = 4;
+    private static int INITIAL_HOLE_MARBLE_COUNT = 4;
     private Store store;
     
     /**
@@ -32,13 +32,6 @@ public class Player {
     	Game game = Game.getGame();
     	return game.sow(start, store);
     }
-    
-    /**
-     * Keeps track of the amount of marbles in the player's hands (the amount they pick up)
-     */
-    public int marblesInHand(){
-    	return INITIAL_HOLE_MARBLE_COUNT;
-    }
 
     /**
      * Checks if two Players are the same based on their store
@@ -60,11 +53,11 @@ public class Player {
     	if (!game.gameStatus())
     		return false;
         boolean player1 = false;
-        if (game.getBoard().getHoleAt(Board.PLAYER1_STORE_INDEX).equals(store))
+        if (game.getBoard().getPlayer1Store().equals(store))
         	player1 = true;
         if (player1)
-        	return store.getMarblecount() > game.getBoard().getHoleAt(Board.PLAYER2_STORE_INDEX).getMarblecount();
-		return store.getMarblecount() > game.getBoard().getHoleAt(Board.PLAYER1_STORE_INDEX).getMarblecount();
+        	return store.getMarblecount() > game.getBoard().getPlayer2Store().getMarblecount();
+		return store.getMarblecount() > game.getBoard().getPlayer1Store().getMarblecount();
     }
 
     

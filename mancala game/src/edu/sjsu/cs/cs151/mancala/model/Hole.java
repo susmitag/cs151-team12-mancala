@@ -7,9 +7,8 @@ package edu.sjsu.cs.cs151.mancala.model;
 public class Hole{
     private int index;
 	private int marbleCount;
-	public static final int INITIAL_HOLE_INDEX = -1;
-	public static final int INITIAL_HOLE_MARBLE_COUNT = 4; //Sets initial marble count to 4 for holes
-    public static final int INITIAL_STORE_MARBLE_COUNT = 0; //Sets initial marble count to 0 for stores
+	private static final int INITIAL_HOLE_INDEX = -1;
+	private static final int INITIAL_HOLE_MARBLE_COUNT = 4; //Sets initial marble count to 4 for holes
     
     // Constructs a default Hole with the marble count set to 4
 	public Hole() {
