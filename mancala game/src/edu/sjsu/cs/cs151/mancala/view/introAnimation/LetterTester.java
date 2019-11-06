@@ -16,11 +16,11 @@ private static final int iconHeight = 300;
     {
         JFrame frame = new JFrame();    
         final MoveableShape m = new LetterM(0, 0, letterHeight, letterWidth);
-        final MoveableShape a1 = new LetterA(0, 300, letterHeight, letterWidth);
+        final MoveableShape a1 = new LetterA(0, iconHeight, letterHeight, letterWidth);
         final MoveableShape n = new LetterN(0, 0, letterHeight, letterWidth);
-        final MoveableShape c = new LetterC(0, 300, letterHeight, letterWidth);
+        final MoveableShape c = new LetterC(0, iconHeight, letterHeight, letterWidth);
         final MoveableShape a2 = new LetterA(0, 0, letterHeight, letterWidth);
-        final MoveableShape l = new LetterL(0, 300, letterHeight, letterWidth);
+        final MoveableShape l = new LetterL(0, iconHeight, letterHeight, letterWidth);
         final MoveableShape a3 = new LetterA(0, 0, letterHeight, letterWidth);
 
         ShapeIcon icon1 = new ShapeIcon(m, iconWidth, iconHeight);
@@ -54,20 +54,23 @@ private static final int iconHeight = 300;
         Timer t = new Timer(delay, new
                 ActionListener() {
                     public void actionPerformed(ActionEvent event) {
-                        m.translate(0, 1);
-                        label1.repaint();
-                        a1.translate(0, -1);
-                        label2.repaint();
-                        n.translate(0, 1);
-                        label3.repaint();
-                        c.translate(0, -1);
-                        label4.repaint();
-                        a2.translate(0, 1);
-                        label5.repaint();
-                        l.translate(0, -1);
-                        label6.repaint();
-                        a3.translate(0, 1);
-                        label7.repaint();
+                    	if (m.getY() != iconHeight / 2) 
+                    	{
+							m.translate(0, 1);
+							label1.repaint();
+							a1.translate(0, -1);
+							label2.repaint();
+							n.translate(0, 1);
+							label3.repaint();
+							c.translate(0, -1);
+							label4.repaint();
+							a2.translate(0, 1);
+							label5.repaint();
+							l.translate(0, -1);
+							label6.repaint();
+							a3.translate(0, 1);
+							label7.repaint();
+                    	}
                     }
                 });
         t.start();

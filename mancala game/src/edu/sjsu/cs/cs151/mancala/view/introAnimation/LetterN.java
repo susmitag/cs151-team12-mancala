@@ -37,5 +37,9 @@ public class LetterN implements MoveableShape {
         g.draw(right);
         g.draw(angle);
     }
+
+	public int getY() {
+    	return y;
+    }
 }
 

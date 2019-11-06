@@ -31,11 +31,15 @@ public class LetterA implements MoveableShape {
 
         Line2D.Double left = new Line2D.Double(bleft, tleft);
         Line2D.Double right = new Line2D.Double(bright, tright);
-        Line2D.Double mid = new Line2D.Double(tleft, tright);
+        Line2D.Double tmid = new Line2D.Double(tleft, tright);
 
         g.draw(left);
         g.draw(right);
-        g.draw(mid);
+        g.draw(tmid);
+    }
+
+	public int getY() {
+    	return y;
     }
 }
 

@@ -40,5 +40,9 @@ public class LetterM implements MoveableShape {
         g.draw(leftAngle);
         g.draw(rightAngle);
     }
+
+	public int getY() {
+    	return y;
+    }
 }
 
