@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - LetterTester",
+            "request": "launch",
+            "mainClass": "edu.sjsu.cs.cs151.mancala.view.introAnimation.LetterTester",
+            "projectName": "mancala game"
+        }
+    ]
+}
