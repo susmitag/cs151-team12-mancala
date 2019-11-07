@@ -2,6 +2,7 @@ package edu.sjsu.cs.cs151.mancala.view.introAnimation;
 
 import java.awt.*;
 import java.awt.geom.*;
+import java.util.*;
 
 public class LetterC implements MoveableShape {
     private int height;
