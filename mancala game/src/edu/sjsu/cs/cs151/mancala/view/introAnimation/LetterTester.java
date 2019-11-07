@@ -9,7 +9,6 @@ import java.util.Random;
 public class LetterTester {
 	private static final int letterWidth = 25;
 	private static final int letterHeight = 75;
-	private static final int space = 0;
 	private static final int iconWidth = 200;
 	private static final int iconHeight = 300;
 	
@@ -34,25 +33,25 @@ public class LetterTester {
         
         ShapeIcon icon1 = new ShapeIcon(m, iconWidth, iconHeight);
         final JLabel label1 = new JLabel(icon1);
-	label1.setForeground(randomColor);
+		label1.setForeground(randomColor);
         ShapeIcon icon2 = new ShapeIcon(a1, iconWidth, iconHeight);
         final JLabel label2 = new JLabel(icon2);
-	label2.setForeground(randomColor);	
+		label2.setForeground(randomColor);	
         ShapeIcon icon3 = new ShapeIcon(n, iconWidth, iconHeight);
         final JLabel label3 = new JLabel(icon3);
-	label3.setForeground(randomColor);
+		label3.setForeground(randomColor);
         ShapeIcon icon4 = new ShapeIcon(c, iconWidth, iconHeight);
         final JLabel label4 = new JLabel(icon4);
-	label4.setForeground(randomColor);
+		label4.setForeground(randomColor);
         ShapeIcon icon5 = new ShapeIcon(a2, iconWidth, iconHeight);
         final JLabel label5 = new JLabel(icon5);
-	label5.setForeground(randomColor);	
+		label5.setForeground(randomColor);	
         ShapeIcon icon6 = new ShapeIcon(l, iconWidth, iconHeight);
         final JLabel label6 = new JLabel(icon6);
-	label6.setForeground(randomColor);	
+		label6.setForeground(randomColor);	
         ShapeIcon icon7 = new ShapeIcon(a3, iconWidth, iconHeight);
         final JLabel label7 = new JLabel(icon7);
-	label7.setForeground(randomColor);	
+		label7.setForeground(randomColor);	
 
         frame.setLayout(new FlowLayout());
         frame.add(label1);
