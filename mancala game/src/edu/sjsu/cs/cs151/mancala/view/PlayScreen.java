@@ -4,37 +4,49 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 
-public class PlayScreen {
+public class PlayScreen 
+{
 	
 	JFrame frame;
 	JPanel main;
 	JPanel center;
+	JPanel p2North;
+	JPanel p1South;
 	
-	public PlayScreen() {
+	public PlayScreen() 
+	{
 		frame = new JFrame("Mancala");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		main = new JPanel();
 		center = new JPanel();
-
+		p2North = new JPanel();
+		p1South = new JPanel();
+		
 		main.setLayout(new BorderLayout());
 		center.setLayout(new GridLayout(2,6));
-		int x = 0;
-		int y = 0;
-		for (int i = 0; i < 12; i++,x++,y++)
-			center.add(new VisualHole(x,y));			
+		for (int i = 0; i < 12; i++)
+			center.add(new VisualHole(0,0));			
+
+		p2North.setBackground(Color.gray);
+		p1South.setBackground(Color.gray);
+		center.setBackground(Color.gray);
 
 		main.add(BorderLayout.CENTER, center);
-		main.add(BorderLayout.WEST, new VisualStore(0, 0));
-		main.add(BorderLayout.EAST, new VisualStore(main.getWidth(), 0));
+		main.add(BorderLayout.WEST, new VisualStore(0, 200));
+		main.add(BorderLayout.EAST, new VisualStore(main.getWidth(), 200));
+		main.add(BorderLayout.NORTH, p2North);
+		main.add(BorderLayout.SOUTH, p1South);
+		center.setPreferredSize(new Dimension(300,300));
+		center.setMaximumSize(new Dimension(300, 300));
 		frame.add(main);
 		frame.setSize(1200, 800);
 		frame.setVisible(true);
 		frame.pack();
 	}
 	
-	private class VisualHole extends JComponent {
-		
+	private class VisualHole extends JComponent 
+	{
 		int x;
 		int y;
 		int r;
@@ -53,8 +65,8 @@ public class PlayScreen {
 		}
 	}
 
-	private class VisualStore extends JComponent {
-		
+	private class VisualStore extends JComponent 
+	{
 		int x;
 		int y;
 		int h;
