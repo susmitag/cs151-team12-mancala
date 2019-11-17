@@ -25,8 +25,8 @@ public class PlayScreen {
 			center.add(new VisualHole(x,y));			
 
 		main.add(BorderLayout.CENTER, center);
-		main.add(BorderLayout.WEST, new VisualStore(20, main.getHeight() / 2));
-		main.add(BorderLayout.EAST, new VisualStore(main.getWidth() - 20, main.getHeight() / 2));
+		main.add(BorderLayout.WEST, new VisualStore(0, 0));
+		main.add(BorderLayout.EAST, new VisualStore(main.getWidth(), 0));
 		frame.add(main);
 		frame.setSize(1200, 800);
 		frame.setVisible(true);
@@ -73,5 +73,9 @@ public class PlayScreen {
 			g2.setStroke(new BasicStroke(2.5f));
 			g2.draw(new Ellipse2D.Double(x,y, w, h));
 		}
+
+		public Dimension getPreferredSize() {
+		    return new Dimension(w, h);
+        }
 	}
 }
