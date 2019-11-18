@@ -8,24 +8,39 @@ class PlayScreenInternal {
 
 	JPanel main;
 	JPanel center;
-	JPanel holePanel[];
+    JPanel p2North;
+    JPanel p1South;
 
 	public PlayScreenInternal() {
 
 		main = new JPanel();
 		center = new JPanel();
+        p2North = new JPanel();
+        p1South = new JPanel();
 
 		main.setLayout(new BorderLayout());
-		center.setLayout(new GridLayout(2,6));
-		int x = 0;
-		int y = 0;
-		for (int i = 0; i < 12; i++,x++,y++) {
-			center.add(new VisualHole(x,y));
+		center.setLayout(new GridLayout(3,6));
+
+		for (int i = 0; i < 18; i++) {
+            if (i < 6)
+                center.add(new VisualHole(-1,-1));
+            else
+                center.add(new VisualHole(0,0));
 		}
 
+        p2North.setBackground(Color.gray);
+        p1South.setBackground(Color.gray);
+        center.setBackground(Color.red);
+        p1South.setPreferredSize(new Dimension(300, 70));
+        p2North.setPreferredSize(new Dimension(300, 70));
+        center.setPreferredSize(new Dimension(500,500));
+        center.setMaximumSize(new Dimension(500, 500));
+
 		main.add(BorderLayout.CENTER, center);
-		main.add(BorderLayout.WEST, new VisualStore(0, 0));
-		main.add(BorderLayout.EAST, new VisualStore(main.getWidth(), 0));
+		main.add(BorderLayout.WEST, new VisualStore(0, 200));
+		main.add(BorderLayout.EAST, new VisualStore(main.getWidth(), 200));
+        main.add(BorderLayout.NORTH, p2North);
+        main.add(BorderLayout.SOUTH, p1South);
 	}
 
 	JPanel getMainComponent() {
@@ -39,8 +54,16 @@ class PlayScreenInternal {
 		int r;
 		
 		private VisualHole(int x, int y) {
-			this.x = x;
-			this.y = y;
+            if (x == -1 && y == -1) {
+                this.x = 0;
+                this.y = 0;
+                r = 0;
+            }
+            else {
+                this.x = x;
+                this.y = y;
+                r = 80;
+            }
 			r = 80;
 		}
 
