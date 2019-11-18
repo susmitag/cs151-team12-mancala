@@ -64,7 +64,6 @@ class PlayScreenInternal {
                 this.y = y;
                 r = 80;
             }
-			r = 80;
 		}
 
 		public void paint(Graphics g) {
