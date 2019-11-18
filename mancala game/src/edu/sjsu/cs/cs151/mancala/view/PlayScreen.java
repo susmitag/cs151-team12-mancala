@@ -11,6 +11,7 @@ class PlayScreenInternal {
     JPanel p1South;
 
 	private JLayeredPane mainLayeredPane = new JLayeredPane();
+	private JPanelHole panelHole = new JPanelHole(1,1);
 
 	public PlayScreenInternal() {
 
@@ -25,7 +26,13 @@ class PlayScreenInternal {
             if (i < 6)
                 center.add(new VisualHole(-1,-1));
             else
-                center.add(new VisualHole(0,0));
+            	if(i==6) {
+					//center.add(panelHole);
+					//panelHole.add(new VisualHole(0,0));
+					center.add(new VisualHole(0,0));
+				}
+            	else
+            		center.add(new VisualHole(0,0));
 		}
 
         p2North.setBackground(Color.gray);
@@ -46,7 +53,43 @@ class PlayScreenInternal {
 	JLayeredPane getMainComponent() {
 		return mainLayeredPane;
 	}
-	
+
+	class JPanelHole extends JPanel {
+		private int row;
+		private int col;
+		private JComponent seed = null;
+
+		public JPanelHole(int row, int col){
+			this.row = row;
+			this.col = col;
+			setLayout(new GridBagLayout());
+		}
+
+		public int getRow() {
+			return row;
+		}
+
+		public int getCol() {
+			return col;
+		}
+
+		@Override
+		public Component add(Component c) {
+			seed = (JComponent) c;
+			return super.add(c);
+		}
+
+		@Override
+		public void remove(Component comp) {
+			seed = null;
+			super.remove(comp);
+		}
+
+		public JComponent getSeed() {
+			return seed;
+		}
+	}
+
 	private class VisualHole extends JComponent {
 		
 		int x;
