@@ -4,15 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 
-public class PlayScreen {
-	
-	JFrame frame;
+class PlayScreenInternal {
+
 	JPanel main;
 	JPanel center;
-	
-	public PlayScreen() {
-		frame = new JFrame("Mancala");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	JPanel holePanel[];
+
+	public PlayScreenInternal() {
 
 		main = new JPanel();
 		center = new JPanel();
@@ -21,16 +19,17 @@ public class PlayScreen {
 		center.setLayout(new GridLayout(2,6));
 		int x = 0;
 		int y = 0;
-		for (int i = 0; i < 12; i++,x++,y++)
-			center.add(new VisualHole(x,y));			
+		for (int i = 0; i < 12; i++,x++,y++) {
+			center.add(new VisualHole(x,y));
+		}
 
 		main.add(BorderLayout.CENTER, center);
 		main.add(BorderLayout.WEST, new VisualStore(0, 0));
 		main.add(BorderLayout.EAST, new VisualStore(main.getWidth(), 0));
-		frame.add(main);
-		frame.setSize(1200, 800);
-		frame.setVisible(true);
-		frame.pack();
+	}
+
+	JPanel getMainComponent() {
+		return main;
 	}
 	
 	private class VisualHole extends JComponent {
@@ -77,5 +76,18 @@ public class PlayScreen {
 		public Dimension getPreferredSize() {
 		    return new Dimension(w, h);
         }
+	}
+}
+
+public class PlayScreen {
+	JFrame frame;
+	public PlayScreen() {
+		frame = new JFrame("Mancala");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		PlayScreenInternal playScreenInternal = new PlayScreenInternal();
+		frame.add(playScreenInternal.getMainComponent());
+		frame.setSize(1200, 800);
+		frame.setVisible(true);
+		frame.pack();
 	}
 }
