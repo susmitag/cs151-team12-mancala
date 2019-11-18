@@ -6,19 +6,19 @@ import java.awt.geom.*;
 
 class PlayScreenInternal {
 
-	JPanel main;
 	JPanel center;
     JPanel p2North;
     JPanel p1South;
 
+	private JLayeredPane mainLayeredPane = new JLayeredPane();
+
 	public PlayScreenInternal() {
 
-		main = new JPanel();
 		center = new JPanel();
         p2North = new JPanel();
         p1South = new JPanel();
 
-		main.setLayout(new BorderLayout());
+		mainLayeredPane.setLayout(new BorderLayout());
 		center.setLayout(new GridLayout(3,6));
 
 		for (int i = 0; i < 18; i++) {
@@ -36,15 +36,15 @@ class PlayScreenInternal {
         center.setPreferredSize(new Dimension(500,500));
         center.setMaximumSize(new Dimension(500, 500));
 
-		main.add(BorderLayout.CENTER, center);
-		main.add(BorderLayout.WEST, new VisualStore(0, 200));
-		main.add(BorderLayout.EAST, new VisualStore(main.getWidth(), 200));
-        main.add(BorderLayout.NORTH, p2North);
-        main.add(BorderLayout.SOUTH, p1South);
+		mainLayeredPane.add(BorderLayout.CENTER, center);
+		mainLayeredPane.add(BorderLayout.WEST, new VisualStore(0, 200));
+		mainLayeredPane.add(BorderLayout.EAST, new VisualStore(mainLayeredPane.getWidth(), 200));
+        mainLayeredPane.add(BorderLayout.NORTH, p2North);
+        mainLayeredPane.add(BorderLayout.SOUTH, p1South);
 	}
 
-	JPanel getMainComponent() {
-		return main;
+	JLayeredPane getMainComponent() {
+		return mainLayeredPane;
 	}
 	
 	private class VisualHole extends JComponent {
