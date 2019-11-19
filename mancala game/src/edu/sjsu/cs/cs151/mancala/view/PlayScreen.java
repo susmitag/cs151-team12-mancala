@@ -40,7 +40,9 @@ class PlayScreenInternal {
 
         p2North.setBackground(Color.gray);
         p1South.setBackground(Color.gray);
-        
+        p2North.add(new JLabel("Player 2"));
+        p1South.add(new JLabel("Player 1"));
+
         wStore.setLayout(new BorderLayout());
         eStore.setLayout(new BorderLayout());
         wStore.add(BorderLayout.CENTER, new VisualStore());
@@ -126,27 +128,31 @@ class PlayScreenInternal {
         }
     }
 
-	private class VisualHole extends JButton 
+	private class VisualHole extends JButton
 	{
 		
 		private VisualHole() {
 			super (new Icon()
-					{
-						public void paintIcon(Component c, Graphics g, int x, int y) {
-							g.drawOval(10, 80, 80, 80);
-						}
-						
-						public int getIconHeight() {
-							return 80;
-						}
-						
-						public int getIconWidth() {
-							 return 80;           						
-						}
-					});
+				{
+					public void paintIcon(Component c, Graphics g, int x, int y) {
+						Graphics2D g2 = (Graphics2D)g;
+						g2.setStroke(new BasicStroke(5));
+						g2.setColor(Color.black);
+						g2.drawOval(10, 80, 80, 80);
+					}
+
+					public int getIconHeight() {
+						return 80;
+					}
+
+					public int getIconWidth() {
+						 return 80;
+					}
+				});
 			this.setPreferredSize(new Dimension(60, 50));
 			this.setBorder(BorderFactory.createEmptyBorder());
 			this.setFocusPainted(false);
+			this.setBackground(Color.GRAY);
 		}
 	}
 
@@ -155,22 +161,26 @@ class PlayScreenInternal {
 		
 		private VisualStore() {
 			super (new Icon()
-					{
-						public void paintIcon(Component c, Graphics g, int x, int y) {
-							g.drawOval(10, 100, 80, 160);
-						}
-						
-						public int getIconHeight() {
-							return 80;
-						}
-						
-						public int getIconWidth() {
-							 return 80;           						
-						}
-					});
+				{
+					public void paintIcon(Component c, Graphics g, int x, int y) {
+						Graphics2D g2 = (Graphics2D)g;
+						g2.setStroke(new BasicStroke(5));
+						g2.setColor(Color.black);
+						g2.drawOval(10, 135, 80, 160);
+					}
+
+					public int getIconHeight() {
+						return 80;
+					}
+
+					public int getIconWidth() {
+						 return 80;
+					}
+				});
 			this.setPreferredSize(new Dimension(100, 60));
 			this.setBorder(BorderFactory.createEmptyBorder());
 			this.setFocusPainted(false);
+			this.setBackground(Color.GRAY);
 		}
 	}
 }
@@ -184,6 +194,8 @@ public class PlayScreen
 		PlayScreenInternal playScreenInternal = new PlayScreenInternal();
 		frame.add(playScreenInternal.getMainComponent());
 		frame.setSize(1600, 800);
+		frame.setMinimumSize(new Dimension(800, 600));
+		frame.setMaximumSize(new Dimension(1100, 800));
 		frame.setVisible(true);
 		frame.pack();
 	}
