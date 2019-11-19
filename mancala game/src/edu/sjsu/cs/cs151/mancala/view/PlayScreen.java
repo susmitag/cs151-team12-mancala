@@ -32,7 +32,6 @@ class PlayScreenInternal {
 
         p2North.setBackground(Color.gray);
         p1South.setBackground(Color.gray);
-        center.setBackground(Color.red);
         
         wStore.setLayout(new BorderLayout());
         eStore.setLayout(new BorderLayout());
