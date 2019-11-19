@@ -13,7 +13,7 @@ class PlayScreenInternal {
     JPanel eStore;
 
 	private JLayeredPane mainLayeredPane = new JLayeredPane();
-	private JPanelHole panelHole = new JPanelHole(1,1);
+	private JPanel board = new JPanel(new BorderLayout());
 
 	public PlayScreenInternal() {
 
@@ -22,13 +22,21 @@ class PlayScreenInternal {
         p1South = new JPanel();
         wStore = new JPanel();
         eStore = new JPanel();
-         
 
-		mainLayeredPane.setLayout(new BorderLayout());
 		center.setLayout(new GridLayout(2,6));
 
-		for (int i = 0; i < 12; i++)
-			center.add(new VisualHole());
+		for (int i = 0; i < 12; i++) {
+		    if (i == 0) {
+                JPanelHole panelHole = new JPanelHole(1,1);
+		        center.add(panelHole);
+		        //JComponent seed = new JButtonSeed();
+                //panelHole.add(seed);
+                JLabel lab = new JLabel("Hole 1 Seed 1", JLabel.LEFT);
+		        panelHole.add(lab);
+            } else {
+                center.add(new VisualHole());
+            }
+        }
 
         p2North.setBackground(Color.gray);
         p1South.setBackground(Color.gray);
@@ -43,11 +51,15 @@ class PlayScreenInternal {
         center.setPreferredSize(new Dimension(600,400));
         center.setMaximumSize(new Dimension(500, 500));
 
-		mainLayeredPane.add(BorderLayout.CENTER, center);
-		mainLayeredPane.add(BorderLayout.WEST, wStore);
-		mainLayeredPane.add(BorderLayout.EAST, eStore);
-        mainLayeredPane.add(BorderLayout.NORTH, p2North);
-        mainLayeredPane.add(BorderLayout.SOUTH, p1South);
+        board.add(BorderLayout.CENTER, center);
+        board.add(BorderLayout.WEST, wStore);
+        board.add(BorderLayout.EAST, eStore);
+        board.add(BorderLayout.NORTH, p2North);
+        board.add(BorderLayout.SOUTH, p1South);
+        board.setSize(board.getPreferredSize());
+        board.setLocation(0, 0);
+        mainLayeredPane.add(board, JLayeredPane.DEFAULT_LAYER);
+        mainLayeredPane.setPreferredSize(board.getPreferredSize());
 	}
 
 	JLayeredPane getMainComponent() {
@@ -90,6 +102,29 @@ class PlayScreenInternal {
 			return seed;
 		}
 	}
+
+	private class JButtonSeed extends JButton
+    {
+        private JButtonSeed() {
+            super (new Icon()
+            {
+                public void paintIcon(Component c, Graphics g, int x, int y) {
+                    g.drawOval(10, 80, 80, 80);
+                }
+
+                public int getIconHeight() {
+                    return 80;
+                }
+
+                public int getIconWidth() {
+                    return 80;
+                }
+            });
+            this.setPreferredSize(new Dimension(60, 50));
+            this.setBorder(BorderFactory.createEmptyBorder());
+            this.setFocusPainted(false);
+        }
+    }
 
 	private class VisualHole extends JButton 
 	{
