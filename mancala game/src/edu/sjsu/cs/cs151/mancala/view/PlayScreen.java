@@ -23,7 +23,6 @@ class PlayScreenInternal {
         wStore = new JPanel();
         eStore = new JPanel();
          
-
 		mainLayeredPane.setLayout(new BorderLayout());
 		center.setLayout(new GridLayout(2,6));
 
@@ -33,6 +32,8 @@ class PlayScreenInternal {
 		center.setBackground(Color.gray);
         p2North.setBackground(Color.gray);
         p1South.setBackground(Color.gray);
+        p2North.add(new JLabel("Player 2"));
+        p1South.add(new JLabel("Player 1"));
         
         wStore.setLayout(new BorderLayout());
         eStore.setLayout(new BorderLayout());
@@ -97,22 +98,22 @@ class PlayScreenInternal {
 		
 		private VisualHole() {
 			super (new Icon()
-					{
-						public void paintIcon(Component c, Graphics g, int x, int y) {
-							Graphics2D g2 = (Graphics2D)g;
-							g2.setStroke(new BasicStroke(5));
-							g2.setColor(Color.black);
-							g2.drawOval(10, 80, 80, 80);
-						}
-						
-						public int getIconHeight() {
-							return 80;
-						}
-						
-						public int getIconWidth() {
-							 return 80;           						
-						}
-					});
+				{
+					public void paintIcon(Component c, Graphics g, int x, int y) {
+						Graphics2D g2 = (Graphics2D)g;
+						g2.setStroke(new BasicStroke(5));
+						g2.setColor(Color.black);
+						g2.drawOval(10, 80, 80, 80);
+					}
+					
+					public int getIconHeight() {
+						return 80;
+					}
+					
+					public int getIconWidth() {
+						 return 80;           						
+					}
+				});
 			this.setPreferredSize(new Dimension(60, 50));
 			this.setBorder(BorderFactory.createEmptyBorder());
 			this.setFocusPainted(false);
@@ -125,22 +126,22 @@ class PlayScreenInternal {
 		
 		private VisualStore() {
 			super (new Icon()
-					{
-						public void paintIcon(Component c, Graphics g, int x, int y) {
-							Graphics2D g2 = (Graphics2D)g;
-							g2.setStroke(new BasicStroke(5));
-							g2.setColor(Color.black);
-							g2.drawOval(10, 135, 80, 160);
-						}
-						
-						public int getIconHeight() {
-							return 80;
-						}
-						
-						public int getIconWidth() {
-							 return 80;           						
-						}
-					});
+				{
+					public void paintIcon(Component c, Graphics g, int x, int y) {
+						Graphics2D g2 = (Graphics2D)g;
+						g2.setStroke(new BasicStroke(5));
+						g2.setColor(Color.black);
+						g2.drawOval(10, 135, 80, 160);
+					}
+					
+					public int getIconHeight() {
+						return 80;
+					}
+					
+					public int getIconWidth() {
+						 return 80;           						
+					}
+				});
 			this.setPreferredSize(new Dimension(100, 60));
 			this.setBorder(BorderFactory.createEmptyBorder());
 			this.setFocusPainted(false);
