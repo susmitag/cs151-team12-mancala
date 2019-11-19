@@ -99,7 +99,7 @@ class PlayScreenInternal {
 			super (new Icon()
 					{
 						public void paintIcon(Component c, Graphics g, int x, int y) {
-							g.drawOval(0, 90, 80, 80);
+							g.drawOval(10, 80, 80, 80);
 						}
 						
 						public int getIconHeight() {
@@ -121,7 +121,7 @@ class PlayScreenInternal {
 			super (new Icon()
 					{
 						public void paintIcon(Component c, Graphics g, int x, int y) {
-							g.drawOval(0, 90, 80, 160);
+							g.drawOval(10, 100, 80, 160);
 						}
 						
 						public int getIconHeight() {
