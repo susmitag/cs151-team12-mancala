@@ -20,19 +20,19 @@ class PlayScreenInternal {
         p1South = new JPanel();
 
 		mainLayeredPane.setLayout(new BorderLayout());
-		center.setLayout(new GridLayout(3,6));
+		center.setLayout(new GridLayout(2,6));
 
-		for (int i = 0; i < 18; i++) {
-            if (i < 6)
-                center.add(new VisualHole(-1,-1));
-            else
-            	if(i==6) {
+		for (int i = 0; i < 12; i++) {
+//            if (i < 6)
+//                center.add(new VisualHole(-1,-1));
+//            else
+//            	if(i==6) {
 					//center.add(panelHole);
 					//panelHole.add(new VisualHole(0,0));
-					center.add(new VisualHole(0,0));
-				}
-            	else
-            		center.add(new VisualHole(0,0));
+//					center.add(new VisualHole(0,0));
+//				}
+ //           	else
+            		center.add(new VisualHole());
 		}
 
         p2North.setBackground(Color.gray);
@@ -40,12 +40,12 @@ class PlayScreenInternal {
         center.setBackground(Color.red);
         p1South.setPreferredSize(new Dimension(300, 70));
         p2North.setPreferredSize(new Dimension(300, 70));
-        center.setPreferredSize(new Dimension(500,500));
+        center.setPreferredSize(new Dimension(600,400));
         center.setMaximumSize(new Dimension(500, 500));
 
 		mainLayeredPane.add(BorderLayout.CENTER, center);
-		mainLayeredPane.add(BorderLayout.WEST, new VisualStore(0, 200));
-		mainLayeredPane.add(BorderLayout.EAST, new VisualStore(mainLayeredPane.getWidth(), 200));
+		mainLayeredPane.add(BorderLayout.WEST, new VisualStore());
+		mainLayeredPane.add(BorderLayout.EAST, new VisualStore());
         mainLayeredPane.add(BorderLayout.NORTH, p2North);
         mainLayeredPane.add(BorderLayout.SOUTH, p1South);
 	}
@@ -54,7 +54,8 @@ class PlayScreenInternal {
 		return mainLayeredPane;
 	}
 
-	class JPanelHole extends JPanel {
+	class JPanelHole extends JPanel 
+	{
 		private int row;
 		private int col;
 		private JComponent seed = null;
@@ -90,68 +91,60 @@ class PlayScreenInternal {
 		}
 	}
 
-	private class VisualHole extends JComponent {
+	private class VisualHole extends JButton 
+	{
 		
-		int x;
-		int y;
-		int r;
-		
-		private VisualHole(int x, int y) {
-            if (x == -1 && y == -1) {
-                this.x = 0;
-                this.y = 0;
-                r = 0;
-            }
-            else {
-                this.x = x;
-                this.y = y;
-                r = 80;
-            }
-		}
-
-		public void paint(Graphics g) {
-			Graphics2D g2 = (Graphics2D) g;
-			g2.setPaint(Color.blue);
-			g2.setStroke(new BasicStroke(2.5f));
-			g2.draw(new Ellipse2D.Double(x,y, r, r));
+		private VisualHole() {
+			super (new Icon()
+					{
+						public void paintIcon(Component c, Graphics g, int x, int y) {
+							g.drawOval(0, 90, 80, 80);
+						}
+						
+						public int getIconHeight() {
+							return 80;
+						}
+						
+						public int getIconWidth() {
+							 return 80;           						
+						}
+					});
+			this.setPreferredSize(new Dimension(60, 60));
 		}
 	}
 
-	private class VisualStore extends JComponent {
+	private class VisualStore extends JButton 
+	{
 		
-		int x;
-		int y;
-		int h;
-		int w;
-		
-		private VisualStore(int x, int y) {
-			this.x = x;
-			this.y = y;
-			h = 140;
-			w = 70;
+		private VisualStore() {
+			super (new Icon()
+					{
+						public void paintIcon(Component c, Graphics g, int x, int y) {
+							g.drawOval(0, 90, 80, 160);
+						}
+						
+						public int getIconHeight() {
+							return 80;
+						}
+						
+						public int getIconWidth() {
+							 return 80;           						
+						}
+					});
+			this.setPreferredSize(new Dimension(80, 60));
 		}
-
-		public void paint(Graphics g) {
-			Graphics2D g2 = (Graphics2D) g;
-			g2.setPaint(Color.blue);
-			g2.setStroke(new BasicStroke(2.5f));
-			g2.draw(new Ellipse2D.Double(x,y, w, h));
-		}
-
-		public Dimension getPreferredSize() {
-		    return new Dimension(w, h);
-        }
 	}
 }
 
-public class PlayScreen {
+public class PlayScreen 
+{
 	JFrame frame;
 	public PlayScreen() {
 		frame = new JFrame("Mancala");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		PlayScreenInternal playScreenInternal = new PlayScreenInternal();
 		frame.add(playScreenInternal.getMainComponent());
-		frame.setSize(1200, 800);
+		frame.setSize(1600, 800);
 		frame.setVisible(true);
 		frame.pack();
 	}
