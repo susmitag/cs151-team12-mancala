@@ -111,6 +111,7 @@ class PlayScreenInternal {
 						}
 					});
 			this.setPreferredSize(new Dimension(60, 50));
+			this.setBorder(BorderFactory.createEmptyBorder());
 		}
 	}
 
@@ -133,6 +134,7 @@ class PlayScreenInternal {
 						}
 					});
 			this.setPreferredSize(new Dimension(100, 60));
+			this.setBorder(BorderFactory.createEmptyBorder());
 		}
 	}
 }
