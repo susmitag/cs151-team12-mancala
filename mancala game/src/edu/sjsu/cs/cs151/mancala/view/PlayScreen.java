@@ -9,6 +9,8 @@ class PlayScreenInternal {
 	JPanel center;
     JPanel p2North;
     JPanel p1South;
+    JPanel wStore;
+    JPanel eStore;
 
 	private JLayeredPane mainLayeredPane = new JLayeredPane();
 	private JPanelHole panelHole = new JPanelHole(1,1);
@@ -18,34 +20,33 @@ class PlayScreenInternal {
 		center = new JPanel();
         p2North = new JPanel();
         p1South = new JPanel();
+        wStore = new JPanel();
+        eStore = new JPanel();
+         
 
 		mainLayeredPane.setLayout(new BorderLayout());
 		center.setLayout(new GridLayout(2,6));
 
-		for (int i = 0; i < 12; i++) {
-//            if (i < 6)
-//                center.add(new VisualHole(-1,-1));
-//            else
-//            	if(i==6) {
-					//center.add(panelHole);
-					//panelHole.add(new VisualHole(0,0));
-//					center.add(new VisualHole(0,0));
-//				}
- //           	else
-            		center.add(new VisualHole());
-		}
+		for (int i = 0; i < 12; i++)
+			center.add(new VisualHole());
 
         p2North.setBackground(Color.gray);
         p1South.setBackground(Color.gray);
         center.setBackground(Color.red);
+        
+        wStore.setLayout(new BorderLayout());
+        eStore.setLayout(new BorderLayout());
+        wStore.add(BorderLayout.CENTER, new VisualStore());
+        eStore.add(BorderLayout.CENTER, new VisualStore());
+        
         p1South.setPreferredSize(new Dimension(300, 70));
         p2North.setPreferredSize(new Dimension(300, 70));
         center.setPreferredSize(new Dimension(600,400));
         center.setMaximumSize(new Dimension(500, 500));
 
 		mainLayeredPane.add(BorderLayout.CENTER, center);
-		mainLayeredPane.add(BorderLayout.WEST, new VisualStore());
-		mainLayeredPane.add(BorderLayout.EAST, new VisualStore());
+		mainLayeredPane.add(BorderLayout.WEST, wStore);
+		mainLayeredPane.add(BorderLayout.EAST, eStore);
         mainLayeredPane.add(BorderLayout.NORTH, p2North);
         mainLayeredPane.add(BorderLayout.SOUTH, p1South);
 	}
@@ -109,7 +110,7 @@ class PlayScreenInternal {
 							 return 80;           						
 						}
 					});
-			this.setPreferredSize(new Dimension(60, 60));
+			this.setPreferredSize(new Dimension(60, 50));
 		}
 	}
 
@@ -131,7 +132,7 @@ class PlayScreenInternal {
 							 return 80;           						
 						}
 					});
-			this.setPreferredSize(new Dimension(80, 60));
+			this.setPreferredSize(new Dimension(100, 60));
 		}
 	}
 }
