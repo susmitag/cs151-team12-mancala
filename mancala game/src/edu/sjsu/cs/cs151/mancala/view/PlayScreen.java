@@ -27,12 +27,14 @@ class PlayScreenInternal {
 
 		for (int i = 0; i < 12; i++) {
 		    if (i == 0) {
-                JPanelHole panelHole = new JPanelHole(1,1);
-		        center.add(panelHole);
-		        //JComponent seed = new JButtonSeed();
-                //panelHole.add(seed);
-                JLabel lab = new JLabel("Hole 1 Seed 1", JLabel.LEFT);
-		        panelHole.add(lab);
+				HolePanel holePanel = new HolePanel(0,0);
+		        JButton seedButton = new SeedButton();
+                holePanel.add(seedButton);
+                //JLabel lab = new JLabel("Hole 1 Seed 1", JLabel.LEFT);
+		        //holePanel.add(lab);
+                //JComponent seedComponent = new SeedComponent(0, 0);
+                //holePanel.add(seedComponent);
+				center.add(holePanel);
             } else {
                 center.add(new VisualHole());
             }
@@ -68,13 +70,13 @@ class PlayScreenInternal {
 		return mainLayeredPane;
 	}
 
-	class JPanelHole extends JPanel 
+	class HolePanel extends JPanel
 	{
 		private int row;
 		private int col;
 		private JComponent seed = null;
 
-		public JPanelHole(int row, int col){
+		public HolePanel(int row, int col){
 			this.row = row;
 			this.col = col;
 			setLayout(new GridBagLayout());
@@ -105,9 +107,9 @@ class PlayScreenInternal {
 		}
 	}
 
-	private class JButtonSeed extends JButton
+	private class SeedButton extends JButton
     {
-        private JButtonSeed() {
+        private SeedButton() {
             super (new Icon()
             {
                 public void paintIcon(Component c, Graphics g, int x, int y) {
@@ -125,6 +127,32 @@ class PlayScreenInternal {
             this.setPreferredSize(new Dimension(60, 50));
             this.setBorder(BorderFactory.createEmptyBorder());
             this.setFocusPainted(false);
+        }
+    }
+
+    private class SeedComponent extends JComponent {
+        int x;
+        int y;
+        int r;
+
+        private SeedComponent(int x, int y) {
+            if (x == -1 && y == -1) {
+                this.x = 0;
+                this.y = 0;
+                r = 0;
+            }
+            else {
+                this.x = x;
+                this.y = y;
+                r = 20;
+            }
+        }
+
+        public void paint(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setPaint(Color.blue);
+            g2.setStroke(new BasicStroke(2.5f));
+            g2.draw(new Ellipse2D.Double(x, y, r, r));
         }
     }
 
