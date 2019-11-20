@@ -24,11 +24,12 @@ public class PlayScreen
 	private class PlayScreenInternal 
 	{
 
-		JPanel center;
-		JPanel p2North;
-		JPanel p1South;
-		JPanel wStore;
-		JPanel eStore;
+		private JPanel center;
+		private JPanel p2North;
+		private JPanel p1South;
+		private JPanel wStore;
+		private JPanel eStore;
+		private JPanel options;
 
 		private JLayeredPane mainLayeredPane = new JLayeredPane();
 		private JPanel board = new JPanel(new BorderLayout());
@@ -41,15 +42,20 @@ public class PlayScreen
 			p1South = new JPanel();
 			wStore = new JPanel();
 			eStore = new JPanel();
+			options = new JPanel();
 
 			center.setLayout(new GridLayout(2,6));
 			for (int i = 0; i < 12; i++)
 				center.add(new VisualHole());
 
-			p2North.setBackground(Color.gray);
-			p1South.setBackground(Color.gray);
-			p2North.add(new JLabel("Player 2"));
-			p1South.add(new JLabel("Player 1"));
+			p2North.setBackground(Color.DARK_GRAY);
+			p1South.setBackground(Color.DARK_GRAY);
+			JLabel p1 = new JLabel("Player 1");
+			JLabel p2 = new JLabel("Player 2");
+			p1.setForeground(Color.white);
+			p2.setForeground(Color.white);
+			p2North.add(p2);
+			p1South.add(p1);
 
 			wStore.setLayout(new BorderLayout());
 			eStore.setLayout(new BorderLayout());
@@ -68,8 +74,22 @@ public class PlayScreen
 			board.add(BorderLayout.SOUTH, p1South);
 			board.setSize(board.getPreferredSize());
 			board.setLocation(0, 0);
+			
+			options.setLayout(new BorderLayout());
+			JButton instructions = new JButton("?");
+			instructions.setPreferredSize(new Dimension(55,55));
+			instructions.setBackground(Color.lightGray);
+			JButton quit = new JButton("X");
+			quit.setPreferredSize(new Dimension(55,55));		
+			quit.setBackground(Color.lightGray);
+			options.add(BorderLayout.EAST, instructions);
+			options.add(BorderLayout.WEST, quit);
+			options.setPreferredSize(new Dimension(110,55));
+			options.setBounds(mainLayeredPane.getWidth(), mainLayeredPane.getHeight(), 110, 55);
+			
 			mainLayeredPane.add(board, JLayeredPane.DEFAULT_LAYER);
 			mainLayeredPane.setPreferredSize(board.getPreferredSize());
+			mainLayeredPane.add(options, JLayeredPane.PALETTE_LAYER);
 		}
 
 		JLayeredPane getMainComponent() {
