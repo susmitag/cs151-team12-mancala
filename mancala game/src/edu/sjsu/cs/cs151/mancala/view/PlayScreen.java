@@ -16,7 +16,8 @@ class PlayScreenInternal {
 	private JLayeredPane mainLayeredPane = new JLayeredPane();
 	private JPanel board = new JPanel(new BorderLayout());
 
-	public PlayScreenInternal() {
+	public PlayScreenInternal() 
+	{
 
 		center = new JPanel();
         p2North = new JPanel();
@@ -25,17 +26,8 @@ class PlayScreenInternal {
         eStore = new JPanel();
 
 		center.setLayout(new GridLayout(2,6));
-		try {
-			Image img = ImageIO.read(getClass().getResource("mancala-stone.jpg"));
-
-			for (int i = 0; i < 12; i++) {
-				VisualHole vh = new VisualHole();
-				vh.setIcon(new ImageIcon(img));
-				center.add(vh);
-			}
-		} catch (Exception ex) {
-			System.out.println(ex);
-		}
+		for (int i = 0; i < 12; i++)
+			center.add(new VisualHole());
 
         p2North.setBackground(Color.gray);
         p1South.setBackground(Color.gray);
@@ -67,11 +59,15 @@ class PlayScreenInternal {
 		return mainLayeredPane;
 	}
 
-	private class VisualHole extends JButton
+	private class VisualHole extends JLayeredPane
 	{
-		
-		private VisualHole() {
-			super (new Icon()
+		private VisualHole()
+		{
+			JPanel jp = new JPanel(new BorderLayout());
+			jp.setSize(100, 100);
+			jp.setBounds(0, 0, 100, 200);
+			jp.setBackground(Color.GRAY);
+			JButton jb = new JButton(new Icon()
 				{
 					public void paintIcon(Component c, Graphics g, int x, int y) {
 						Graphics2D g2 = (Graphics2D)g;
@@ -88,40 +84,59 @@ class PlayScreenInternal {
 						 return 80;
 					}
 				});
-			this.setPreferredSize(new Dimension(60, 50));
-			this.setBorder(BorderFactory.createEmptyBorder());
-			this.setFocusPainted(false);
+			jb.setPreferredSize(new Dimension(100, 100));
+			jb.setBorder(BorderFactory.createEmptyBorder());
+			jb.setFocusPainted(false);
+			jb.setBackground(Color.GRAY);
+			
+			jp.add(BorderLayout.CENTER, jb);
+			
+			this.setPreferredSize(new Dimension(100, 100));
 			this.setBackground(Color.GRAY);
+			this.add(jp, JLayeredPane.DEFAULT_LAYER);
+			this.setVisible(true);
 		}
 	}
+	
+		private class VisualStore extends JLayeredPane
+		{
+			private VisualStore()
+			{
+				JPanel jp = new JPanel(new BorderLayout());
+				jp.setSize(100, 100);
+				jp.setBounds(0, 0, 100, 400);
+				jp.setBackground(Color.GRAY);
+				JButton jb = new JButton(new Icon()
+					{
+						public void paintIcon(Component c, Graphics g, int x, int y) {
+							Graphics2D g2 = (Graphics2D)g;
+							g2.setStroke(new BasicStroke(5));
+							g2.setColor(Color.black);
+							g2.drawOval(10, 135, 80, 160);
+						}
 
-	private class VisualStore extends JButton 
-	{
-		
-		private VisualStore() {
-			super (new Icon()
-				{
-					public void paintIcon(Component c, Graphics g, int x, int y) {
-						Graphics2D g2 = (Graphics2D)g;
-						g2.setStroke(new BasicStroke(5));
-						g2.setColor(Color.black);
-						g2.drawOval(10, 135, 80, 160);
-					}
+						public int getIconHeight() {
+							return 80;
+						}
 
-					public int getIconHeight() {
-						return 80;
-					}
-
-					public int getIconWidth() {
-						 return 80;
-					}
-				});
-			this.setPreferredSize(new Dimension(100, 60));
-			this.setBorder(BorderFactory.createEmptyBorder());
-			this.setFocusPainted(false);
-			this.setBackground(Color.GRAY);
-		}
+						public int getIconWidth() {
+							 return 80;
+						}
+					});
+				jb.setPreferredSize(new Dimension(100, 100));
+				jb.setBorder(BorderFactory.createEmptyBorder());
+				jb.setFocusPainted(false);
+				jb.setBackground(Color.GRAY);
+				
+				jp.add(BorderLayout.CENTER, jb);
+				
+				this.setPreferredSize(new Dimension(100, 100));
+				this.setBackground(Color.GRAY);
+				this.add(jp, JLayeredPane.DEFAULT_LAYER);
+				this.setVisible(true);
+			}
 	}
+
 }
 
 public class PlayScreen 
@@ -133,7 +148,7 @@ public class PlayScreen
 		PlayScreenInternal playScreenInternal = new PlayScreenInternal();
 		frame.add(playScreenInternal.getMainComponent());
 		frame.setSize(1600, 800);
-		frame.setMinimumSize(new Dimension(800, 600));
+		frame.setMinimumSize(new Dimension(800, 550));
 		frame.setMaximumSize(new Dimension(1100, 800));
 		frame.setVisible(true);
 		frame.pack();
