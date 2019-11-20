@@ -2,11 +2,7 @@ package edu.sjsu.cs.cs151.mancala.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.*;
 import java.awt.geom.*;
-import java.awt.geom.Ellipse2D.Double;
-
-import javax.imageio.*;
 
 class PlayScreenInternal {
 
