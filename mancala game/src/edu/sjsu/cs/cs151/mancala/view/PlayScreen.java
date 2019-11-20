@@ -3,6 +3,7 @@ package edu.sjsu.cs.cs151.mancala.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
+import javax.imageio.*;
 
 class PlayScreenInternal {
 
@@ -24,21 +25,17 @@ class PlayScreenInternal {
         eStore = new JPanel();
 
 		center.setLayout(new GridLayout(2,6));
+		try {
+			Image img = ImageIO.read(getClass().getResource("mancala-stone.jpg"));
 
-		for (int i = 0; i < 12; i++) {
-		    if (i == 0) {
-				HolePanel holePanel = new HolePanel(0,0);
-		        JButton seedButton = new SeedButton();
-                holePanel.add(seedButton);
-                //JLabel lab = new JLabel("Hole 1 Seed 1", JLabel.LEFT);
-		        //holePanel.add(lab);
-                //JComponent seedComponent = new SeedComponent(0, 0);
-                //holePanel.add(seedComponent);
-				center.add(holePanel);
-            } else {
-                center.add(new VisualHole());
-            }
-        }
+			for (int i = 0; i < 12; i++) {
+				VisualHole vh = new VisualHole();
+				vh.setIcon(new ImageIcon(img));
+				center.add(vh);
+			}
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
 
         p2North.setBackground(Color.gray);
         p1South.setBackground(Color.gray);
@@ -69,92 +66,6 @@ class PlayScreenInternal {
 	JLayeredPane getMainComponent() {
 		return mainLayeredPane;
 	}
-
-	class HolePanel extends JPanel
-	{
-		private int row;
-		private int col;
-		private JComponent seed = null;
-
-		public HolePanel(int row, int col){
-			this.row = row;
-			this.col = col;
-			setLayout(new GridBagLayout());
-		}
-
-		public int getRow() {
-			return row;
-		}
-
-		public int getCol() {
-			return col;
-		}
-
-		@Override
-		public Component add(Component c) {
-			seed = (JComponent) c;
-			return super.add(c);
-		}
-
-		@Override
-		public void remove(Component comp) {
-			seed = null;
-			super.remove(comp);
-		}
-
-		public JComponent getSeed() {
-			return seed;
-		}
-	}
-
-	private class SeedButton extends JButton
-    {
-        private SeedButton() {
-            super (new Icon()
-            {
-                public void paintIcon(Component c, Graphics g, int x, int y) {
-                    g.drawOval(10, 80, 80, 80);
-                }
-
-                public int getIconHeight() {
-                    return 80;
-                }
-
-                public int getIconWidth() {
-                    return 80;
-                }
-            });
-            this.setPreferredSize(new Dimension(60, 50));
-            this.setBorder(BorderFactory.createEmptyBorder());
-            this.setFocusPainted(false);
-        }
-    }
-
-    private class SeedComponent extends JComponent {
-        int x;
-        int y;
-        int r;
-
-        private SeedComponent(int x, int y) {
-            if (x == -1 && y == -1) {
-                this.x = 0;
-                this.y = 0;
-                r = 0;
-            }
-            else {
-                this.x = x;
-                this.y = y;
-                r = 20;
-            }
-        }
-
-        public void paint(Graphics g) {
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setPaint(Color.blue);
-            g2.setStroke(new BasicStroke(2.5f));
-            g2.draw(new Ellipse2D.Double(x, y, r, r));
-        }
-    }
 
 	private class VisualHole extends JButton
 	{
