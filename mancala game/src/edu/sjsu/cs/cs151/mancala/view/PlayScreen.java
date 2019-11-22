@@ -2,6 +2,8 @@ package edu.sjsu.cs.cs151.mancala.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 
 public class PlayScreen 
@@ -94,6 +96,24 @@ public class PlayScreen
 
 		JLayeredPane getMainComponent() {
 			return mainLayeredPane;
+		}
+
+		private class SowMouseAdapter extends MouseAdapter {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				Point p = e.getPoint();
+				Component c = board.getComponentAt(p);
+			}
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+			}
 		}
 	}
 
