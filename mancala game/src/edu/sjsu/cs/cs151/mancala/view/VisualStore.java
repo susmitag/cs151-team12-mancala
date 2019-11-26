@@ -1,6 +1,9 @@
 package edu.sjsu.cs.cs151.mancala.view;
 
 import javax.swing.*;
+
+import edu.sjsu.cs.cs151.mancala.model.Board;
+
 import java.awt.*;
 
 public class VisualStore extends VisualHole
@@ -44,7 +47,7 @@ public class VisualStore extends VisualHole
 		this.setBackground(Color.GRAY);
 		this.add(jp, JLayeredPane.DEFAULT_LAYER);
 		this.setVisible(true);
-		mg = new MarbleGroup(0);
+		mg = new MarbleGroup(Board.INITIAL_STORE_MARBLE_COUNT, true);
 		this.add(mg, JLayeredPane.PALETTE_LAYER);
 	}
 			

@@ -45,12 +45,12 @@ public class VisualHole extends JLayeredPane
 			jb.setBorder(BorderFactory.createEmptyBorder());
 			jb.setFocusPainted(false);
 			jb.setBackground(Color.GRAY);
+			jb.setFocusable(false);
 			
 			jb.addActionListener(new ActionListener()
 					{
 						public void actionPerformed(ActionEvent event)
 						{
-							System.out.println(index);
 							queue.add(new Message(new GameInfo(index)));
 						}
 					});
@@ -61,16 +61,20 @@ public class VisualHole extends JLayeredPane
 			this.setBackground(Color.GRAY);
 			this.add(jp, JLayeredPane.DEFAULT_LAYER);
 			this.setVisible(true);
-			mg = new MarbleGroup(4);
+			mg = new MarbleGroup(4, false);
 			this.add(mg, JLayeredPane.PALETTE_LAYER);
 		}
 		
 		public void setMarbleCount(int i) {
-			if (mg == null)
-				System.out.println("NULL");
-			else
+			boolean isStore;
+			if (mg == null) {
+				isStore = true;
+			}
+			else {
+				isStore = mg.isStore();
 				this.remove(mg);
-			mg = new MarbleGroup(i);
+			}
+			mg = new MarbleGroup(i, isStore);
 			this.add(mg, JLayeredPane.PALETTE_LAYER);
 		}
 }

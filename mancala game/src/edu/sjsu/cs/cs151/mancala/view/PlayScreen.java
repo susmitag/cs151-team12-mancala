@@ -137,7 +137,6 @@ public class PlayScreen
 		public void updateMarbleCount(GameInfo g) {
 			for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
 				holes[i].setMarbleCount(g.getMarbleCounts()[i]);
-				System.out.println("index: " + i + "marbles: "+g.getMarbleCounts()[i]);
 			}
 		}
 
