@@ -12,9 +12,9 @@ package edu.sjsu.cs.cs151.mancala.model;
  *
  */
 public class Board {
-    private static final int AMOUNT_OF_HOLES = 14;
-    private static final int PLAYER1_STORE_INDEX = 6;
-    private static final int PLAYER2_STORE_INDEX = 13;
+    public static final int AMOUNT_OF_HOLES = 14;
+    public static final int PLAYER1_STORE_INDEX = 6;
+    public static final int PLAYER2_STORE_INDEX = 13;
     
  //   private int lastHoleIndex;
     private Hole[] board = new Hole[14];
@@ -32,6 +32,21 @@ public class Board {
         }
     }
 
+    /**
+     * Given the index of a Hole, determines whether that Hole belongs to 
+     * 	player1 or player2 and returns the corresponding Store
+     * @param index index of Hole to find Store of
+     * @return Store corresponding to Hole
+     */
+    public Store getCorrespondingStore(int index)
+    {
+    	if (index >= 7 && index <= 12)
+    		return (Store) board[PLAYER2_STORE_INDEX];
+    	else if (index >= 0 && index <= 6)
+    		return (Store) board[PLAYER1_STORE_INDEX];
+    	else return null;
+    }
+    
     /**
      * Displays the state of a side of the board by number of marbles per hole or store
      * @param start hole of side

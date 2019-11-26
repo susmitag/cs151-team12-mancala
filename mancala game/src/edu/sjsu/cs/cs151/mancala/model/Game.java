@@ -1,5 +1,6 @@
 package edu.sjsu.cs.cs151.mancala.model;
 import edu.sjsu.cs.cs151.mancala.*;
+import edu.sjsu.cs.cs151.mancala.controller.*;
 
 /**
  * A Game object represents a single mancala game between two players.
@@ -34,13 +35,36 @@ public class Game {
 	}
 	
 	/**
+	 * Gives a Message containing info about the number of marbles in each hole.
+	 * 	The index of the array corresponds with the index of the Hole
+	 * @return Message with array of marbles counts
+	 */
+	public Message getMarbleCounts() {
+		int[] marbleCounts = new int[Board.AMOUNT_OF_HOLES];
+		for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
+			marbleCounts[i] = board.getHoleAt(i).getMarblecount();
+		}
+		return new Message(new GameInfo(marbleCounts));
+	}
+	/**
+	 * Given an index of a Hole, sows that Hole
+	 * @param index index of Hole to sow
+	 */
+	public void sow(int index) throws MancalaException { 
+		Hole h = board.getHoleAt(index);
+		Store s = board.getCorrespondingStore(index);
+		sow(h, s);
+	}
+	
+	/**
 	 * Places all marbles in\
 	 *  selected hole into the next holes and stores according to mancala's rules.
 	 * 
 	 * @param hole the hole to take the marbles from
+	 * @param playerStore the Store corresponding to the hole being sown
 	 * @return true if the last marble sowed ends in player's store (for free turn)
 	 */
-	public boolean sow(Hole hole, Store playerStore) throws MancalaException{
+	public boolean sow(Hole hole, Store playerStore) throws MancalaException {
 		if (Game.getGame().getBoard().checkIfStore(hole)) {
 			throw new MancalaException("Error: can not sow marbles from a store.");
 		}

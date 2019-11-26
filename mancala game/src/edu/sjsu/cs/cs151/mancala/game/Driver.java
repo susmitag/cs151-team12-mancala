@@ -3,11 +3,38 @@ package edu.sjsu.cs.cs151.mancala.game;
 import edu.sjsu.cs.cs151.mancala.model.*;
 import edu.sjsu.cs.cs151.mancala.game.*;
 import edu.sjsu.cs.cs151.mancala.view.*;
+import edu.sjsu.cs.cs151.mancala.controller.*;
 import edu.sjsu.cs.cs151.mancala.*;
 
 import java.util.Scanner;
+import java.util.concurrent.*;
 
 public class Driver {
+
+	public static void main(String[] args) 
+	{
+		LinkedBlockingQueue<Message> queue = new LinkedBlockingQueue<Message>(); 
+		PlayScreen view = PlayScreen.init(queue);
+		Game model = Game.getGame();
+		Controller controller = new Controller(queue, view, model);
+		UpdateGameStateValve gameValve = new UpdateGameStateValve(controller);
+		ValveResponse response = ValveResponse.EXECUTED;
+		while (response != ValveResponse.FINISHED) {
+			try {
+				Message m = queue.take();
+				response = gameValve.execute(m);
+			}
+			catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		view.close();
+		queue.clear();
+	}		
+}
+	
+	
+
 
 	/**
 	 * Checks who is the current player and displays a message.
@@ -15,6 +42,7 @@ public class Driver {
 	 * @param p1 is player1
 	 * @param s is the message to display
 	 */
+	/*
 	private static void displayForPlayer(Player p, Player p1, String s){
 		if(p.equals(p1))
 			System.out.println(s + " 1");
@@ -61,3 +89,4 @@ public class Driver {
 		sc.close();
 	}
 }
+*/

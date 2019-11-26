@@ -2,25 +2,44 @@ package edu.sjsu.cs.cs151.mancala.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.awt.geom.*;
+import java.util.concurrent.*;
+import edu.sjsu.cs.cs151.mancala.controller.*;
+import edu.sjsu.cs.cs151.mancala.model.Board;
 
 public class PlayScreen 
 {
+	private PlayScreen instance; 
+	private LinkedBlockingQueue<Message> queue;
 	private JFrame frame;
+	private PlayScreenInternal playScreenInternal;
 	
-	public PlayScreen() 
+	private PlayScreen() 
 	{
 		frame = new JFrame("Mancala");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		PlayScreenInternal playScreenInternal = new PlayScreenInternal();
+		playScreenInternal = new PlayScreenInternal();
 		frame.add(playScreenInternal.getMainComponent());
 		frame.setSize(1600, 800);
 		frame.setMinimumSize(new Dimension(800, 550));
 		frame.setMaximumSize(new Dimension(1100, 800));
 		frame.setVisible(true);
 		frame.pack();
+	}
+	
+	public static PlayScreen init(LinkedBlockingQueue<Message> queue) {
+		PlayScreen ps = new PlayScreen();
+		ps.queue = queue;
+		return ps;
+	}
+		
+	public void close() {
+		frame.dispose();
+	}
+	 
+	public void update(Message m) {
+		playScreenInternal.updateMarbleCount(m.getInfo());
 	}
 	
 	private class PlayScreenInternal 
@@ -35,10 +54,11 @@ public class PlayScreen
 
 		private JLayeredPane mainLayeredPane = new JLayeredPane();
 		private JPanel board = new JPanel(new BorderLayout());
+		private VisualHole[] holes;
 
 		private PlayScreenInternal() 
 		{
-
+			holes = new VisualHole[Board.AMOUNT_OF_HOLES];
 			center = new JPanel();
 			p2North = new JPanel();
 			p1South = new JPanel();
@@ -47,8 +67,19 @@ public class PlayScreen
 			options = new JPanel();
 
 			center.setLayout(new GridLayout(2,6));
-			for (int i = 0; i < 12; i++)
-				center.add(new VisualHole());
+			
+			//This is to ensure the holes have the correct index 
+			//	corresponding with the index used in the model
+			for (int i = 12; i > 6; i--) {
+				VisualHole vh = new VisualHole(i);
+				holes[i] = vh;
+				center.add(vh);
+			}
+			for (int i = 0; i < 6; i++) {
+				VisualHole vh = new VisualHole(i);
+				holes[i] = vh;
+				center.add(vh);
+			}
 
 			p2North.setBackground(Color.DARK_GRAY);
 			p1South.setBackground(Color.DARK_GRAY);
@@ -61,8 +92,13 @@ public class PlayScreen
 
 			wStore.setLayout(new BorderLayout());
 			eStore.setLayout(new BorderLayout());
-			wStore.add(BorderLayout.CENTER, new VisualStore());
-			eStore.add(BorderLayout.CENTER, new VisualStore());
+			
+			VisualStore p1Store = new VisualStore(Board.PLAYER1_STORE_INDEX);
+			VisualStore p2Store = new VisualStore(Board.PLAYER2_STORE_INDEX);
+			holes[Board.PLAYER1_STORE_INDEX] = p1Store;
+			holes[Board.PLAYER2_STORE_INDEX] = p2Store;
+			wStore.add(BorderLayout.CENTER, p2Store);
+			eStore.add(BorderLayout.CENTER, p1Store);
 			
 			p1South.setPreferredSize(new Dimension(300, 70));
 			p2North.setPreferredSize(new Dimension(300, 70));
@@ -98,6 +134,12 @@ public class PlayScreen
 			return mainLayeredPane;
 		}
 
+		public void updateMarbleCount(GameInfo g) {
+			for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
+				holes[i].setMarbleCount(g.getMarbleCounts()[i]);
+			}
+		}
+
 		private class SowMouseAdapter extends MouseAdapter {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -119,8 +161,16 @@ public class PlayScreen
 
 	private class VisualHole extends JLayeredPane
 	{
-		private VisualHole()
+		private int index;
+		private MarbleGroup mg;
+		
+		private VisualHole() {
+			super();
+		}
+		
+		private VisualHole(int index)
 		{
+			this.index = index;
 			JPanel jp = new JPanel(new BorderLayout());
 			jp.setSize(100, 100);
 			jp.setBounds(0, 0, 100, 200);
@@ -147,22 +197,39 @@ public class PlayScreen
 			jb.setFocusPainted(false);
 			jb.setBackground(Color.GRAY);
 			
+			jb.addActionListener(new ActionListener()
+					{
+						public void actionPerformed(ActionEvent event)
+						{
+							queue.add(new Message(new GameInfo(index)));
+						}
+					});
+			
 			jp.add(BorderLayout.CENTER, jb);
 			
 			this.setPreferredSize(new Dimension(100, 100));
 			this.setBackground(Color.GRAY);
 			this.add(jp, JLayeredPane.DEFAULT_LAYER);
 			this.setVisible(true);
-			MarbleGroup m = new MarbleGroup(4);
-			this.add(m, JLayeredPane.PALETTE_LAYER);
+			mg = new MarbleGroup(4);
+			this.add(mg, JLayeredPane.PALETTE_LAYER);
+		}
+		
+		private void setMarbleCount(int i) {
+			mg = new MarbleGroup(i);
+			this.add(mg, JLayeredPane.PALETTE_LAYER);
 		}
 	}
 	
-		private class VisualStore extends JLayeredPane
+		private class VisualStore extends VisualHole
 		{
 			JPanel marbles = new JPanel();
-			private VisualStore()
+			int index;
+			MarbleGroup mg;
+			
+			private VisualStore(int index)
 			{
+				this.index = index;
 				JPanel jp = new JPanel(new BorderLayout());
 				jp.setSize(100, 100);
 				jp.setBounds(0, 0, 100, 400);
@@ -194,8 +261,11 @@ public class PlayScreen
 				this.setPreferredSize(new Dimension(100, 100));
 				this.setBackground(Color.GRAY);
 				this.add(jp, JLayeredPane.DEFAULT_LAYER);
-				this.setVisible(true);	
+				this.setVisible(true);
+				mg = new MarbleGroup(0);
+				this.add(mg, JLayeredPane.PALETTE_LAYER);
 			}
+			
 	}
 	
 	private class MarbleGroup extends JPanel
