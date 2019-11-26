@@ -29,8 +29,8 @@ public class MarbleGroup extends JPanel
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setColor(Color.BLUE);
 		Ellipse2D.Double marble;
-		if (!isStore) 
-		{
+		if (!isStore) 				// marbles are painted in different location in holes 
+		{			  				// 	and stores due to them being different shapes
 			int x = 0, y = 0;
 			for (int i = 0; i < count; i++,x = r.nextInt(35),y = r.nextInt(35)) {
 				marble = new Ellipse2D.Double(x, y, 20, 20);
