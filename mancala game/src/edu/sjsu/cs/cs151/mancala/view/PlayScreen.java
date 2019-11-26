@@ -15,8 +15,9 @@ public class PlayScreen
 	private JFrame frame;
 	private PlayScreenInternal playScreenInternal;
 	
-	private PlayScreen() 
+	private PlayScreen(LinkedBlockingQueue<Message> queue) 
 	{
+		this.queue = queue;
 		frame = new JFrame("Mancala");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		playScreenInternal = new PlayScreenInternal();
@@ -29,8 +30,7 @@ public class PlayScreen
 	}
 	
 	public static PlayScreen init(LinkedBlockingQueue<Message> queue) {
-		PlayScreen ps = new PlayScreen();
-		ps.queue = queue;
+		PlayScreen ps = new PlayScreen(queue);
 		return ps;
 	}
 		
@@ -71,12 +71,12 @@ public class PlayScreen
 			//This is to ensure the holes have the correct index 
 			//	corresponding with the index used in the model
 			for (int i = 12; i > 6; i--) {
-				VisualHole vh = new VisualHole(i);
+				VisualHole vh = new VisualHole(i, queue);
 				holes[i] = vh;
 				center.add(vh);
 			}
 			for (int i = 0; i < 6; i++) {
-				VisualHole vh = new VisualHole(i);
+				VisualHole vh = new VisualHole(i, queue);
 				holes[i] = vh;
 				center.add(vh);
 			}
@@ -137,6 +137,7 @@ public class PlayScreen
 		public void updateMarbleCount(GameInfo g) {
 			for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
 				holes[i].setMarbleCount(g.getMarbleCounts()[i]);
+				System.out.println("index: " + i + "marbles: "+g.getMarbleCounts()[i]);
 			}
 		}
 
@@ -155,144 +156,6 @@ public class PlayScreen
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				
-			}
-		}
-	}
-
-	private class VisualHole extends JLayeredPane
-	{
-		private int index;
-		private MarbleGroup mg;
-		
-		private VisualHole() {
-			super();
-		}
-		
-		private VisualHole(int index)
-		{
-			this.index = index;
-			JPanel jp = new JPanel(new BorderLayout());
-			jp.setSize(100, 100);
-			jp.setBounds(0, 0, 100, 200);
-			jp.setBackground(Color.GRAY);
-			JButton jb = new JButton(new Icon()
-				{
-					public void paintIcon(Component c, Graphics g, int x, int y) {
-						Graphics2D g2 = (Graphics2D)g;
-						g2.setStroke(new BasicStroke(5));
-						g2.setColor(Color.black);
-						g2.drawOval(10, 80, 80, 80);
-					}
-
-					public int getIconHeight() {
-						return 80;
-					}
-
-					public int getIconWidth() {
-						 return 80;
-					}
-				});
-			jb.setPreferredSize(new Dimension(100, 100));
-			jb.setBorder(BorderFactory.createEmptyBorder());
-			jb.setFocusPainted(false);
-			jb.setBackground(Color.GRAY);
-			
-			jb.addActionListener(new ActionListener()
-					{
-						public void actionPerformed(ActionEvent event)
-						{
-							queue.add(new Message(new GameInfo(index)));
-						}
-					});
-			
-			jp.add(BorderLayout.CENTER, jb);
-			
-			this.setPreferredSize(new Dimension(100, 100));
-			this.setBackground(Color.GRAY);
-			this.add(jp, JLayeredPane.DEFAULT_LAYER);
-			this.setVisible(true);
-			mg = new MarbleGroup(4);
-			this.add(mg, JLayeredPane.PALETTE_LAYER);
-		}
-		
-		private void setMarbleCount(int i) {
-			mg = new MarbleGroup(i);
-			this.add(mg, JLayeredPane.PALETTE_LAYER);
-		}
-	}
-	
-		private class VisualStore extends VisualHole
-		{
-			JPanel marbles = new JPanel();
-			int index;
-			MarbleGroup mg;
-			
-			private VisualStore(int index)
-			{
-				this.index = index;
-				JPanel jp = new JPanel(new BorderLayout());
-				jp.setSize(100, 100);
-				jp.setBounds(0, 0, 100, 400);
-				jp.setBackground(Color.GRAY);
-				JButton jb = new JButton(new Icon()
-					{
-						public void paintIcon(Component c, Graphics g, int x, int y) {
-							Graphics2D g2 = (Graphics2D)g;
-							g2.setStroke(new BasicStroke(5));
-							g2.setColor(Color.black);
-							g2.drawOval(10, 135, 80, 160);
-						}
-
-						public int getIconHeight() {
-							return 80;
-						}
-
-						public int getIconWidth() {
-							 return 80;
-						}
-					});
-				jb.setPreferredSize(new Dimension(100, 100));
-				jb.setBorder(BorderFactory.createEmptyBorder());
-				jb.setFocusPainted(false);
-				jb.setBackground(Color.GRAY);
-				
-				jp.add(BorderLayout.CENTER, jb);
-				
-				this.setPreferredSize(new Dimension(100, 100));
-				this.setBackground(Color.GRAY);
-				this.add(jp, JLayeredPane.DEFAULT_LAYER);
-				this.setVisible(true);
-				mg = new MarbleGroup(0);
-				this.add(mg, JLayeredPane.PALETTE_LAYER);
-			}
-			
-	}
-	
-	private class MarbleGroup extends JPanel
-	{
-		int n;
-		
-		private MarbleGroup(int n) {
-			this.n = n;
-			this.setPreferredSize(new Dimension(100,100));
-			this.setVisible(true);
-			this.setBackground(Color.GRAY);
-			this.setBounds(25, 95, 100, 100);
-			this.setOpaque(false);
-		}
-		
-		public void paintComponent(Graphics g)
-		{
-			Graphics2D g2 = (Graphics2D)g;
-			g2.setColor(Color.BLUE);
-			int x = 0, y = 0;
-			Ellipse2D.Double marble;
-			for (int i = 0; i < n; i++,x+=10,y+=10) {
-				marble = new Ellipse2D.Double(x, y, 20, 20);
-				g2.setPaint(Color.BLUE);
-				g2.fill(marble);
-				g2.setPaint(Color.BLACK);
-				g2.draw(marble);
 			}
 		}
 	}
