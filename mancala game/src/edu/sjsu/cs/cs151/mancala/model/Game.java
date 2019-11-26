@@ -79,7 +79,7 @@ public class Game {
 			}
 		}
 		//checks if last marble placed was in their store (player goes again)
-		if (hole.equals(playerStore))
+		if (hole.equals(playerStore)) 
 			return true;
 		else {
 			if (hole.getMarblecount() == 1) { 				// if the hole has 1 marble, then it was previously empty and

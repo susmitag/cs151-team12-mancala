@@ -66,6 +66,10 @@ public class VisualHole extends JLayeredPane
 		}
 		
 		public void setMarbleCount(int i) {
+			if (mg == null)
+				System.out.println("NULL");
+			else
+				this.remove(mg);
 			mg = new MarbleGroup(i);
 			this.add(mg, JLayeredPane.PALETTE_LAYER);
 		}

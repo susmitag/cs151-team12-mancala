@@ -31,7 +31,6 @@ public class Board {
             else
                 board[i] = new Hole(INITIAL_HOLE_MARBLE_COUNT);
             board[i].setIndex(i);
-            System.out.println(i+ " "+board[i].getMarblecount());
         }
     }
 

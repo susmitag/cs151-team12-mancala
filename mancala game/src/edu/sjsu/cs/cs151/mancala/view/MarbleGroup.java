@@ -9,6 +9,7 @@ public class MarbleGroup extends JPanel
 	int n;
 	
 	public MarbleGroup(int n) {
+		System.out.println(n);
 		this.n = n;
 		this.setPreferredSize(new Dimension(100,100));
 		this.setVisible(true);
