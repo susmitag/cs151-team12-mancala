@@ -70,7 +70,6 @@ public class Game {
 		}
 		int marbleCount = hole.removeMarbles();
 		Board board = Game.getGame().getBoard();
-		
 		while (marbleCount > 0) {
 			hole = board.getNextHole(hole);
 			// add marbles to the hole only if it is the calling player's store, or if it is a hole

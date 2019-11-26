@@ -15,6 +15,8 @@ public class Board {
     public static final int AMOUNT_OF_HOLES = 14;
     public static final int PLAYER1_STORE_INDEX = 6;
     public static final int PLAYER2_STORE_INDEX = 13;
+    public static final int INITIAL_HOLE_MARBLE_COUNT = 4;
+    public static final int INITIAL_STORE_MARBLE_COUNT = 0;
     
  //   private int lastHoleIndex;
     private Hole[] board = new Hole[14];
@@ -27,8 +29,9 @@ public class Board {
             if (i == PLAYER1_STORE_INDEX || i == PLAYER2_STORE_INDEX)
                 board[i] = new Store();
             else
-                board[i] = new Hole();
+                board[i] = new Hole(INITIAL_HOLE_MARBLE_COUNT);
             board[i].setIndex(i);
+            System.out.println(i+ " "+board[i].getMarblecount());
         }
     }
 
