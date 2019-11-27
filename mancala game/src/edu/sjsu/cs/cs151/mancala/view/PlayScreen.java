@@ -2,23 +2,44 @@ package edu.sjsu.cs.cs151.mancala.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.*;
+import java.util.concurrent.*;
+import edu.sjsu.cs.cs151.mancala.controller.*;
+import edu.sjsu.cs.cs151.mancala.model.Board;
 
 public class PlayScreen 
 {
+	private PlayScreen instance; 
+	private LinkedBlockingQueue<Message> queue;
 	private JFrame frame;
+	private PlayScreenInternal playScreenInternal;
 	
-	public PlayScreen() 
+	private PlayScreen(LinkedBlockingQueue<Message> queue) 
 	{
+		this.queue = queue;
 		frame = new JFrame("Mancala");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		PlayScreenInternal playScreenInternal = new PlayScreenInternal();
+		playScreenInternal = new PlayScreenInternal();
 		frame.add(playScreenInternal.getMainComponent());
 		frame.setSize(1600, 800);
 		frame.setMinimumSize(new Dimension(800, 550));
 		frame.setMaximumSize(new Dimension(1100, 800));
 		frame.setVisible(true);
 		frame.pack();
+	}
+	
+	public static PlayScreen init(LinkedBlockingQueue<Message> queue) {
+		PlayScreen ps = new PlayScreen(queue);
+		return ps;
+	}
+		
+	public void close() {
+		frame.dispose();
+	}
+	 
+	public void update(Message m) {
+		playScreenInternal.updateMarbleCount(m.getInfo());
 	}
 	
 	private class PlayScreenInternal 
@@ -33,10 +54,11 @@ public class PlayScreen
 
 		private JLayeredPane mainLayeredPane = new JLayeredPane();
 		private JPanel board = new JPanel(new BorderLayout());
+		private VisualHole[] holes;
 
 		private PlayScreenInternal() 
 		{
-
+			holes = new VisualHole[Board.AMOUNT_OF_HOLES];
 			center = new JPanel();
 			p2North = new JPanel();
 			p1South = new JPanel();
@@ -45,8 +67,19 @@ public class PlayScreen
 			options = new JPanel();
 
 			center.setLayout(new GridLayout(2,6));
-			for (int i = 0; i < 12; i++)
-				center.add(new VisualHole());
+			
+			//This is to ensure the holes have the correct index 
+			//	corresponding with the index used in the model
+			for (int i = 12; i > 6; i--) {
+				VisualHole vh = new VisualHole(i, queue);
+				holes[i] = vh;
+				center.add(vh);
+			}
+			for (int i = 0; i < 6; i++) {
+				VisualHole vh = new VisualHole(i, queue);
+				holes[i] = vh;
+				center.add(vh);
+			}
 
 			p2North.setBackground(Color.DARK_GRAY);
 			p1South.setBackground(Color.DARK_GRAY);
@@ -59,8 +92,13 @@ public class PlayScreen
 
 			wStore.setLayout(new BorderLayout());
 			eStore.setLayout(new BorderLayout());
-			wStore.add(BorderLayout.CENTER, new VisualStore());
-			eStore.add(BorderLayout.CENTER, new VisualStore());
+			
+			VisualStore p1Store = new VisualStore(Board.PLAYER1_STORE_INDEX);
+			VisualStore p2Store = new VisualStore(Board.PLAYER2_STORE_INDEX);
+			holes[Board.PLAYER1_STORE_INDEX] = p1Store;
+			holes[Board.PLAYER2_STORE_INDEX] = p2Store;
+			wStore.add(BorderLayout.CENTER, p2Store);
+			eStore.add(BorderLayout.CENTER, p1Store);
 			
 			p1South.setPreferredSize(new Dimension(300, 70));
 			p2North.setPreferredSize(new Dimension(300, 70));
@@ -95,114 +133,28 @@ public class PlayScreen
 		JLayeredPane getMainComponent() {
 			return mainLayeredPane;
 		}
-	}
 
-	private class VisualHole extends JLayeredPane
-	{
-		private VisualHole()
-		{
-			JPanel jp = new JPanel(new BorderLayout());
-			jp.setSize(100, 100);
-			jp.setBounds(0, 0, 100, 200);
-			jp.setBackground(Color.GRAY);
-			JButton jb = new JButton(new Icon()
-				{
-					public void paintIcon(Component c, Graphics g, int x, int y) {
-						Graphics2D g2 = (Graphics2D)g;
-						g2.setStroke(new BasicStroke(5));
-						g2.setColor(Color.black);
-						g2.drawOval(10, 80, 80, 80);
-					}
-
-					public int getIconHeight() {
-						return 80;
-					}
-
-					public int getIconWidth() {
-						 return 80;
-					}
-				});
-			jb.setPreferredSize(new Dimension(100, 100));
-			jb.setBorder(BorderFactory.createEmptyBorder());
-			jb.setFocusPainted(false);
-			jb.setBackground(Color.GRAY);
-			
-			jp.add(BorderLayout.CENTER, jb);
-			
-			this.setPreferredSize(new Dimension(100, 100));
-			this.setBackground(Color.GRAY);
-			this.add(jp, JLayeredPane.DEFAULT_LAYER);
-			this.setVisible(true);
-			MarbleGroup m = new MarbleGroup(4);
-			this.add(m, JLayeredPane.PALETTE_LAYER);
-		}
-	}
-	
-		private class VisualStore extends JLayeredPane
-		{
-			JPanel marbles = new JPanel();
-			private VisualStore()
-			{
-				JPanel jp = new JPanel(new BorderLayout());
-				jp.setSize(100, 100);
-				jp.setBounds(0, 0, 100, 400);
-				jp.setBackground(Color.GRAY);
-				JButton jb = new JButton(new Icon()
-					{
-						public void paintIcon(Component c, Graphics g, int x, int y) {
-							Graphics2D g2 = (Graphics2D)g;
-							g2.setStroke(new BasicStroke(5));
-							g2.setColor(Color.black);
-							g2.drawOval(10, 135, 80, 160);
-						}
-
-						public int getIconHeight() {
-							return 80;
-						}
-
-						public int getIconWidth() {
-							 return 80;
-						}
-					});
-				jb.setPreferredSize(new Dimension(100, 100));
-				jb.setBorder(BorderFactory.createEmptyBorder());
-				jb.setFocusPainted(false);
-				jb.setBackground(Color.GRAY);
-				
-				jp.add(BorderLayout.CENTER, jb);
-				
-				this.setPreferredSize(new Dimension(100, 100));
-				this.setBackground(Color.GRAY);
-				this.add(jp, JLayeredPane.DEFAULT_LAYER);
-				this.setVisible(true);	
+		public void updateMarbleCount(GameInfo g) {
+			for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
+				holes[i].setMarbleCount(g.getMarbleCounts()[i]);
 			}
-	}
-	
-	private class MarbleGroup extends JPanel
-	{
-		int n;
-		
-		private MarbleGroup(int n) {
-			this.n = n;
-			this.setPreferredSize(new Dimension(100,100));
-			this.setVisible(true);
-			this.setBackground(Color.GRAY);
-			this.setBounds(25, 95, 100, 100);
-			this.setOpaque(false);
 		}
-		
-		public void paintComponent(Graphics g)
-		{
-			Graphics2D g2 = (Graphics2D)g;
-			g2.setColor(Color.BLUE);
-			int x = 0, y = 0;
-			Ellipse2D.Double marble;
-			for (int i = 0; i < n; i++,x+=10,y+=10) {
-				marble = new Ellipse2D.Double(x, y, 20, 20);
-				g2.setPaint(Color.BLUE);
-				g2.fill(marble);
-				g2.setPaint(Color.BLACK);
-				g2.draw(marble);
+
+		private class SowMouseAdapter extends MouseAdapter {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				Point p = e.getPoint();
+				Component c = board.getComponentAt(p);
+			}
+
+			@Override
+			public void mouseDragged(MouseEvent e) {
+
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
 			}
 		}
 	}

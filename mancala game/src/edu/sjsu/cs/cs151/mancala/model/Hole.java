@@ -4,15 +4,21 @@ package edu.sjsu.cs.cs151.mancala.model;
  * A Hole stores Marbles and keeps count of how many are in it.
  * Extends Marble class
  */
-public class Hole{
+public class Hole {
     private int index;
 	private int marbleCount;
 	private static final int INITIAL_HOLE_INDEX = -1;
-	private static final int INITIAL_HOLE_MARBLE_COUNT = 4; //Sets initial marble count to 4 for holes
     
-    // Constructs a default Hole with the marble count set to 4
+    /** Constructs a default Hole 
+     * @param i initial marble count
+     */
+	public Hole(int i) {
+		marbleCount = i;
+		index = INITIAL_HOLE_INDEX;
+	}
+	
 	public Hole() {
-		marbleCount = INITIAL_HOLE_MARBLE_COUNT;
+		marbleCount = Board.INITIAL_HOLE_MARBLE_COUNT;
 		index = INITIAL_HOLE_INDEX;
 	}
 	
