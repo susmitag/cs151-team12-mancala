@@ -11,6 +11,7 @@ public class Game {
 
 	private Board board = new Board();
 	private static final Game instance = new Game();
+	private int playerWithTurn = 0;
 	
 	/**
 	 * Private constructor to prevent creation of multiple games
@@ -46,14 +47,32 @@ public class Game {
 		}
 		return new Message(new GameInfo(marbleCounts));
 	}
+
+	/**
+	 * Given an index of a Hole, check if that belongs to player with turn
+	 * @param index index of Hole to sow
+	 * @return true if index belongs to player with turn
+	 */
+	private boolean isHoleValid(int index) {
+		if (((playerWithTurn == 0) && (index >=0 && index <= 5)) ||
+		   ((playerWithTurn == 1) && (index >=7 && index <= 12)))
+			return true;
+		return false;
+	}
+
 	/**
 	 * Given an index of a Hole, sows that Hole
 	 * @param index index of Hole to sow
 	 */
-	public void sow(int index) throws MancalaException { 
-		Hole h = board.getHoleAt(index);
-		Store s = board.getCorrespondingStore(index);
-		sow(h, s);
+	public void sow(int index) throws MancalaException {
+		if(isHoleValid(index)){
+			Hole h = board.getHoleAt(index);
+			Store s = board.getCorrespondingStore(index);
+			boolean freeTurn = sow(h, s);
+			if(!freeTurn){
+				playerWithTurn = (playerWithTurn + 1) % 2;
+			}
+		}
 	}
 	
 	/**
