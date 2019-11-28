@@ -12,6 +12,7 @@ public class Game {
 	private Board board = new Board();
 	private static final Game instance = new Game();
 	private int playerWithTurn = 0;
+	private boolean turnChanged = true;
 	
 	/**
 	 * Private constructor to prevent creation of multiple games
@@ -36,16 +37,17 @@ public class Game {
 	}
 	
 	/**
-	 * Gives a Message containing info about the number of marbles in each hole.
+	 * Gives a Message containing info about the number of marbles in each hole,
+	 * whether the current player changed and the changed current player
 	 * 	The index of the array corresponds with the index of the Hole
 	 * @return Message with array of marbles counts
 	 */
-	public Message getMarbleCounts() {
+	public Message getGameState() {
 		int[] marbleCounts = new int[Board.AMOUNT_OF_HOLES];
 		for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
 			marbleCounts[i] = board.getHoleAt(i).getMarblecount();
 		}
-		return new Message(new GameInfo(marbleCounts));
+		return new Message(new GameInfo(marbleCounts, turnChanged, playerWithTurn));
 	}
 
 	/**
@@ -71,6 +73,9 @@ public class Game {
 			boolean freeTurn = sow(h, s);
 			if(!freeTurn){
 				playerWithTurn = (playerWithTurn + 1) % 2;
+				turnChanged = true;
+			} else {
+				turnChanged = false;
 			}
 		}
 	}

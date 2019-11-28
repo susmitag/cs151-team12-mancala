@@ -138,6 +138,24 @@ public class PlayScreen
 			for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
 				holes[i].setMarbleCount(g.getMarbleCounts()[i]);
 			}
+			updatePlayerLabelForeground(g);
+		}
+
+		public JLabel getPlayerLabel(int player) {
+			if(player == 0)
+				return (JLabel)p1South.getComponent(0);
+			else
+				return (JLabel)p2North.getComponent(0);
+		}
+
+		public void updatePlayerLabelForeground(GameInfo g) {
+			if(g.getTurnChanged()){
+				JLabel label = getPlayerLabel(g.getPlayerWithTurn());
+				label.setForeground(Color.YELLOW);
+				int otherPlayer = (g.getPlayerWithTurn() + 1) % 2;
+				label = getPlayerLabel(otherPlayer);
+				label.setForeground(Color.WHITE);
+			}
 		}
 
 		private class SowMouseAdapter extends MouseAdapter {
