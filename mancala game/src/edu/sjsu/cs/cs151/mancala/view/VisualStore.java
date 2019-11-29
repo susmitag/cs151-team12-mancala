@@ -47,7 +47,7 @@ public class VisualStore extends VisualHole
 		this.setBackground(Color.GRAY);
 		this.add(jp, JLayeredPane.DEFAULT_LAYER);
 		this.setVisible(true);
-		mg = new MarbleGroup(Board.INITIAL_STORE_MARBLE_COUNT, true);
+		mg = new MarbleGroup(Board.INITIAL_STORE_MARBLE_COUNT, index, true);
 		this.add(mg, JLayeredPane.PALETTE_LAYER);
 	}
 			
