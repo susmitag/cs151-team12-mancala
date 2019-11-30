@@ -8,7 +8,8 @@ import edu.sjsu.cs.cs151.mancala.controller.*;
 
 public class VisualHole extends JLayeredPane
 {
-		private int index;
+		protected int index;
+		protected boolean isHoleActive;
 		private MarbleGroup mg;
 		private LinkedBlockingQueue<Message> queue;
 
@@ -20,6 +21,7 @@ public class VisualHole extends JLayeredPane
 		{
 			this.queue = queue;
 			this.index = index;
+			isHoleActive = false;
 			JPanel jp = new JPanel(new BorderLayout());
 			jp.setSize(100, 100);
 			jp.setBounds(0, 0, 100, 200);
@@ -71,9 +73,13 @@ public class VisualHole extends JLayeredPane
 			}
 			else {
 				isStore = mg.isStore();
-				this.remove(mg);
+				if (isHoleActive) this.remove(mg);
 			}
 			mg = new MarbleGroup(i, index, isStore);
-			this.add(mg, JLayeredPane.PALETTE_LAYER);
+			if (isHoleActive) this.add(mg, JLayeredPane.PALETTE_LAYER);
 		}
+
+		public void setHoleActive (boolean state) {
+		    isHoleActive = state;
+        }
 }

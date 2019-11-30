@@ -9,12 +9,12 @@ import java.awt.*;
 public class VisualStore extends VisualHole
 {
 	JPanel marbles = new JPanel();
-	int index;
 	MarbleGroup mg;
 	
 	public VisualStore(int index)
 	{
 		this.index = index;
+		isHoleActive = false;
 		JPanel jp = new JPanel(new BorderLayout());
 		jp.setSize(100, 100);
 		jp.setBounds(0, 0, 100, 400);
@@ -48,7 +48,6 @@ public class VisualStore extends VisualHole
 		this.add(jp, JLayeredPane.DEFAULT_LAYER);
 		this.setVisible(true);
 		mg = new MarbleGroup(Board.INITIAL_STORE_MARBLE_COUNT, index, true);
-		this.add(mg, JLayeredPane.PALETTE_LAYER);
+		if (isHoleActive) this.add(mg, JLayeredPane.PALETTE_LAYER);
 	}
-			
 }
