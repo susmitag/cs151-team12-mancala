@@ -59,4 +59,6 @@ public class MarbleGroup extends JPanel
 	public boolean isStore() {
 		return isStore;
 	}
+
+	public int getCount() { return count; }
 }

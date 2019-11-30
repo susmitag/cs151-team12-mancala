@@ -15,7 +15,7 @@ public class VisualStore extends VisualHole
 	{
 		this.index = index;
 		isHoleActive = false;
-		JPanel jp = new JPanel(new BorderLayout());
+		jp = new JPanel(new BorderLayout());
 		jp.setSize(100, 100);
 		jp.setBounds(0, 0, 100, 400);
 		jp.setBackground(Color.GRAY);
