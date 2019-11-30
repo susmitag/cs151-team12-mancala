@@ -44,8 +44,10 @@ public class Game {
 	 */
 	public Message getGameState() {
 		int[] marbleCounts = new int[Board.AMOUNT_OF_HOLES];
+		boolean[] holeActiveState = new boolean[Board.AMOUNT_OF_HOLES];
 		for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
 			marbleCounts[i] = board.getHoleAt(i).getMarblecount();
+            holeActiveState[i] = board.getHoleAt(i).getIsActive();
 		}
 		return new Message(new GameInfo(marbleCounts, turnChanged, playerWithTurn));
 	}
@@ -68,6 +70,9 @@ public class Game {
 	 */
 	public void sow(int index) throws MancalaException {
 		if(isHoleValid(index)){
+            for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
+                board.getHoleAt(i).setIsActive(false);
+            }
 			Hole h = board.getHoleAt(index);
 			Store s = board.getCorrespondingStore(index);
 			boolean freeTurn = sow(h, s);
@@ -93,12 +98,14 @@ public class Game {
 			throw new MancalaException("Error: can not sow marbles from a store.");
 		}
 		int marbleCount = hole.removeMarbles();
+		hole.setIsActive(true);
 		Board board = Game.getGame().getBoard();
 		while (marbleCount > 0) {
 			hole = board.getNextHole(hole);
 			// add marbles to the hole only if it is the calling player's store, or if it is a hole
 			if ((board.checkIfStore(hole) && hole.equals(playerStore)) || !board.checkIfStore(hole)) {
 					hole.addMarble();
+                    hole.setIsActive(true);
 					marbleCount--;
 			}
 		}
