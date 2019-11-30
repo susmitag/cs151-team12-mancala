@@ -49,7 +49,7 @@ public class Game {
 			marbleCounts[i] = board.getHoleAt(i).getMarblecount();
             holeActiveState[i] = board.getHoleAt(i).getIsActive();
 		}
-		return new Message(new GameInfo(marbleCounts, turnChanged, playerWithTurn));
+		return new Message(new GameInfo(marbleCounts, holeActiveState, turnChanged, playerWithTurn));
 	}
 
 	/**

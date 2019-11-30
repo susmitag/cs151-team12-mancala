@@ -3,6 +3,7 @@ package edu.sjsu.cs.cs151.mancala.controller;
 public class GameInfo {
 	private int chosenHole;
 	private int[] marbleCounts;
+	public boolean[] activeStates;
 	private boolean turnChanged;
 	private int playerWithTurn;
 	
@@ -11,8 +12,9 @@ public class GameInfo {
 		marbleCounts = null;
 	}
 	
-	public GameInfo(int[] marbleCounts, boolean turnChanged, int playerWithTurn) {
+	public GameInfo(int[] marbleCounts, boolean[] activeStates, boolean turnChanged, int playerWithTurn) {
 		this.marbleCounts = marbleCounts;
+		this.activeStates = activeStates;
 		this.turnChanged = turnChanged;
 		this.playerWithTurn = playerWithTurn;
 		chosenHole = -1;
@@ -25,6 +27,8 @@ public class GameInfo {
 	public int[] getMarbleCounts() {
 		return marbleCounts;
 	}
+
+	public boolean[] getActiveStates() { return activeStates; }
 
 	public boolean getTurnChanged() { return turnChanged; }
 

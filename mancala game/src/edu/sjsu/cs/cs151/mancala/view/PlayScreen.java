@@ -39,7 +39,7 @@ public class PlayScreen
 	}
 	 
 	public void update(Message m) {
-		playScreenInternal.updateMarbleCount(m.getInfo());
+		playScreenInternal.updateState(m.getInfo());
 	}
 	
 	private class PlayScreenInternal 
@@ -134,9 +134,10 @@ public class PlayScreen
 			return mainLayeredPane;
 		}
 
-		public void updateMarbleCount(GameInfo g) {
+		public void updateState(GameInfo g) {
 			for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
 				holes[i].setMarbleCount(g.getMarbleCounts()[i]);
+				holes[i].setHoleActive(g.getActiveStates()[i]);
 			}
 			updatePlayerLabelForeground(g);
 		}
