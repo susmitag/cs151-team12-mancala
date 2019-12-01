@@ -76,6 +76,7 @@ public class Game {
 			Hole h = board.getHoleAt(index);
 			Store s = board.getCorrespondingStore(index);
 			boolean freeTurn = sow(h, s);
+			checkCaptureRemaining(s);
 			if(!freeTurn){
 				playerWithTurn = (playerWithTurn + 1) % 2;
 				turnChanged = true;
@@ -114,9 +115,18 @@ public class Game {
 			return true;
 		else {
 			if (hole.getMarblecount() == 1) { 				// if the hole has 1 marble, then it was previously empty and
-				board.captureOpposite(hole, playerStore);   //    the player captures all marbles in the opposite hole
+				board.captureHole(hole, playerStore, true);   //    the player captures all marbles in the opposite hole
 			}
 			return false;
+		}
+	}
+
+	private void checkCaptureRemaining (Store s) {
+		if (gameStatus()) {
+			int startHole = board.getStartHoleOfPlayer(playerWithTurn);
+			for (int i=startHole; i<board.AMOUNT_OF_HOLES_PER_PLAYER; ++i){
+				board.captureHole(board.getHoleAt(startHole), s, false);
+			}
 		}
 	}
 

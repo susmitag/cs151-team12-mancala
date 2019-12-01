@@ -13,6 +13,7 @@ package edu.sjsu.cs.cs151.mancala.model;
  */
 public class Board {
     public static final int AMOUNT_OF_HOLES = 14;
+    public static final int AMOUNT_OF_HOLES_PER_PLAYER = AMOUNT_OF_HOLES/2 - 1;
     public static final int PLAYER1_STORE_INDEX = 6;
     public static final int PLAYER2_STORE_INDEX = 13;
     public static final int INITIAL_HOLE_MARBLE_COUNT = 4;
@@ -78,9 +79,11 @@ public class Board {
      * Removes all marbles from opposite hole and adds them to players store
      * @param h hole to find opposite of
      * @param playerStore store to add captured marbles to
+     * @param opposite this hole or opposite hole
      */
-    public void captureOpposite(Hole h, Store playerStore) {
-    	Hole capturedHole = getOpposite(h);
+    public void captureHole(Hole h, Store playerStore, boolean opposite) {
+    	Hole capturedHole = h;
+    	if (opposite) capturedHole = getOpposite(h);
     	int capturedMarbles = capturedHole.removeMarbles();
     	playerStore.addMarbles(capturedMarbles);
     }
@@ -172,5 +175,13 @@ public class Board {
      */
     public int getNumberOfHoles() { 
     	return  AMOUNT_OF_HOLES;
+    }
+
+    public int getStartHoleOfPlayer (int playerIndex) {
+        if (playerIndex == 1) {
+            return 0;
+        } else {
+            return 7;
+        }
     }
 }
