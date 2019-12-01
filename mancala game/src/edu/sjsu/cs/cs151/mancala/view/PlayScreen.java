@@ -135,11 +135,16 @@ public class PlayScreen
 		}
 
 		public void updateState(GameInfo g) {
-			for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
-				holes[i].setMarbleCount(g.getMarbleCounts()[i]);
-				holes[i].setHoleActive(g.getActiveStates()[i]);
+			if (!g.getGameEnded()) {
+				for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
+					holes[i].setMarbleCount(g.getMarbleCounts()[i]);
+					holes[i].setHoleActive(g.getActiveStates()[i]);
+				}
+				updatePlayerLabelForeground(g);
+			} else {
+				JLabel popup = new JLabel("Game Ended");
+				mainLayeredPane.add(popup, JLayeredPane.POPUP_LAYER);
 			}
-			updatePlayerLabelForeground(g);
 		}
 
 		public JLabel getPlayerLabel(int player) {
