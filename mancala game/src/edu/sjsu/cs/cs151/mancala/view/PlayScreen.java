@@ -85,7 +85,7 @@ public class PlayScreen
 			p1South.setBackground(Color.DARK_GRAY);
 			JLabel p1 = new JLabel("Player 1");
 			JLabel p2 = new JLabel("Player 2");
-			p1.setForeground(Color.white);
+			p1.setForeground(Color.YELLOW);
 			p2.setForeground(Color.white);
 			p2North.add(p2);
 			p1South.add(p1);
