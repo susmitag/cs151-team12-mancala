@@ -146,8 +146,7 @@ public class PlayScreen
 					holes[i].setMarbleCount(g.getMarbleCounts()[i]);
 					holes[i].setHoleActive(g.getActiveStates()[i]);
 				}
-				JLabel popup = new JLabel("Game Ended");
-				mainLayeredPane.add(popup, JLayeredPane.POPUP_LAYER);
+				JOptionPane.showMessageDialog(frame, "Game Ended");
 			}
 		}
 
