@@ -82,10 +82,11 @@ public class Board {
      * @param opposite this hole or opposite hole
      */
     public void captureHole(Hole h, Store playerStore, boolean opposite) {
+    	h.removeMarbles();
     	Hole capturedHole = h;
     	if (opposite) capturedHole = getOpposite(h);
     	int capturedMarbles = capturedHole.removeMarbles();
-    	playerStore.addMarbles(capturedMarbles);
+    	playerStore.addMarbles(capturedMarbles + 1);
     }
     
     /**

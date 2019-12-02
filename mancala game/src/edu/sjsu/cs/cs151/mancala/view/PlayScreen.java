@@ -117,6 +117,8 @@ public class PlayScreen
 			JButton instructions = new JButton("?");
 			instructions.setPreferredSize(new Dimension(55,55));
 			instructions.setBackground(Color.lightGray);
+			instructions.addActionListener(event -> 
+				new JOptionPane().showMessageDialog(null, new RulesDialog(), "Mancala Rules", JOptionPane.INFORMATION_MESSAGE));
 			JButton quit = new JButton("X");
 			quit.setPreferredSize(new Dimension(55,55));		
 			quit.setBackground(Color.lightGray);
