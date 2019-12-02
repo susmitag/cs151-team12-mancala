@@ -127,7 +127,7 @@ public class PlayScreen
 			options.setPreferredSize(new Dimension(110,55));
 			options.setBounds(mainLayeredPane.getWidth(), mainLayeredPane.getHeight(), 110, 55);
 			
-			mainLayeredPane.add(board, JLayeredPane.DEFAUg.getMarbleCounts()[Board.PLAYER2_STORE_INDEX]LT_LAYER);
+			mainLayeredPane.add(board, JLayeredPane.DEFAULT_LAYER);
 			mainLayeredPane.setPreferredSize(board.getPreferredSize());
 			mainLayeredPane.add(options, JLayeredPane.PALETTE_LAYER);
 		}
