@@ -39,7 +39,7 @@ public class PlayScreen
 	}
 	 
 	public void update(Message m) {
-		playScreenInternal.updateMarbleCount(m.getInfo());
+		playScreenInternal.updateState(m.getInfo());
 	}
 	
 	private class PlayScreenInternal 
@@ -85,7 +85,7 @@ public class PlayScreen
 			p1South.setBackground(Color.DARK_GRAY);
 			JLabel p1 = new JLabel("Player 1");
 			JLabel p2 = new JLabel("Player 2");
-			p1.setForeground(Color.white);
+			p1.setForeground(Color.YELLOW);
 			p2.setForeground(Color.white);
 			p2North.add(p2);
 			p1South.add(p1);
@@ -117,6 +117,8 @@ public class PlayScreen
 			JButton instructions = new JButton("?");
 			instructions.setPreferredSize(new Dimension(55,55));
 			instructions.setBackground(Color.lightGray);
+			instructions.addActionListener(event -> 
+				new JOptionPane().showMessageDialog(null, new RulesDialog(), "Mancala Rules", JOptionPane.INFORMATION_MESSAGE));
 			JButton quit = new JButton("X");
 			quit.setPreferredSize(new Dimension(55,55));		
 			quit.setBackground(Color.lightGray);
@@ -134,9 +136,37 @@ public class PlayScreen
 			return mainLayeredPane;
 		}
 
-		public void updateMarbleCount(GameInfo g) {
-			for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
-				holes[i].setMarbleCount(g.getMarbleCounts()[i]);
+		public void updateState(GameInfo g) {
+			if (!g.getGameEnded()) {
+				for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
+					holes[i].setMarbleCount(g.getMarbleCounts()[i]);
+					holes[i].setHoleActive(g.getActiveStates()[i]);
+				}
+				updatePlayerLabelForeground(g);
+			} else {
+				for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
+					holes[i].setMarbleCount(g.getMarbleCounts()[i]);
+					holes[i].setHoleActive(g.getActiveStates()[i]);
+				}
+				JLabel popup = new JLabel("Game Ended");
+				mainLayeredPane.add(popup, JLayeredPane.POPUP_LAYER);
+			}
+		}
+
+		public JLabel getPlayerLabel(int player) {
+			if(player == 0)
+				return (JLabel)p1South.getComponent(0);
+			else
+				return (JLabel)p2North.getComponent(0);
+		}
+
+		public void updatePlayerLabelForeground(GameInfo g) {
+			if(g.getTurnChanged()){
+				JLabel label = getPlayerLabel(g.getPlayerWithTurn());
+				label.setForeground(Color.YELLOW);
+				int otherPlayer = (g.getPlayerWithTurn() + 1) % 2;
+				label = getPlayerLabel(otherPlayer);
+				label.setForeground(Color.WHITE);
 			}
 		}
 

@@ -11,6 +11,8 @@ public class Game {
 
 	private Board board = new Board();
 	private static final Game instance = new Game();
+	private int playerWithTurn = 0;
+	private boolean turnChanged = true;
 	
 	/**
 	 * Private constructor to prevent creation of multiple games
@@ -35,25 +37,53 @@ public class Game {
 	}
 	
 	/**
-	 * Gives a Message containing info about the number of marbles in each hole.
+	 * Gives a Message containing info about the number of marbles in each hole,
+	 * whether the current player changed and the changed current player
 	 * 	The index of the array corresponds with the index of the Hole
 	 * @return Message with array of marbles counts
 	 */
-	public Message getMarbleCounts() {
+	public Message getGameState() {
 		int[] marbleCounts = new int[Board.AMOUNT_OF_HOLES];
+		boolean[] holeActiveState = new boolean[Board.AMOUNT_OF_HOLES];
 		for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
 			marbleCounts[i] = board.getHoleAt(i).getMarblecount();
+            holeActiveState[i] = board.getHoleAt(i).getIsActive();
 		}
-		return new Message(new GameInfo(marbleCounts));
+		return new Message(new GameInfo(marbleCounts, holeActiveState, turnChanged, playerWithTurn, gameStatus()));
 	}
+
+	/**
+	 * Given an index of a Hole, check if that belongs to player with turn
+	 * @param index index of Hole to sow
+	 * @return true if index belongs to player with turn
+	 */
+	private boolean isHoleValid(int index) {
+		if (((playerWithTurn == 0) && (index >=0 && index <= 5)) ||
+		   ((playerWithTurn == 1) && (index >=7 && index <= 12)))
+			return true;
+		return false;
+	}
+
 	/**
 	 * Given an index of a Hole, sows that Hole
 	 * @param index index of Hole to sow
 	 */
-	public void sow(int index) throws MancalaException { 
-		Hole h = board.getHoleAt(index);
-		Store s = board.getCorrespondingStore(index);
-		sow(h, s);
+	public void sow(int index) throws MancalaException {
+		if(isHoleValid(index)){
+            for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
+                board.getHoleAt(i).setIsActive(false);
+            }
+			Hole h = board.getHoleAt(index);
+			Store s = board.getCorrespondingStore(index);
+			boolean freeTurn = sow(h, s);
+			checkCaptureRemaining(s);
+			if(!freeTurn){
+				playerWithTurn = (playerWithTurn + 1) % 2;
+				turnChanged = true;
+			} else {
+				turnChanged = false;
+			}
+		}
 	}
 	
 	/**
@@ -69,12 +99,14 @@ public class Game {
 			throw new MancalaException("Error: can not sow marbles from a store.");
 		}
 		int marbleCount = hole.removeMarbles();
+		hole.setIsActive(true);
 		Board board = Game.getGame().getBoard();
 		while (marbleCount > 0) {
 			hole = board.getNextHole(hole);
 			// add marbles to the hole only if it is the calling player's store, or if it is a hole
 			if ((board.checkIfStore(hole) && hole.equals(playerStore)) || !board.checkIfStore(hole)) {
 					hole.addMarble();
+                    hole.setIsActive(true);
 					marbleCount--;
 			}
 		}
@@ -83,9 +115,18 @@ public class Game {
 			return true;
 		else {
 			if (hole.getMarblecount() == 1) { 				// if the hole has 1 marble, then it was previously empty and
-				board.captureOpposite(hole, playerStore);   //    the player captures all marbles in the opposite hole
+				board.captureHole(hole, playerStore, true);   //    the player captures all marbles in the opposite hole
 			}
 			return false;
+		}
+	}
+
+	private void checkCaptureRemaining (Store s) {
+		if (gameStatus()) {
+			int startHole = board.getStartHoleOfPlayer(playerWithTurn);
+			for (int i=startHole; i<board.AMOUNT_OF_HOLES_PER_PLAYER; ++i){
+				board.captureHole(board.getHoleAt(startHole), s, false);
+			}
 		}
 	}
 

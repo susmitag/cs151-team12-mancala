@@ -9,10 +9,12 @@ public class MarbleGroup extends JPanel
 {
 	private int count;
 	private boolean isStore;
+	private int index;
 	
-	public MarbleGroup(int n, boolean isStore) {
+	public MarbleGroup(int n, int index, boolean isStore) {
 		count = n;
 		this.isStore = isStore;
+		this.index = index;
 		this.setPreferredSize(new Dimension(100,100));
 		this.setVisible(true);
 		this.setBackground(Color.GRAY);
@@ -57,4 +59,6 @@ public class MarbleGroup extends JPanel
 	public boolean isStore() {
 		return isStore;
 	}
+
+	public int getCount() { return count; }
 }

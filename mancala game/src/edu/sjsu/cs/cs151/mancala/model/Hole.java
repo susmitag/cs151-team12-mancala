@@ -8,6 +8,7 @@ public class Hole {
     private int index;
 	private int marbleCount;
 	private static final int INITIAL_HOLE_INDEX = -1;
+	protected boolean isActive = false;
     
     /** Constructs a default Hole 
      * @param i initial marble count
@@ -33,7 +34,7 @@ public class Hole {
 	
 	/**
 	 * Set index of the hole in the board
-	 * @param the index of the hole in the board
+	 * @param index of the hole in the board
 	 */		
 	public void setIndex(int index)
 	{
@@ -51,7 +52,6 @@ public class Hole {
 
 	/**
 	 * Adds a marble to hole, incrementing the hole's marbleCount
-	 * @param marbleCount marble to add to hole
 	 * @postcondition getMarblecount() > 0
 	 */
 	public void addMarble() {
@@ -79,5 +79,8 @@ public class Hole {
 			return true;
 		return false;
 	}
-	
+
+	public void setIsActive (boolean state) { isActive = state; }
+
+	public boolean getIsActive () { return isActive; }
 }

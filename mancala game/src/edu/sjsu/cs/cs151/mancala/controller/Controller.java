@@ -34,7 +34,7 @@ public class Controller
 	
 	public Message updateModel(Message m) throws MancalaException {
 		model.sow(m.getInfo().getChosenHole());
-		Message m2 = model.getMarbleCounts();
+		Message m2 = model.getGameState();
 		return m2;
 	}
 }
