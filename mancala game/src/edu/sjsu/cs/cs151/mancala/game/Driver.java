@@ -1,12 +1,9 @@
 package edu.sjsu.cs.cs151.mancala.game;
 
 import edu.sjsu.cs.cs151.mancala.model.*;
-import edu.sjsu.cs.cs151.mancala.game.*;
 import edu.sjsu.cs.cs151.mancala.view.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
-import edu.sjsu.cs.cs151.mancala.*;
 
-import java.util.Scanner;
 import java.util.concurrent.*;
 
 public class Driver {
