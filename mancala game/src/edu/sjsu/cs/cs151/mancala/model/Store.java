@@ -22,5 +22,21 @@ public class Store extends Hole {
 	public void addMarbles(int amount) {
 		marbleCount += amount;
 	}
+
+	/**
+	 * Get count of marbles in the hole
+	 * @return the count of marbles in the hole
+	 */	
+	public int getMarblecount()
+	{
+		return marbleCount;
+	}
 	
+	/**
+	 * Adds a marble to hole, incrementing the hole's marbleCount
+	 * @postcondition getMarblecount() > 0
+	 */
+	public void addMarble() {
+		this.marbleCount += 1;	
+	}
 }
