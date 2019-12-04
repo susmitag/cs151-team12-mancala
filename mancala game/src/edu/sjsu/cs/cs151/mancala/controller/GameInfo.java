@@ -12,6 +12,7 @@ public class GameInfo {
 	private boolean turnChanged;
 	private int playerWithTurn;
 	private boolean gameEnded;
+	private boolean exitEarly = false;
 	
 	/**
 	 * Constructed by view, contains information about which hole has been chosen.
@@ -20,6 +21,15 @@ public class GameInfo {
 	public GameInfo(int chosenHole) {
 		this.chosenHole = chosenHole;
 		marbleCounts = null;
+	}
+	
+	/**
+	 * Constructed by view when user prematurely ends game
+	 * @param gameEnded true when the game is over
+	 */
+	public GameInfo(boolean gameEnded) {
+		this.gameEnded = gameEnded;
+		exitEarly = true;
 	}
 	
 	/**
@@ -54,4 +64,6 @@ public class GameInfo {
 	public int getPlayerWithTurn() { return playerWithTurn; }
 
 	public boolean getGameEnded() { return gameEnded; }
+	
+	public boolean isEarly() { return exitEarly; }
 }

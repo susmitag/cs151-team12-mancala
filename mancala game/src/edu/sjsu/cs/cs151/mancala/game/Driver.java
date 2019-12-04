@@ -19,7 +19,7 @@ public class Driver {
 		Controller controller = new Controller(queue, view, model);
 		UpdateGameStateValve gameValve = new UpdateGameStateValve(controller);
 		ValveResponse response = ValveResponse.EXECUTED;
-		while (response != ValveResponse.FINISHED) {
+		while (response != ValveResponse.FINISHED && response != ValveResponse.EXIT) {
 			try {
 				Message m = queue.take();
 				response = gameValve.execute(m);
@@ -28,7 +28,8 @@ public class Driver {
 				e.printStackTrace();
 			}
 		}
-		view.displayWinner(model.getWinnerIndex());
+		if (response != ValveResponse.EXIT)
+			view.displayWinner(model.getWinnerIndex());
 		view.close();
 		queue.clear();
 		System.exit(0);

@@ -211,4 +211,8 @@ public class PlayScreen
 		}
 	}
 	
+	public LinkedBlockingQueue<Message> getQueue() {
+		return queue;
+	}
+	
 }
