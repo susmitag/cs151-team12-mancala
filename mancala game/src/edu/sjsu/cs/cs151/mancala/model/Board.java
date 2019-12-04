@@ -19,7 +19,6 @@ public class Board {
     public static final int INITIAL_HOLE_MARBLE_COUNT = 4;
     public static final int INITIAL_STORE_MARBLE_COUNT = 0;
     
- //   private int lastHoleIndex;
     private Hole[] board = new Hole[14];
 
     /**
@@ -171,6 +170,11 @@ public class Board {
     	return (Store) board[PLAYER2_STORE_INDEX];
     }
     
+    /**
+     * Returns player's initial hole to sow to
+     * @param playerIndex index of player
+     * @return index of players initial hole
+     */
     public int getStartHoleOfPlayer (int playerIndex) {
         if (playerIndex == 1) {
             return 0;

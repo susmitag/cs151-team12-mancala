@@ -36,7 +36,9 @@ public class Driver {
 }
 	
 	
-
+/**
+ * This is the command line version of the game.
+ */
 
 	/**
 	 * Checks who is the current player and displays a message.

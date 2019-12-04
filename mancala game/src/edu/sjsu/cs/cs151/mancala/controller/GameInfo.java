@@ -1,5 +1,10 @@
 package edu.sjsu.cs.cs151.mancala.controller;
 
+/**
+ * This class contains information about the current state of the game/
+ * @author user
+ *
+ */
 public class GameInfo {
 	private int chosenHole;
 	private int[] marbleCounts;
@@ -8,11 +13,23 @@ public class GameInfo {
 	private int playerWithTurn;
 	private boolean gameEnded;
 	
+	/**
+	 * Constructed by view, contains information about which hole has been chosen.
+	 * @param chosenHole chosen hole for sowing
+	 */
 	public GameInfo(int chosenHole) {
 		this.chosenHole = chosenHole;
 		marbleCounts = null;
 	}
 	
+	/**
+	 * Constructed by model, contains information about current game state
+	 * @param marbleCounts array of hole marble counts based on index
+	 * @param activeStates array of hole states based on index
+	 * @param turnChanged true if the turn has changed
+	 * @param playerWithTurn player with turn
+	 * @param gameEnded true if the game is over
+	 */
 	public GameInfo(int[] marbleCounts, boolean[] activeStates, boolean turnChanged, int playerWithTurn, boolean gameEnded) {
 		this.marbleCounts = marbleCounts;
 		this.activeStates = activeStates;
