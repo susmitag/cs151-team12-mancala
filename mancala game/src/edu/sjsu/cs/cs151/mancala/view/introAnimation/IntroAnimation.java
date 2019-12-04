@@ -1,5 +1,7 @@
 package edu.sjsu.cs.cs151.mancala.view.introAnimation;
 
+import edu.sjsu.cs.cs151.mancala.view.PlayScreen;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -22,7 +24,7 @@ public class IntroAnimation {
 
 	private static Color randomColor = new Color(r, g, b);
 
-	public IntroAnimation() {
+	public IntroAnimation(PlayScreen ps) {
 		frame = new JFrame();
 		frame.getContentPane().setBackground( Color.BLACK );
 
@@ -55,6 +57,14 @@ public class IntroAnimation {
 		ShapeIcon icon7 = new ShapeIcon(a3, iconWidth, iconHeight);
 		final JLabel label7 = new JLabel(icon7);
 		label7.setForeground(randomColor);
+
+		JButton startButton = new JButton("Start Game");
+		startButton.addActionListener(event ->
+		{
+			frame.setVisible(false);
+			ps.frameSetVisible();
+		});
+		frame.add(startButton);
 
 		frame.setLayout(new FlowLayout());
 		frame.setBounds(0, 0, 500, 500);

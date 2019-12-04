@@ -11,18 +11,10 @@ public class Driver {
 
 	public static void main(String[] args) 
 	{
-		IntroAnimation intro = new IntroAnimation();
-		try {
-			TimeUnit.SECONDS.sleep(19);
-		}
-		catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		finally {
-			intro.close();
-		}
-		LinkedBlockingQueue<Message> queue = new LinkedBlockingQueue<Message>(); 
-		PlayScreen view = PlayScreen.init(queue);
+        LinkedBlockingQueue<Message> queue = new LinkedBlockingQueue<Message>();
+        PlayScreen view = PlayScreen.init(queue);
+		IntroAnimation intro = new IntroAnimation(view);
+
 		Game model = Game.getGame();
 		Controller controller = new Controller(queue, view, model);
 		UpdateGameStateValve gameValve = new UpdateGameStateValve(controller);
