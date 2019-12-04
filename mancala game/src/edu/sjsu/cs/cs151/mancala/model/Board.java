@@ -82,9 +82,11 @@ public class Board {
      * @param opposite this hole or opposite hole
      */
     public void captureHole(Hole h, Store playerStore, boolean opposite) {
-    	Hole capturedHole = h;
-    	if (opposite) capturedHole = getOpposite(h);
-    	int capturedMarbles = capturedHole.removeMarbles();
+    	int capturedMarbles = h.removeMarbles();
+    	if (opposite) {
+			Hole capturedHole = getOpposite(h);
+			capturedMarbles+=capturedHole.removeMarbles();
+    	}
     	playerStore.addMarbles(capturedMarbles);
     }
     
@@ -169,14 +171,6 @@ public class Board {
     	return (Store) board[PLAYER2_STORE_INDEX];
     }
     
-    /**
-     * Get number of holes in the board
-     * @return AMOUNT_OF_HOLES
-     */
-    public int getNumberOfHoles() { 
-    	return  AMOUNT_OF_HOLES;
-    }
-
     public int getStartHoleOfPlayer (int playerIndex) {
         if (playerIndex == 1) {
             return 0;
