@@ -3,7 +3,6 @@ package edu.sjsu.cs.cs151.mancala.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.*;
 import java.util.concurrent.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
 import edu.sjsu.cs.cs151.mancala.model.Board;

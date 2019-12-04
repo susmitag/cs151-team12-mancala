@@ -11,12 +11,10 @@ public class UpdateGameStateValve implements Valve {
 	}
 
 	public ValveResponse execute(Message m) {
-		boolean isOver = false;
+		boolean isOver = m.getInfo().getGameEnded();
 		try {
 			m = controller.updateModel(m);
 			controller.updateView(m);
-			if (m.getInfo().getGameEnded())
-				isOver = true;
 		}
 		catch (MancalaException e) {
 			e.printStackTrace();
