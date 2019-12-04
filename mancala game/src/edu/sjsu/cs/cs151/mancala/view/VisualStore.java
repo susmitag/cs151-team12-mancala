@@ -34,7 +34,7 @@ public class VisualStore extends VisualHole
 					Graphics2D g2 = (Graphics2D)g;
 					g2.setStroke(new BasicStroke(5));
 					g2.setColor(Color.black);
-					g2.drawOval(10, 135, 80, 160);
+					g2.drawOval(12, 135, 80, 160);
 				}
 
 				public int getIconHeight() {

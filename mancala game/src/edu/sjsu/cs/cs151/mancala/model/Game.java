@@ -80,6 +80,8 @@ public class Game {
 	 * @param index index of Hole to sow
 	 */
 	public void sow(int index) throws MancalaException {
+		if (board.getHoleAt(index).getMarblecount() <= 0)
+			return;
 		if(isHoleValid(index)){
             for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
                 board.getHoleAt(i).setIsActive(false);
