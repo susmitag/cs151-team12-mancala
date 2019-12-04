@@ -1,4 +1,5 @@
 package edu.sjsu.cs.cs151.mancala.model;
+
 import edu.sjsu.cs.cs151.mancala.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
 
@@ -13,7 +14,7 @@ public class Game {
 	private static final Game instance = new Game();
 	private int playerWithTurn = 0;
 	private boolean turnChanged = true;
-	
+
 	/**
 	 * Private constructor to prevent creation of multiple games
 	 */
@@ -36,6 +37,12 @@ public class Game {
 		board = new Board();
 	}
 	
+	public int getWinnerIndex() {
+		if (board.getPlayer1Store().getMarblecount() > board.getPlayer2Store().getMarblecount())
+			return Board.PLAYER1_STORE_INDEX;
+		else 
+			return Board.PLAYER2_STORE_INDEX;
+	}
 	/**
 	 * Gives a Message containing info about the number of marbles in each hole,
 	 * whether the current player changed and the changed current player
@@ -123,9 +130,9 @@ public class Game {
 
 	private void checkCaptureRemaining (Store s) {
 		if (gameStatus()) {
-			int startHole = board.getStartHoleOfPlayer(playerWithTurn);
-			for (int i=startHole; i<board.AMOUNT_OF_HOLES_PER_PLAYER; ++i){
-				board.captureHole(board.getHoleAt(startHole), s, false);
+			for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
+				if (!board.checkIfStore(board.getHoleAt(i)))
+					board.captureHole(board.getHoleAt(i), s, false);
 			}
 		}
 	}
@@ -142,9 +149,9 @@ public class Game {
 	 * Checks if all holes on one side is empty
 	 * @return returns a boolean value that's true if all holes on one side is empty
 	 */
-	private boolean checkSideEmpty(int start, int end){
+	private boolean checkSideEmpty(int start, int end) {
 		boolean isSideEmpty = true;
-		for(int i=start; i < end; ++i){
+		for(int i=start; i < end; i++){
 			Hole h = board.getHoleAt(i);
 			if(board.checkIfStore(h)) continue;
 			if(h.getMarblecount() > 0) {
@@ -159,12 +166,8 @@ public class Game {
 	 * Checks for the current game's running status
 	 * @return returns a boolean value that's true if the game is over, false if the game is still going
 	 */
-	public boolean gameStatus(){
-		int numberOfHoles = board.getNumberOfHoles();
-		if ((checkSideEmpty(0, numberOfHoles/2)) || (checkSideEmpty(numberOfHoles/2 + 1, numberOfHoles)))
-			gameOver = true;
-		else
-			gameOver = false;
-		return gameOver;
+	public boolean gameStatus() {
+		int numberOfHoles = Board.AMOUNT_OF_HOLES;
+		return (checkSideEmpty(0, numberOfHoles/2 - 1)) || (checkSideEmpty(numberOfHoles/2, numberOfHoles));
 	}
 }

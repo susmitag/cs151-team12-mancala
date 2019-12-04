@@ -25,6 +25,7 @@ public class Driver {
 				e.printStackTrace();
 			}
 		}
+		view.displayWinner(model.getWinnerIndex());
 		view.close();
 		queue.clear();
 	}		

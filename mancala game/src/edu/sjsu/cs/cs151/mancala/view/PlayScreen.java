@@ -42,6 +42,15 @@ public class PlayScreen
 		playScreenInternal.updateState(m.getInfo());
 	}
 	
+	public void displayWinner(int winnerIndex) {
+		String winner;
+		if (winnerIndex == Board.PLAYER1_STORE_INDEX)
+			winner = "Player1";
+		else 
+			winner = "Player2";
+		GameoverDialog go = new GameoverDialog(winner);
+	}
+	
 	private class PlayScreenInternal 
 	{
 
