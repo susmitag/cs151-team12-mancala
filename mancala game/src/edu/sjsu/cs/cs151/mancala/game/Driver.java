@@ -39,6 +39,7 @@ public class Driver {
 		view.displayWinner(model.getWinnerIndex());
 		view.close();
 		queue.clear();
+		System.exit(0);
 	}		
 }
 	
