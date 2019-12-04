@@ -83,6 +83,10 @@ public class Game {
 			Hole h = board.getHoleAt(index);
 			Store s = board.getCorrespondingStore(index);
 			boolean freeTurn = sow(h, s);
+			if (s.equals(board.getPlayer1Store()))
+				s = board.getPlayer2Store();
+			else
+				s = board.getPlayer1Store();
 			checkCaptureRemaining(s);
 			if(!freeTurn){
 				playerWithTurn = (playerWithTurn + 1) % 2;
