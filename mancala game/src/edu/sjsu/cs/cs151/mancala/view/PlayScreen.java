@@ -118,9 +118,9 @@ public class PlayScreen
 		frame.pack();
 	}
 
-	public void frameSetVisible() {
-		frame.setVisible(true);
-	}
+	public void frameSetVisible () {
+	    frame.setVisible(true);
+    }
 	
 	/**
 	 * Given a LinkedBlockingQueue, this method constructs a new view. This should only be called once.
