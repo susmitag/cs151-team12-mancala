@@ -6,11 +6,18 @@ import edu.sjsu.cs.cs151.mancala.model.Board;
 
 import java.awt.*;
 
+/**
+ * This class is a visual representation of a Store. It has all of the
+ * 	functionality of a VisualHole, but does not send event messageg on click.
+ */
 public class VisualStore extends VisualHole
 {
-	JPanel marbles = new JPanel();
-	MarbleGroup mg;
+	private JPanel marbles = new JPanel();
 	
+	/**
+	 * Constructs a VisualStore
+	 * @param index position on the board
+	 */
 	public VisualStore(int index)
 	{
 		this.index = index;
@@ -19,13 +26,15 @@ public class VisualStore extends VisualHole
 		jp.setSize(100, 100);
 		jp.setBounds(0, 0, 100, 400);
 		jp.setBackground(Color.GRAY);
+		
+		// JButton with oval on it to represent store
 		JButton jb = new JButton(new Icon()
 			{
 				public void paintIcon(Component c, Graphics g, int x, int y) {
 					Graphics2D g2 = (Graphics2D)g;
 					g2.setStroke(new BasicStroke(5));
 					g2.setColor(Color.black);
-					g2.drawOval(10, 135, 80, 160);
+					g2.drawOval(12, 135, 80, 160);
 				}
 
 				public int getIconHeight() {
@@ -41,45 +50,29 @@ public class VisualStore extends VisualHole
 		jb.setFocusPainted(false);
 		jb.setBackground(Color.GRAY);
 		
-		jp.add(BorderLayout.CENTER, jb);
+		label = new JLabel(""+Board.INITIAL_STORE_MARBLE_COUNT);
+		label.setHorizontalTextPosition(JLabel.CENTER);
+		label.setHorizontalAlignment(JLabel.CENTER);
+		label.setBounds(43, 320, 20, 20);
 		
+		String player;
+		if (index == Board.PLAYER1_STORE_INDEX)
+			player = "Player1";
+		else
+			player = "Player2";
+		JLabel label1 = new JLabel(player);
+		label1.setHorizontalTextPosition(JLabel.CENTER);
+		label1.setHorizontalAlignment(JLabel.CENTER);
+		label1.setBounds(15, 100, 80, 20);
+		
+		jp.add(BorderLayout.CENTER, jb);
 		this.setPreferredSize(new Dimension(100, 100));
 		this.setBackground(Color.GRAY);
 		this.add(jp, JLayeredPane.DEFAULT_LAYER);
+		this.add(label, JLayeredPane.MODAL_LAYER);
+		this.add(label1, JLayeredPane.MODAL_LAYER);
 		this.setVisible(true);
 		mg = new MarbleGroup(Board.INITIAL_STORE_MARBLE_COUNT, index, true);
-		//if (isHoleActive) this.add(mg, JLayeredPane.PALETTE_LAYER);
 		this.add(mg, JLayeredPane.PALETTE_LAYER);
-		this.add(new JPanel(true) {
-			Font font = new Font("Serif", Font.PLAIN, 20);
-			String s = "4";
-
-			@Override
-			public void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				Graphics2D g2 = (Graphics2D) g;
-
-				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-						RenderingHints.VALUE_ANTIALIAS_ON);
-				g2.setFont(font);
-
-				FontMetrics fm = g.getFontMetrics(font);
-
-				int width = fm.stringWidth(s);
-
-				Dimension d = getSize();
-
-				//center String/text
-				int cx = (d.width - width) / 2;
-				int cy = (d.height - fm.getHeight()) / 2;
-
-				g2.drawString(s, cx, cy);
-			}
-
-			@Override
-			public Dimension getPreferredSize() {
-				return new Dimension(300, 100);
-			}
-		}, JLayeredPane.MODAL_LAYER);
 	}
 }

@@ -5,26 +5,40 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.util.*;
 
+/**
+ * This class represents a collection of marbles to be drawn over a VisualHole
+ */
 public class MarbleGroup extends JPanel
 {
 	private int count;
 	private boolean isStore;
 	private int index;
 	
-	public MarbleGroup(int n, int index, boolean isStore) {
+	/**
+	 * Constructs a new MarbleGroup
+	 * @param n number of initial marbles
+	 * @param index hole's posisition on board
+	 * @param isStore whether this MarbleGroup belongs to a store or not
+	 */
+	public MarbleGroup(int n, int index, boolean isStore) 
+	{
 		count = n;
 		this.isStore = isStore;
 		this.index = index;
 		this.setPreferredSize(new Dimension(100,100));
 		this.setVisible(true);
 		this.setBackground(Color.GRAY);
-		if (isStore)
+		if (isStore)							// different bounds for holes/stores
 			this.setBounds(25, 95, 100, 300);
 		else
 			this.setBounds(25, 95, 100, 100);
 		this.setOpaque(false);
 	}
 	
+	/**
+	 * Paints marbles
+	 * @param g Graphics to paint with
+	 */
 	public void paintComponent(Graphics g)
 	{
 		Random r = new Random();
@@ -56,9 +70,19 @@ public class MarbleGroup extends JPanel
 		}
 	}
 	
+	/**
+	 * Checks if this MarblesGroup belongs to a store
+	 * @return true if this belongs to a store
+	 */
 	public boolean isStore() {
 		return isStore;
 	}
 
-	public int getCount() { return count; }
+	/**
+	 * Returns marble count
+	 * @return marble count
+	 */
+	public int getCount() { 
+		return count; 
+	}
 }

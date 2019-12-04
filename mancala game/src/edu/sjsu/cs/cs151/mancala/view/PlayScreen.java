@@ -7,7 +7,8 @@ import edu.sjsu.cs.cs151.mancala.controller.*;
 import edu.sjsu.cs.cs151.mancala.model.Board;
 
 /*
- * This class represents the main window for the Mancala game.
+ * This class represents the main window for the Mancala game. 
+ * 	It is implemented using the singleton pattern.
  */
 public class PlayScreen 
 {
@@ -101,6 +102,8 @@ public class PlayScreen
 		JButton quit = new JButton("X");
 		quit.setPreferredSize(new Dimension(55,55));		
 		quit.setBackground(Color.lightGray);
+		quit.addActionListener(event ->
+			new CloseDialog(this).question());
 		options.add(BorderLayout.EAST, instructions);
 		options.add(BorderLayout.WEST, quit);
 		options.setPreferredSize(new Dimension(110,55));
@@ -164,7 +167,8 @@ public class PlayScreen
 	 * Updates view based on the information given
 	 * @param g GameInfo object with current game state
 	 */
-	private void updateState(GameInfo g) {
+	private void updateState(GameInfo g) 
+	{
 		if (!g.getGameEnded()) {
 			for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
 				holes[i].setMarbleCount(g.getMarbleCounts()[i]);
@@ -206,5 +210,9 @@ public class PlayScreen
 			label.setForeground(Color.WHITE);
 		}
 	}
-
+	
+	public LinkedBlockingQueue<Message> getQueue() {
+		return queue;
+	}
+	
 }

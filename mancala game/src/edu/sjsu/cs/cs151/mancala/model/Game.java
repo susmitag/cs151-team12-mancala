@@ -37,6 +37,10 @@ public class Game {
 		board = new Board();
 	}
 	
+	/**
+	 * Returns the index of the winning player's store
+	 * @return index of store with the most marbles
+	 */
 	public int getWinnerIndex() {
 		if (board.getPlayer1Store().getMarblecount() > board.getPlayer2Store().getMarblecount())
 			return Board.PLAYER1_STORE_INDEX;
@@ -76,6 +80,8 @@ public class Game {
 	 * @param index index of Hole to sow
 	 */
 	public void sow(int index) throws MancalaException {
+		if (board.getHoleAt(index).getMarblecount() <= 0)
+			return;
 		if(isHoleValid(index)){
             for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
                 board.getHoleAt(i).setIsActive(false);
@@ -132,6 +138,10 @@ public class Game {
 		}
 	}
 
+	/**
+	 * Check if the game is over, and if so give the rest of the marbles to store
+	 * @param s Store to add marbles to
+	 */
 	private void checkCaptureRemaining (Store s) {
 		if (gameStatus()) {
 			for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
