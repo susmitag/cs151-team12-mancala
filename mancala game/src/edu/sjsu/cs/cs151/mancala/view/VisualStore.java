@@ -54,12 +54,23 @@ public class VisualStore extends VisualHole
 		label.setHorizontalTextPosition(JLabel.CENTER);
 		label.setHorizontalAlignment(JLabel.CENTER);
 		label.setBounds(43, 320, 20, 20);
-
+		
+		String player;
+		if (index == Board.PLAYER1_STORE_INDEX)
+			player = "Player1";
+		else
+			player = "Player2";
+		JLabel label1 = new JLabel(player);
+		label1.setHorizontalTextPosition(JLabel.CENTER);
+		label1.setHorizontalAlignment(JLabel.CENTER);
+		label1.setBounds(15, 100, 80, 20);
+		
 		jp.add(BorderLayout.CENTER, jb);
 		this.setPreferredSize(new Dimension(100, 100));
 		this.setBackground(Color.GRAY);
 		this.add(jp, JLayeredPane.DEFAULT_LAYER);
 		this.add(label, JLayeredPane.MODAL_LAYER);
+		this.add(label1, JLayeredPane.MODAL_LAYER);
 		this.setVisible(true);
 		mg = new MarbleGroup(Board.INITIAL_STORE_MARBLE_COUNT, index, true);
 		this.add(mg, JLayeredPane.PALETTE_LAYER);
