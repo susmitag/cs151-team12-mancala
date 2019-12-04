@@ -7,7 +7,8 @@ import edu.sjsu.cs.cs151.mancala.controller.*;
 import edu.sjsu.cs.cs151.mancala.model.Board;
 
 /*
- * This class represents the main window for the Mancala game.
+ * This class represents the main window for the Mancala game. 
+ * 	It is implemented using the singleton pattern.
  */
 public class PlayScreen 
 {
@@ -101,6 +102,8 @@ public class PlayScreen
 		JButton quit = new JButton("X");
 		quit.setPreferredSize(new Dimension(55,55));		
 		quit.setBackground(Color.lightGray);
+		quit.addActionListener(event ->
+			new CloseDialog(this).question());
 		options.add(BorderLayout.EAST, instructions);
 		options.add(BorderLayout.WEST, quit);
 		options.setPreferredSize(new Dimension(110,55));
@@ -207,5 +210,5 @@ public class PlayScreen
 			label.setForeground(Color.WHITE);
 		}
 	}
-
+	
 }
