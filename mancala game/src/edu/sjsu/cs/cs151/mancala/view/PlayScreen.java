@@ -164,7 +164,8 @@ public class PlayScreen
 	 * Updates view based on the information given
 	 * @param g GameInfo object with current game state
 	 */
-	private void updateState(GameInfo g) {
+	private void updateState(GameInfo g) 
+	{
 		if (!g.getGameEnded()) {
 			for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
 				holes[i].setMarbleCount(g.getMarbleCounts()[i]);

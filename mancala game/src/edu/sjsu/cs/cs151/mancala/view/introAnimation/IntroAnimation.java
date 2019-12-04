@@ -8,6 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+/**
+ * This class creates a JFrame with the introduction animation 
+ * 	and a start button on it
+ */
 public class IntroAnimation {
 
 	private static final int letterWidth = 25;
@@ -26,7 +30,12 @@ public class IntroAnimation {
 
 	private static Color randomColor = new Color(r, g, b);
 
-	public IntroAnimation(PlayScreen ps) {
+	/**
+	 * Constructs a new IntroAnimation
+	 * @param ps view to start after
+	 */
+	public IntroAnimation(PlayScreen ps) 
+	{
 		frame = new JFrame();
 		main = new JPanel();
 		animationPanel = new JPanel();
@@ -121,6 +130,9 @@ public class IntroAnimation {
 		t.start();
 	}
 	
+	/**
+	 * Closes the frame
+	 */
 	public void close() {
 		frame.dispose();
 	}

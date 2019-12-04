@@ -2,9 +2,13 @@ package edu.sjsu.cs.cs151.mancala.view;
 
 import javax.swing.*;
 
+/**
+ * This class is JPanel displaying the rules of Mancala
+ */
 public class RulesDialog extends JPanel
 {
-	public RulesDialog() {
+	public RulesDialog() 
+	{
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		JLabel r1 = new JLabel("1) The mancala board consists of 2 rows of 6 holes and 2 stores (1 for each player).");
 		JLabel r2 = new JLabel("2) Each hole starts with 4 marbles in it. Each player's store is empty.");
