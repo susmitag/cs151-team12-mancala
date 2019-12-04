@@ -7,7 +7,8 @@ package edu.sjsu.cs.cs151.mancala.model;
 public class Hole {
     private int index;
 	private int marbleCount;
-	private static final int INITIAL_HOLE_INDEX = -1;
+	static final int INITIAL_HOLE_INDEX = -1;
+	public static final int INITIAL_HOLE_MARBLE_COUNT = 4;
 	protected boolean isActive = false;
     
     /** Constructs a default Hole 

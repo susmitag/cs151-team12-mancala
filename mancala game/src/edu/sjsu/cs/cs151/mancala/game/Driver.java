@@ -1,18 +1,26 @@
 package edu.sjsu.cs.cs151.mancala.game;
 
 import edu.sjsu.cs.cs151.mancala.model.*;
-import edu.sjsu.cs.cs151.mancala.game.*;
 import edu.sjsu.cs.cs151.mancala.view.*;
+import edu.sjsu.cs.cs151.mancala.view.introAnimation.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
-import edu.sjsu.cs.cs151.mancala.*;
 
-import java.util.Scanner;
 import java.util.concurrent.*;
 
 public class Driver {
 
 	public static void main(String[] args) 
 	{
+		IntroAnimation intro = new IntroAnimation();
+		try {
+			TimeUnit.SECONDS.sleep(9);
+		}
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		finally {
+			intro.close();
+		}
 		LinkedBlockingQueue<Message> queue = new LinkedBlockingQueue<Message>(); 
 		PlayScreen view = PlayScreen.init(queue);
 		Game model = Game.getGame();
@@ -28,8 +36,10 @@ public class Driver {
 				e.printStackTrace();
 			}
 		}
+		view.displayWinner(model.getWinnerIndex());
 		view.close();
 		queue.clear();
+		System.exit(0);
 	}		
 }
 	

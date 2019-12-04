@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Driver",
+            "request": "launch",
+            "mainClass": "edu.sjsu.cs.cs151.mancala.game.Driver",
+            "projectName": "mancala"
+        }
+    ]
+}

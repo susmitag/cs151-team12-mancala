@@ -14,7 +14,10 @@ public class Player {
     	store = s;
     }
     
-    /**
+    public Player() {
+	}
+
+	/**
      * Checks if a Store belongs to this Player
      * @param s store to check ownership of
      * @return true if this Player own the store
