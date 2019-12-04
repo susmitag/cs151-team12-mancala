@@ -21,12 +21,22 @@ public class IntroAnimation {
 	private static float g = rand.nextFloat();
 	private static float b = rand.nextFloat();
 	private JFrame frame;
+	private JPanel main;
+	private JPanel animationPanel;
 
 	private static Color randomColor = new Color(r, g, b);
 
 	public IntroAnimation(PlayScreen ps) {
 		frame = new JFrame();
+		main = new JPanel();
+		animationPanel = new JPanel();
 		frame.getContentPane().setBackground( Color.BLACK );
+		main.setBackground( Color.BLACK );
+		animationPanel.setBackground( Color.BLACK );
+		main.setLayout(new BorderLayout());
+		animationPanel.setLayout(new FlowLayout());
+		main.setLayout(new BorderLayout());
+		main.setPreferredSize(new Dimension(800,300));
 
 		final MoveableShape m = new LetterM(0, 0, letterHeight, letterWidth);
 		final MoveableShape a1 = new LetterA(0, 300, letterHeight, letterWidth);
@@ -61,22 +71,26 @@ public class IntroAnimation {
 		JButton startButton = new JButton("Start Game");
 		startButton.addActionListener(event ->
 		{
-			frame.setVisible(false);
+			close();
 			ps.frameSetVisible();
 		});
-		frame.add(startButton);
+		startButton.setBackground(Color.DARK_GRAY);
+		startButton.setForeground(Color.WHITE);
+		startButton.setFocusable(false);
 
-		frame.setLayout(new FlowLayout());
-		frame.setBounds(0, 0, 500, 500);
-		frame.setMinimumSize(new Dimension(5*letterWidth, letterHeight));
-		frame.setMaximumSize(new Dimension(5*letterWidth, letterHeight));
-		frame.add(label1);
-		frame.add(label2);
-		frame.add(label3);
-		frame.add(label4);
-		frame.add(label5);
-		frame.add(label6);
-		frame.add(label7);
+		
+		animationPanel.add(label1);
+		animationPanel.add(label2);
+		animationPanel.add(label3);
+		animationPanel.add(label4);
+		animationPanel.add(label5);
+		animationPanel.add(label6);
+		animationPanel.add(label7);
+		
+		main.add(animationPanel, BorderLayout.CENTER);
+		main.add(startButton, BorderLayout.SOUTH);
+		frame.add(main);
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
