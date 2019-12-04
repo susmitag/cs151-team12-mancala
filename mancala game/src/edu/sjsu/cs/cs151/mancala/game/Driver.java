@@ -13,7 +13,7 @@ public class Driver {
 	{
 		IntroAnimation intro = new IntroAnimation();
 		try {
-			TimeUnit.SECONDS.sleep(9);
+			TimeUnit.SECONDS.sleep(19);
 		}
 		catch (InterruptedException e) {
 			e.printStackTrace();
