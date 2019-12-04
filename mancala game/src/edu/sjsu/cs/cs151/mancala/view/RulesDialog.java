@@ -12,7 +12,7 @@ public class RulesDialog extends JPanel
 		JLabel r4 = new JLabel("4) Moving counter-clockwise, the marbles from the selected hole are added 1 at a time to the followng holes until the marbles run out.");
 		JLabel r5 = new JLabel("5) When sowing, a player's own store gets a marble, while the opponents store is skipped.");
 		JLabel r6 = new JLabel("6) If the last marble ends in your store, you get a free turn (get to go again).");
-		JLabel r7 = new JLabel("7) If the last marble is placed in an empty store, you capture all marbles in the opposite hole plus that marble.");
+		JLabel r7 = new JLabel("7) If the last marble is placed in an empty hole, you capture all marbles in the opposite hole plus that marble.");
 		JLabel r8 = new JLabel("8) Any marbles that are captured go into your store.");
 		JLabel r9 = new JLabel("9) The game ends when all holes on any side are empty.");
 		JLabel r10 = new JLabel("10) The player who still has marbles on their side when the game ends captures those marbles.");

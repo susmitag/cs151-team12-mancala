@@ -10,7 +10,7 @@ public class IntroAnimation {
 
 	private static final int letterWidth = 25;
 	private static final int letterHeight = 75;
-	private static final int iconWidth = 200;
+	private static final int iconWidth = 80;
 	private static final int iconHeight = 300;
 
 
@@ -57,6 +57,9 @@ public class IntroAnimation {
 		label7.setForeground(randomColor);
 
 		frame.setLayout(new FlowLayout());
+		frame.setBounds(0, 0, 500, 500);
+		frame.setMinimumSize(new Dimension(5*letterWidth, letterHeight));
+		frame.setMaximumSize(new Dimension(5*letterWidth, letterHeight));
 		frame.add(label1);
 		frame.add(label2);
 		frame.add(label3);
