@@ -115,8 +115,11 @@ public class PlayScreen
 		frame.setSize(1600, 800);
 		frame.setMinimumSize(new Dimension(800, 550));
 		frame.setMaximumSize(new Dimension(1100, 800));
-		frame.setVisible(true);
 		frame.pack();
+	}
+
+	public void frameSetVisible() {
+		frame.setVisible(true);
 	}
 	
 	/**
