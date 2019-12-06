@@ -17,9 +17,9 @@ public class VisualHole extends JLayeredPane
 		protected MarbleGroup mg;
 		protected JPanel jp;
 		protected JLabel label;
+		protected JButton jb;
 		private LinkedBlockingQueue<Message> queue;
 		private Client client = null;
-		protected JButton jb;
 
 		/*
 		 * If no arguments, calls JLayeredPane constructor.
@@ -71,7 +71,7 @@ public class VisualHole extends JLayeredPane
 			jb.addActionListener(event ->
 					{
 						if (client != null) { // client is initialized only in client's view
-							queue.add(new Message(new GameInfo(index), true));
+							queue.add(new Message(new GameInfo(index), true, false));
 						}
 						queue.add(new Message(new GameInfo(index)));
 					});

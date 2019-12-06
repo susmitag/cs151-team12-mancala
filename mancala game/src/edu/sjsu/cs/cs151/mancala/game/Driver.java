@@ -21,11 +21,13 @@ public class Driver {
 		
 		int gameType = controller.getGameType();		// player chooses, the gameType is UNASSIGNED
 		if (gameType == SetupDialog.NEW_LOCAL_GAME) {
-			System.out.println(gameType);
 		}
 		
 		else if (gameType == SetupDialog.NEW_NETWORK_GAME) {
-			Server server = new Server(queue);
+			Server server = controller.getServer();
+			if (server == null) {
+				// complain
+			}
 			view.disablePlayer2Holes(); // disable other players holes to prevent cheating
 		}
 		

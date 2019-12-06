@@ -16,6 +16,8 @@ public class Controller
 	private Game model;
 	private int gameType = SetupDialog.NEW_LOCAL_GAME;
 	private Client client;
+	private Server server;
+	private ExecutorService service;
 	
 	/**
 	 * Constructs a new controller
@@ -72,8 +74,9 @@ public class Controller
 	
 	/**
 	 * Sets game type and network information. This should only be 
-	 * 	called once because it also gives the view a new Client
-	 * @param type
+	 * 	called once because it also gives the view a new Client and
+	 * 	creates the client/server class if needed
+	 * @param info information about the kind of game that will be run
 	 */
 	public void setup(SetupInfo info) {
 		gameType = info.getGameType();
@@ -82,8 +85,20 @@ public class Controller
 			view.setClient(client);		
 		}
 		else if (gameType == SetupDialog.NEW_NETWORK_GAME) {
-			
+			server = new Server(queue);
+			server.setHost(info.getHost());
+			server.setPort(info.getPort());
+			service = Executors.newCachedThreadPool();
+			service.execute(server);
 		}
+	}
+	
+	/**
+	 * Returns a reference to the server
+	 * @return server to communicate with the client with
+	 */
+	public Server getServer() {
+		return server;
 	}
 	
 	/**
