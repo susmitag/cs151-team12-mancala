@@ -5,6 +5,8 @@ import java.awt.*;
 import java.util.concurrent.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
 import edu.sjsu.cs.cs151.mancala.model.Board;
+import edu.sjsu.cs.cs151.mancala.network.*;
+
 /**
  * This class is a visual representation of a Hole.
  */
@@ -13,9 +15,10 @@ public class VisualHole extends JLayeredPane
 		protected int index;
 		protected boolean isHoleActive;
 		protected MarbleGroup mg;
-		private LinkedBlockingQueue<Message> queue;
 		protected JPanel jp;
 		protected JLabel label;
+		private LinkedBlockingQueue<Message> queue;
+		private Client client = null;
 
 		/*
 		 * If no arguments, calls JLayeredPane constructor.
@@ -66,6 +69,9 @@ public class VisualHole extends JLayeredPane
 			// on click, send game state to controller
 			jb.addActionListener(event ->
 					{
+						if (client != null) { // client is initialized only in client's view
+							client.addEvent(new Message(new GameInfo(index)));
+						}
 						queue.add(new Message(new GameInfo(index)));
 					});
 
@@ -107,7 +113,15 @@ public class VisualHole extends JLayeredPane
 		 * Sets Hole's active state
 		 * @param state state to set
 		 */
-		public void setHoleActive (boolean state) {
+		public void setHoleActive(boolean state) {
 		    isHoleActive = state;
         }
+		
+		/**
+		 * Sets client variable for client in a network game
+		 * @param client Client object to communicate with the Server with
+		 */
+		public void setClient(Client client) {
+			this.client = client;
+		}
 }

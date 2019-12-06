@@ -5,6 +5,7 @@ import java.awt.*;
 import java.util.concurrent.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
 import edu.sjsu.cs.cs151.mancala.model.Board;
+import edu.sjsu.cs.cs151.mancala.network.*;
 
 /*
  * This class represents the main window for the Mancala game. 
@@ -24,6 +25,7 @@ public class PlayScreen
 	private JLayeredPane main= new JLayeredPane(); // consists of board plus options
 	private JPanel board = new JPanel(new BorderLayout()); // entire playing board
 	private VisualHole[] holes;
+	private Client client = null; 		// this is only set on client-side network games
 	
 	/**
 	 * Private constructor, nobody should create multiple instances. 
@@ -45,10 +47,10 @@ public class PlayScreen
 		options = new JPanel();
 		center.setLayout(new GridLayout(2,6));
 		
-		// creating holes
+		// creating holes, two loops to ensure indices match
 		for (int i = 12; i > 6; i--) {
-			VisualHole vh = new VisualHole(i, queue);		//This is to ensure the holes have the correct index 	
-			holes[i] = vh;									//	corresponding with the index used in the model
+			VisualHole vh = new VisualHole(i, queue); 
+			holes[i] = vh;								
 			center.add(vh);
 		}
 		for (int i = 0; i < 6; i++) {
@@ -98,7 +100,7 @@ public class PlayScreen
 		instructions.setPreferredSize(new Dimension(55,55));
 		instructions.setBackground(Color.lightGray);
 		instructions.addActionListener(event -> 
-			new JOptionPane().showMessageDialog(null, new RulesDialog(), "Mancala Rules", JOptionPane.INFORMATION_MESSAGE));
+			JOptionPane.showMessageDialog(null, new RulesDialog(), "Mancala Rules", JOptionPane.INFORMATION_MESSAGE));
 		JButton quit = new JButton("X");
 		quit.setPreferredSize(new Dimension(55,55));		
 		quit.setBackground(Color.lightGray);
@@ -214,8 +216,25 @@ public class PlayScreen
 		}
 	}
 	
+	/**
+	 * Accessor for queue
+	 * @return queue
+	 */
 	public LinkedBlockingQueue<Message> getQueue() {
 		return queue;
+	}
+	
+	/**
+	 * Mutator for client. Passes reference to each of the VisualHoles that aren't a VisualStore
+	 * @param client client to add events to
+	 */
+	public void setClient(Client client) {
+		this.client = client;
+		for (VisualHole h: holes) {
+			if (h instanceof VisualStore)
+				continue;
+			h.setClient(client);
+		}
 	}
 	
 }

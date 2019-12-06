@@ -27,6 +27,6 @@ public class SetupDialog extends JOptionPane
 			else if (response == 1 )
 				return CONNECT_TO_GAME;
 		}
-		return UNEXPLAINABLE_ERROR;
+		return UNEXPLAINABLE_ERROR; //this should never be returned
 	}
 }

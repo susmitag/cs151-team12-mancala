@@ -4,7 +4,9 @@ import edu.sjsu.cs.cs151.mancala.model.*;
 import edu.sjsu.cs.cs151.mancala.view.*;
 import edu.sjsu.cs.cs151.mancala.view.introAnimation.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
+import edu.sjsu.cs.cs151.mancala.network.*;
 
+import javax.swing.*;
 import java.util.concurrent.*;
 
 public class Driver {
@@ -25,16 +27,14 @@ public class Driver {
 		}
 		
 		else if (gameType == SetupDialog.NEW_NETWORK_GAME) {
-			
+			Server server = new Server(queue);
 		}
 		
 		else if (gameType == SetupDialog.CONNECT_TO_GAME) {
-			
+			model = null; 			// server keeps track of model. this one can be garbage collected
 		}
 		
-		else {
-			
-		}
+		// No extra action
 		UpdateGameStateValve gameValve = new UpdateGameStateValve(controller);
 		ValveResponse response = ValveResponse.EXECUTED;
 		while (response != ValveResponse.FINISHED && response != ValveResponse.EXIT) {

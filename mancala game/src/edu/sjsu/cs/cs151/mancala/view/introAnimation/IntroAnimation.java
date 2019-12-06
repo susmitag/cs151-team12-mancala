@@ -3,6 +3,7 @@ package edu.sjsu.cs.cs151.mancala.view.introAnimation;
 import edu.sjsu.cs.cs151.mancala.view.PlayScreen;
 import edu.sjsu.cs.cs151.mancala.view.SetupDialog;
 import edu.sjsu.cs.cs151.mancala.controller.*;
+import edu.sjsu.cs.cs151.mancala.network.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -81,10 +82,12 @@ public class IntroAnimation {
 		JButton startButton = new JButton("Start Game");
 		startButton.addActionListener(event ->
 		{
-			int gameType = SetupDialog.question();
-			controller.setGameType(gameType);
-			close();
-			ps.setFrameVisible();
+			int gameType = SetupDialog.question();				// decides gametype 
+			controller.setGameType(gameType);					// must get gametype info from controller
+			if (gameType == SetupDialog.CONNECT_TO_GAME)		// if we are a client, give view client
+				ps.setClient(new Client(ps, ps.getQueue()));	// object to communicate with
+			close();											// closes intro animation
+			ps.setFrameVisible();								// sets view visible		
 		});
 		startButton.setBackground(Color.DARK_GRAY);
 		startButton.setForeground(Color.WHITE);
