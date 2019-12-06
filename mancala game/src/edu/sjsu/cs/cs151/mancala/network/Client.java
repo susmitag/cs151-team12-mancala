@@ -18,7 +18,8 @@ public class Client
 		this.port = port;
 	}
 	
-	public void addEvent(Message m) {
-		
+	public Message addEvent(Message m) {
+		// send to server, get response, return response
+		return null;
 	}
 }

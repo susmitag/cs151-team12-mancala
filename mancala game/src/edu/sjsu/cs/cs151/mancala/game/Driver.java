@@ -19,7 +19,10 @@ public class Driver {
 		Controller controller = new Controller(queue, view, model);
 		IntroAnimation intro = new IntroAnimation(view, controller);
 		
-		int gameType = controller.getGameType();		// player chooses, the gameType is UNASSIGNED
+		int gameType = controller.getGameType();		// until player chooses, the gameType is UNASSIGNED
+		while (gameType == Controller.UNASSIGNED) 
+			gameType = controller.getGameType();
+		
 		if (gameType == SetupDialog.NEW_LOCAL_GAME) {
 		}
 		
@@ -47,6 +50,7 @@ public class Driver {
 			// 	  > display winner is conditional
 		}
 		
+		view.addActionListeners(); // adds action listeners to all holes that arent disabled
 		UpdateGameStateValve gameValve = new UpdateGameStateValve(controller);
 		ValveResponse response = ValveResponse.EXECUTED;
 		while (response != ValveResponse.FINISHED && response != ValveResponse.EXIT) {

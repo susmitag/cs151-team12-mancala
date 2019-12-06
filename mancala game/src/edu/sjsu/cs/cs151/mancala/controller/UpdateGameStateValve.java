@@ -28,8 +28,18 @@ public class UpdateGameStateValve implements Valve {
 		if (m.getInfo().getGameEnded() && m.getInfo().isEarly())
 			return ValveResponse.EXIT;
 		try {
-			if (!m.isClient())
+			if (m.isClient()) {
+				if (m.getInfo().getChosenHole() == GameInfo.UNASSIGNED) // chosenHole is unassigned when the message comes from the server
+					controller.updateView(m);
+				else  // if message not from server, it must be from view
+					m = controller.sendEventAsClient(m);
+			}
+			else {
 				m = controller.updateModel(m);
+				if (m.isServer()) {
+					controller.sendEventAsServer(m);
+				}
+			}
 			controller.updateView(m);
 			isOver = m.getInfo().getGameEnded();
 		}

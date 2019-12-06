@@ -223,8 +223,9 @@ public class PlayScreen
 	 * @param end last hole to disable
 	 */
 	private void disableHoles(int start, int end) {
-		for (int i = start; i <= end; i++)
-			holes[i].disableActionLister();
+		for (int i = start; i <= end; i++) {
+			holes[i].setDisabled(true);
+		}
 	}
 	
 	/**
@@ -260,6 +261,18 @@ public class PlayScreen
 			if (h instanceof VisualStore)
 				continue;
 			h.setClient(client);
+		}
+	}
+	
+	/**
+	 * Adds actionListeners to all of the Holes
+	 */
+	public void addActionListeners() {
+		for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
+			if (i == Board.PLAYER1_STORE_INDEX || i == Board.PLAYER2_STORE_INDEX) 
+				continue;		// no action listeners on stores
+			else
+				holes[i].addActionListener();
 		}
 	}
 	

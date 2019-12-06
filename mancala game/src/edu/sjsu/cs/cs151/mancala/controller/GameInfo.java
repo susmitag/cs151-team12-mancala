@@ -6,7 +6,8 @@ package edu.sjsu.cs.cs151.mancala.controller;
  *
  */
 public class GameInfo {
-	private int chosenHole;
+	public static final int UNASSIGNED = -1;
+	private int chosenHole = UNASSIGNED;
 	private int[] marbleCounts;
 	public boolean[] activeStates;
 	private boolean turnChanged;

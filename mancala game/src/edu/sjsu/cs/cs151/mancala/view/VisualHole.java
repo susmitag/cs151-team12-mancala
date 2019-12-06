@@ -20,6 +20,8 @@ public class VisualHole extends JLayeredPane
 		protected JButton jb;
 		private LinkedBlockingQueue<Message> queue;
 		private Client client = null;
+		private Server server = null;
+		private boolean disabled = false;
 
 		/*
 		 * If no arguments, calls JLayeredPane constructor.
@@ -66,15 +68,6 @@ public class VisualHole extends JLayeredPane
 			jb.setFocusPainted(false);
 			jb.setBackground(Color.GRAY);
 			jb.setFocusable(false);
-			
-			// on click, send game state to controller
-			jb.addActionListener(event ->
-					{
-						if (client != null) { // client is initialized only in client's view
-							queue.add(new Message(new GameInfo(index), true, false));
-						}
-						queue.add(new Message(new GameInfo(index)));
-					});
 
 			label = new JLabel(""+Board.INITIAL_HOLE_MARBLE_COUNT);
 			label.setHorizontalTextPosition(JLabel.CENTER);
@@ -127,9 +120,36 @@ public class VisualHole extends JLayeredPane
 		}
 		
 		/**
-		 * Removes the action listener to make hole unsowable
+		 * Returns this holes's button status
+		 * @return true if this hole is disabled
 		 */
-		public void disableActionLister() {
-			jb.removeChangeListener(event -> {});
+		public boolean isDisabled() {
+			return disabled;
+		}
+		
+		/**
+		 * Adds an action listener to jb that add messaged to the queue
+		 */
+		public void addActionListener() {
+			// on click, send game state to controller
+			if (!disabled) {
+				jb.addActionListener(event ->
+						{
+							if (client instanceof Client) 		 // client is initialized only in client's view
+									queue.add(new Message(new GameInfo(index), true, false));
+							else if (server instanceof Server )  // server is only initialized in server's view
+									queue.add(new Message(new GameInfo(index), false, true));						
+							else
+								queue.add(new Message(new GameInfo(index)));
+						});
+			}
+		}
+		
+		/**
+		 * Sets the disabled variable
+		 * @param hole's disabled state
+		 */
+		public void setDisabled(boolean d) {
+			disabled = d;
 		}
 }

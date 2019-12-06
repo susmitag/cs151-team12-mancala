@@ -11,10 +11,11 @@ import java.util.concurrent.*;
  */
 public class Controller 
 {
+	public static final int UNASSIGNED = -1;
 	private LinkedBlockingQueue<Message> queue;
 	private PlayScreen view;
 	private Game model;
-	private int gameType = SetupDialog.NEW_LOCAL_GAME;
+	private int gameType = UNASSIGNED;
 	private Client client;
 	private Server server;
 	private ExecutorService service;
@@ -81,6 +82,7 @@ public class Controller
 	public void setup(SetupInfo info) {
 		gameType = info.getGameType();
 		if (gameType == SetupDialog.CONNECT_TO_GAME) {		// if we are a client, give view Client
+			model = null; // remove references so it will be garbage collected
 			client =  new Client(view, queue, info.getHost(), info.getPort());    // object to communicate with
 			view.setClient(client);		
 		}
@@ -93,6 +95,14 @@ public class Controller
 		}
 	}
 	
+	public Message sendEventAsClient(Message m) {
+		return client.addEvent(m);
+	}
+	
+	public void sendEventAsServer(Message m) {
+		server.updateClient(m);
+	}
+	
 	/**
 	 * Returns a reference to the server
 	 * @return server to communicate with the client with
@@ -102,9 +112,18 @@ public class Controller
 	}
 	
 	/**
-	 * @return gameType
+	 * Returns game type. Synchronized to ensure it returns correct value
+	 * @return current gameType
 	 */
-	public int getGameType() {
+	public synchronized int getGameType() {
 		return gameType;
+	}
+	
+	/**
+	 * Sets gameType. Synchronized to ensure it sets correct value
+	 * @param type game type to set
+	 */
+	private synchronized void setGameType(int type) {
+		gameType = type;
 	}
 }
