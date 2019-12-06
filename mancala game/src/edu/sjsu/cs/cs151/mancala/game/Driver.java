@@ -13,10 +13,28 @@ public class Driver {
 	{
         LinkedBlockingQueue<Message> queue = new LinkedBlockingQueue<Message>();
         PlayScreen view = PlayScreen.init(queue);
-		IntroAnimation intro = new IntroAnimation(view);
-
 		Game model = Game.getGame();
 		Controller controller = new Controller(queue, view, model);
+		IntroAnimation intro = new IntroAnimation(view, controller);
+		
+		int gameType = Controller.UNASSIGNED;			// The gameType will be set by a SetupDialog
+		while (gameType == Controller.UNASSIGNED)       // created by the IntroAnimation. Before the 
+			gameType = controller.getGameType();		// player chooses, the gameType is UNASSIGNED
+		if (gameType == SetupDialog.NEW_LOCAL_GAME) {
+			
+		}
+		
+		else if (gameType == SetupDialog.NEW_NETWORK_GAME) {
+			
+		}
+		
+		else if (gameType == SetupDialog.CONNECT_TO_GAME) {
+			
+		}
+		
+		else {
+			
+		}
 		UpdateGameStateValve gameValve = new UpdateGameStateValve(controller);
 		ValveResponse response = ValveResponse.EXECUTED;
 		while (response != ValveResponse.FINISHED && response != ValveResponse.EXIT) {

@@ -10,9 +10,11 @@ import java.util.concurrent.*;
  */
 public class Controller 
 {
+	public static final int UNASSIGNED = -1;
 	private LinkedBlockingQueue<Message> queue;
 	private PlayScreen view;
 	private Game model;
+	private int gameType = UNASSIGNED;
 	
 	/**
 	 * Constructs a new controller
@@ -57,5 +59,13 @@ public class Controller
 		model.sow(m.getInfo().getChosenHole());
 		Message m2 = model.getGameState();
 		return m2;
+	}
+	
+	public synchronized void setGameType(int type) {
+		gameType = type;
+	}
+	
+	public synchronized int getGameType() {
+		return gameType;
 	}
 }

@@ -121,7 +121,10 @@ public class PlayScreen
 		frame.pack();
 	}
 
-	public void frameSetVisible () {
+	/**
+	 * Sets the main window's visibility
+	 */
+	public void setFrameVisible () {
 	    frame.setVisible(true);
     }
 	
