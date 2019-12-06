@@ -28,7 +28,7 @@ public class VisualStore extends VisualHole
 		jp.setBackground(Color.GRAY);
 		
 		// JButton with oval on it to represent store
-		JButton jb = new JButton(new Icon()
+		jb = new JButton(new Icon()
 			{
 				public void paintIcon(Component c, Graphics g, int x, int y) {
 					Graphics2D g2 = (Graphics2D)g;

@@ -28,7 +28,8 @@ public class UpdateGameStateValve implements Valve {
 		if (m.getInfo().getGameEnded() && m.getInfo().isEarly())
 			return ValveResponse.EXIT;
 		try {
-			m = controller.updateModel(m);
+			if (!m.isClient())
+				m = controller.updateModel(m);
 			controller.updateView(m);
 			isOver = m.getInfo().getGameEnded();
 		}

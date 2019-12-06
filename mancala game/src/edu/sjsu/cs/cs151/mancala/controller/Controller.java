@@ -3,6 +3,7 @@ package edu.sjsu.cs.cs151.mancala.controller;
 import edu.sjsu.cs.cs151.mancala.model.*;
 import edu.sjsu.cs.cs151.mancala.view.*;
 import edu.sjsu.cs.cs151.mancala.*;
+import edu.sjsu.cs.cs151.mancala.network.*;
 import java.util.concurrent.*;
 
 /**
@@ -10,11 +11,11 @@ import java.util.concurrent.*;
  */
 public class Controller 
 {
-	public static final int UNASSIGNED = -1;
 	private LinkedBlockingQueue<Message> queue;
 	private PlayScreen view;
 	private Game model;
-	private int gameType = UNASSIGNED;
+	private int gameType = SetupDialog.NEW_LOCAL_GAME;
+	private Client client;
 	
 	/**
 	 * Constructs a new controller
@@ -61,11 +62,34 @@ public class Controller
 		return m2;
 	}
 	
-	public synchronized void setGameType(int type) {
-		gameType = type;
+	/**
+	 * Get a reference to the client used to communicate with the server
+	 * @return client reference to client object
+	 */
+	public Client getClient() {
+		return client;
 	}
 	
-	public synchronized int getGameType() {
+	/**
+	 * Sets game type and network information. This should only be 
+	 * 	called once because it also gives the view a new Client
+	 * @param type
+	 */
+	public void setup(SetupInfo info) {
+		gameType = info.getGameType();
+		if (gameType == SetupDialog.CONNECT_TO_GAME) {		// if we are a client, give view Client
+			client =  new Client(view, queue, info.getHost(), info.getPort());    // object to communicate with
+			view.setClient(client);		
+		}
+		else if (gameType == SetupDialog.NEW_NETWORK_GAME) {
+			
+		}
+	}
+	
+	/**
+	 * @return gameType
+	 */
+	public int getGameType() {
 		return gameType;
 	}
 }

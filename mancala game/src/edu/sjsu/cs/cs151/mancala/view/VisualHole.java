@@ -19,6 +19,7 @@ public class VisualHole extends JLayeredPane
 		protected JLabel label;
 		private LinkedBlockingQueue<Message> queue;
 		private Client client = null;
+		protected JButton jb;
 
 		/*
 		 * If no arguments, calls JLayeredPane constructor.
@@ -43,7 +44,7 @@ public class VisualHole extends JLayeredPane
 			jp.setBackground(Color.GRAY);
 			
 			// draw circle on button to represent hole
-			JButton jb = new JButton(new Icon()
+			jb = new JButton(new Icon()
 				{
 					public void paintIcon(Component c, Graphics g, int x, int y) {
 						Graphics2D g2 = (Graphics2D)g;
@@ -70,7 +71,7 @@ public class VisualHole extends JLayeredPane
 			jb.addActionListener(event ->
 					{
 						if (client != null) { // client is initialized only in client's view
-							client.addEvent(new Message(new GameInfo(index)));
+							queue.add(new Message(new GameInfo(index), true));
 						}
 						queue.add(new Message(new GameInfo(index)));
 					});
@@ -123,5 +124,12 @@ public class VisualHole extends JLayeredPane
 		 */
 		public void setClient(Client client) {
 			this.client = client;
+		}
+		
+		/**
+		 * Removes the action listener to make hole unsowable
+		 */
+		public void disableActionLister() {
+			jb.removeChangeListener(event -> {});
 		}
 }

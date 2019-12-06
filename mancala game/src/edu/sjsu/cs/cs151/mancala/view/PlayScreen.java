@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
-import edu.sjsu.cs.cs151.mancala.model.Board;
+import edu.sjsu.cs.cs151.mancala.model.*; // only used for constants
 import edu.sjsu.cs.cs151.mancala.network.*;
 
 /*
@@ -203,6 +203,30 @@ public class PlayScreen
 	}
 
 	/**
+	 * Disables action listeners on player1's holes
+	 */
+	public void disablePlayer1Holes() {
+		disableHoles(Player.PLAYER1_START_INDEX, Player.PLAYER1_END_INDEX);
+	}
+
+	/**
+	 * Disables action listeners on player1's holes
+	 */
+	public void disablePlayer2Holes() {
+		disableHoles(Player.PLAYER2_START_INDEX, Player.PLAYER2_END_INDEX);	
+	}
+
+	/**
+	 * Disables action listeners on holes in the given range
+	 * @param start first hole to disable 
+	 * @param end last hole to disable
+	 */
+	private void disableHoles(int start, int end) {
+		for (int i = start; i <= end; i++)
+			holes[i].disableActionLister();
+	}
+	
+	/**
 	 * Changes color of player JLabel depending on whose turn it is
 	 * @param g GameInfo with turn information
 	 */
@@ -217,7 +241,7 @@ public class PlayScreen
 	}
 	
 	/**
-	 * Accessor for queue
+	 * Returns a reference to queue
 	 * @return queue
 	 */
 	public LinkedBlockingQueue<Message> getQueue() {
@@ -225,7 +249,8 @@ public class PlayScreen
 	}
 	
 	/**
-	 * Mutator for client. Passes reference to each of the VisualHoles that aren't a VisualStore
+	 * Sets client variable and passes reference to each of the VisualHoles that aren't a VisualStore. 
+	 * 	removes action listeners on player1 buttons to prevent cheating
 	 * @param client client to add events to
 	 */
 	public void setClient(Client client) {
@@ -235,6 +260,15 @@ public class PlayScreen
 				continue;
 			h.setClient(client);
 		}
+	}
+	
+	/**
+	 * Returns a reference to client (Warning: this is null if this 
+	 * 	view is running on a server or local instance of the game)
+	 * @return the client this view communicates with 
+	 */
+	public Client getClient() {
+		return client;
 	}
 	
 }

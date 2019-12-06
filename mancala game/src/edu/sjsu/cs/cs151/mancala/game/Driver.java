@@ -19,22 +19,32 @@ public class Driver {
 		Controller controller = new Controller(queue, view, model);
 		IntroAnimation intro = new IntroAnimation(view, controller);
 		
-		int gameType = Controller.UNASSIGNED;			// The gameType will be set by a SetupDialog
-		while (gameType == Controller.UNASSIGNED)       // created by the IntroAnimation. Before the 
-			gameType = controller.getGameType();		// player chooses, the gameType is UNASSIGNED
+		int gameType = controller.getGameType();		// player chooses, the gameType is UNASSIGNED
 		if (gameType == SetupDialog.NEW_LOCAL_GAME) {
-			
+			System.out.println(gameType);
 		}
 		
 		else if (gameType == SetupDialog.NEW_NETWORK_GAME) {
 			Server server = new Server(queue);
+			view.disablePlayer2Holes(); // disable other players holes to prevent cheating
 		}
 		
 		else if (gameType == SetupDialog.CONNECT_TO_GAME) {
 			model = null; 			// server keeps track of model. this one can be garbage collected
+			view.disablePlayer1Holes();
+			Client client = controller.getClient();
+			if (client == null) {
+				// complain
+			}
+			// get network information
+			// while game is not over
+			//	  > listen for move
+			//	  > update
+			// 	  > send move
+			// game over -> quit or finish
+			// 	  > display winner is conditional
 		}
 		
-		// No extra action
 		UpdateGameStateValve gameValve = new UpdateGameStateValve(controller);
 		ValveResponse response = ValveResponse.EXECUTED;
 		while (response != ValveResponse.FINISHED && response != ValveResponse.EXIT) {

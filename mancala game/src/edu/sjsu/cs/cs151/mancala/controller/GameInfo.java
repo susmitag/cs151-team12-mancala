@@ -11,7 +11,7 @@ public class GameInfo {
 	public boolean[] activeStates;
 	private boolean turnChanged;
 	private int playerWithTurn;
-	private boolean gameEnded;
+	private boolean gameEnded = false;
 	private boolean exitEarly = false;
 	
 	/**
@@ -20,7 +20,6 @@ public class GameInfo {
 	 */
 	public GameInfo(int chosenHole) {
 		this.chosenHole = chosenHole;
-		marbleCounts = null;
 	}
 	
 	/**
@@ -46,7 +45,6 @@ public class GameInfo {
 		this.turnChanged = turnChanged;
 		this.playerWithTurn = playerWithTurn;
 		this.gameEnded = gameEnded;
-		chosenHole = -1;
 	}
 	
 	public int getChosenHole() {

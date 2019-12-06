@@ -8,10 +8,14 @@ public class Client
 {
 	private PlayScreen view;
 	private LinkedBlockingQueue<Message> queue;
+	private String host;
+	private int port;
 	
-	public Client(PlayScreen view, LinkedBlockingQueue<Message> queue) {
-		this.view = view;
+	public Client(PlayScreen view, LinkedBlockingQueue<Message> queue, String host, int port) {
 		this.queue = queue;
+		this.view = view;
+		this.host = host;
+		this.port = port;
 	}
 	
 	public void addEvent(Message m) {
