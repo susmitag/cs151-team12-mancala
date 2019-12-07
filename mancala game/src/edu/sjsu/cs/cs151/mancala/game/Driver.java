@@ -41,13 +41,6 @@ public class Driver {
 			if (client == null) {
 				// complain
 			}
-			// get network information
-			// while game is not over
-			//	  > listen for move
-			//	  > update
-			// 	  > send move
-			// game over -> quit or finish
-			// 	  > display winner is conditional
 		}
 		
 		view.addActionListeners(); // adds action listeners to all holes that arent disabled

@@ -41,7 +41,7 @@ public class SetupDialog extends JOptionPane
 		String msg1 = "Enter hostname and port number.";
 		String msg2 = "If you are the server, enter localhost";
 		String msg3 = "If you are the client, get the hostname/port from the server.";
-		String msg4 = "Feel free to change the default port.";
+		String msg4 = "Feel free to change the default port, but it must be above 1024 unless you are root.";
 		panel.setLayout(new GridLayout(10,1));
 		JLabel msg1Label = new JLabel(msg1);
 		JLabel msg2Label = new JLabel(msg2);
@@ -73,9 +73,9 @@ public class SetupDialog extends JOptionPane
 		if (gameType == NEW_NETWORK_GAME) {
 			JPanel panel2 = new JPanel();
 			panel2.setLayout(new GridLayout(4,1));
-			JLabel l1 = new JLabel("If you are playing over a LAN, enter ifconfig (ipconfig on windows) into");
-			JLabel l2 = new JLabel("a terminal to find your local IP address. It likely looks like \"10.0.0.212\"");
-			JLabel l3 = new JLabel("or \"192.0.0.12\". Give this address and port number \""+port+"\" to the client.");
+			JLabel l1 = new JLabel("If you are playing over a LAN, enter ifconfig (ipconfig on windows) into a terminal");
+			JLabel l2 = new JLabel("to find your local IP address. It likely looks like \"10.0.0.212\" or \"192.0.0.12\".");
+			JLabel l3 = new JLabel("Give this address and port number \""+port+"\" to the client (after closing this dialog).");
 			JLabel l4 = new JLabel("If you are playing over the internet, substitute the appropriate hostname.");
 			panel2.add(l1);
 			panel2.add(l2);
