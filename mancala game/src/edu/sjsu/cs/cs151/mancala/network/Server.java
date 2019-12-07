@@ -44,7 +44,7 @@ public class Server implements Runnable {
 	}
 	
 	public void updateClient(Message m) {
-		// add message to internal server queue
+		internalQueue.add(m);
 	}
 	
 	public void setHost(String host) {

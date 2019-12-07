@@ -81,6 +81,7 @@ public class Controller
 	 */
 	public void setup(SetupInfo info) {
 		gameType = info.getGameType();
+		service = Executors.newCachedThreadPool();
 		if (gameType == SetupDialog.CONNECT_TO_GAME) {		// if we are a client, give view Client
 			model = null; // remove references so it will be garbage collected
 			client =  new Client(view, queue, info.getHost(), info.getPort());    // object to communicate with
@@ -90,15 +91,23 @@ public class Controller
 			server = new Server(queue);
 			server.setHost(info.getHost());
 			server.setPort(info.getPort());
-			service = Executors.newCachedThreadPool();
 			service.execute(server);
 		}
 	}
 	
+	/**
+	 * Sends the message to Client object so it can communicate with the server
+	 * @param m message with game state
+	 * @return message with updated game state
+	 */
 	public Message sendEventAsClient(Message m) {
 		return client.addEvent(m);
 	}
 	
+	/**
+	 * Sends the message to Server object so it can communicate with the client
+	 * @param m message with game state
+	 */
 	public void sendEventAsServer(Message m) {
 		server.updateClient(m);
 	}
