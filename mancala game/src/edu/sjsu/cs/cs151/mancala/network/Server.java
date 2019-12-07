@@ -15,8 +15,8 @@ public class Server implements Runnable {
 	private int port = DEFAULT_PORT;
 	private ServerSocket socket;
 	private Socket connection;
-	private DataInputStream in;
-	private DataInputStream out;
+	private ObjectInputStream in;
+	private ObjectOutputStream out;
 	
 	public Server(LinkedBlockingQueue<Message> q) {
 		queue = q;
@@ -27,7 +27,12 @@ public class Server implements Runnable {
 		try {
 			socket = new ServerSocket(port, 50, InetAddress.getByName(host));
 			connection = socket.accept();
+			out = new ObjectOutputStream(connection.getOutputStream());
+			in = new ObjectInputStream(connection.getInputStream());
 			while (true) {
+				String s = (String) in.readObject();
+				System.out.println(s);
+				
 				// check for events to send to client
 				// listen for events from client, add them to queue
 			}

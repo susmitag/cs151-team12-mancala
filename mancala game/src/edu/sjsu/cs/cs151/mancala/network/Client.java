@@ -13,8 +13,8 @@ public class Client
 	private String host;
 	private int port;
 	private Socket socket;
-	private DataInputStream in;
-	private DataInputStream out;
+	private ObjectInputStream in;
+	private ObjectOutputStream out;
 	
 	public Client(PlayScreen view, LinkedBlockingQueue<Message> queue, String host, int port) {
 		this.queue = queue;
@@ -23,6 +23,11 @@ public class Client
 		this.port = port;
 		try {
 			socket = new Socket(host, port);
+			out = new ObjectOutputStream(socket.getOutputStream());
+			in = new ObjectInputStream(socket.getInputStream());
+			String s = "test";
+			out.writeObject(s);
+			out.flush();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
