@@ -265,6 +265,17 @@ public class PlayScreen
 	}
 	
 	/**
+	 * Sets isServer variable on each of the VisualHoles that aren't a VisualStore. 
+	 */
+	public void setServer() {
+		for (VisualHole h: holes) {
+			if (h instanceof VisualStore)
+				continue;
+			h.setServer(true);
+		}
+	}
+	
+	/**
 	 * Adds actionListeners to all of the Holes
 	 */
 	public void addActionListeners() {

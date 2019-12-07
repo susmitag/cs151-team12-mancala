@@ -6,7 +6,7 @@ package edu.sjsu.cs.cs151.mancala.controller;
  *
  */
 public class GameInfo {
-	public static final int UNASSIGNED = -1;
+	public static final int UNASSIGNED = 15; // outside of hole index range
 	private int chosenHole = UNASSIGNED;
 	private int[] marbleCounts;
 	public boolean[] activeStates;

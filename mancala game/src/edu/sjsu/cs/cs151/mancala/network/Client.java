@@ -25,9 +25,6 @@ public class Client
 			socket = new Socket(host, port);
 			out = new ObjectOutputStream(socket.getOutputStream());
 			in = new ObjectInputStream(socket.getInputStream());
-			String s = "test";
-			out.writeObject(s);
-			out.flush();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -36,7 +33,17 @@ public class Client
 	}
 	
 	public Message addEvent(Message m) {
+		GameInfo g;
 		// send to server, get response, return response
-		return null;
+		try {
+			out.writeObject(m.getInfo());
+			out.flush();
+			g = (GameInfo) in.readObject();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			g = null;
+		}
+		return new Message(g, true, false);
 	}
 }

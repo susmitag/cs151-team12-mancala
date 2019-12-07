@@ -89,6 +89,7 @@ public class Controller
 		}
 		else if (gameType == SetupDialog.NEW_NETWORK_GAME) {
 			server = new Server(queue);
+			view.setServer();
 			server.setHost(info.getHost());
 			server.setPort(info.getPort());
 			service.execute(server);

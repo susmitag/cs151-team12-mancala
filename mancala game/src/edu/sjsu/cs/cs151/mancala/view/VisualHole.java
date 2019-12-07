@@ -20,7 +20,7 @@ public class VisualHole extends JLayeredPane
 		protected JButton jb;
 		private LinkedBlockingQueue<Message> queue;
 		private Client client = null;
-		private Server server = null;
+		private boolean isServer = false;
 		private boolean disabled = false;
 
 		/*
@@ -118,6 +118,13 @@ public class VisualHole extends JLayeredPane
 		public void setClient(Client client) {
 			this.client = client;
 		}
+		/**
+		 * Sets isServer value
+		 * @param p true if this Hole belongs to server
+		 */
+		public void setServer(boolean p) {
+			isServer = p;
+		}
 		
 		/**
 		 * Returns this holes's button status
@@ -137,7 +144,7 @@ public class VisualHole extends JLayeredPane
 						{
 							if (client instanceof Client) 		 // client is initialized only in client's view
 									queue.add(new Message(new GameInfo(index), true, false));
-							else if (server instanceof Server )  // server is only initialized in server's view
+							else if (isServer)  // server is only initialized in server's view
 									queue.add(new Message(new GameInfo(index), false, true));						
 							else
 								queue.add(new Message(new GameInfo(index)));

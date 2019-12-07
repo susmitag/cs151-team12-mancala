@@ -39,5 +39,9 @@ public class Message {
 	public GameInfo getInfo() {
 		return info;
 	}
+	
+	public void setServer(boolean t) {
+		isServer = t;
+	}
 
 }
