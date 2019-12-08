@@ -137,4 +137,14 @@ public class Controller
 	private synchronized void setGameType(int type) {
 		gameType = type;
 	}
+	
+	/**
+	 * Disconnects server and client sockets
+	 */
+	public void disconnect() {
+		if (client instanceof Client)
+			client.close();
+		if (server instanceof Server)
+			server.close();
+	}
 }

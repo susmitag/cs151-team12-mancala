@@ -16,6 +16,7 @@ public class GameInfo implements Serializable {
 	private int playerWithTurn;
 	private boolean gameEnded = false;
 	private boolean exitEarly = false;
+	private boolean quit = false;
 	
 	/**
 	 * Constructed by view, contains information about which hole has been chosen.
@@ -58,13 +59,31 @@ public class GameInfo implements Serializable {
 		return marbleCounts;
 	}
 
-	public boolean[] getActiveStates() { return activeStates; }
+	public boolean[] getActiveStates() { 
+		return activeStates; 
+	}
 
-	public boolean getTurnChanged() { return turnChanged; }
+	public boolean getTurnChanged() { 
+		return turnChanged; 
+	}
 
-	public int getPlayerWithTurn() { return playerWithTurn; }
+	public int getPlayerWithTurn() { 
+		return playerWithTurn; 
+	}
 
-	public boolean getGameEnded() { return gameEnded; }
+	public boolean getGameEnded() { 
+		return gameEnded; 
+	}
 	
-	public boolean isEarly() { return exitEarly; }
+	public boolean isEarly() { 
+		return exitEarly; 
+	}
+	
+	public boolean didQuit() {
+		return quit;
+	}
+	
+	public void setQuit(boolean p) {
+		quit = p;
+	}
 }

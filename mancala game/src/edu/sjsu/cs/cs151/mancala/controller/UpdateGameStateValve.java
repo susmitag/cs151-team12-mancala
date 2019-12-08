@@ -1,5 +1,7 @@
 package edu.sjsu.cs.cs151.mancala.controller;
 
+import javax.swing.JOptionPane;
+
 import edu.sjsu.cs.cs151.mancala.MancalaException;
 
 /**
@@ -26,8 +28,30 @@ public class UpdateGameStateValve implements Valve {
 	public ValveResponse execute(Message m) {
 		boolean isOver;
 		boolean server = false;
-		if (m.getInfo().getGameEnded() && m.getInfo().isEarly())
+		if (m.getInfo().getGameEnded() && m.getInfo().isEarly()) 
+		{
+			boolean quit = m.getInfo().didQuit();
+			if (m.isClient()) {
+				if (!quit) {
+					GameInfo g = new GameInfo(true);
+					g.setQuit(true);
+					controller.sendEventAsClient(new Message(g));
+				}
+				else
+					JOptionPane.showMessageDialog(null, "The other player quit the game. That means you win!");
+			}
+			else if (m.isServer()) {
+				if (!quit) {
+					GameInfo g = new GameInfo(true);
+					g.setQuit(true);
+					controller.sendEventAsServer(new Message(g));
+				}
+				else
+					JOptionPane.showMessageDialog(null, "The other player quit the game. That means you win!");
+			}
+			controller.disconnect();
 			return ValveResponse.EXIT;
+		}
 		try {
 			if (m.isClient()) {
 				if (m.getInfo().getChosenHole() == GameInfo.UNASSIGNED) // chosenHole is unassigned when the message comes from the server

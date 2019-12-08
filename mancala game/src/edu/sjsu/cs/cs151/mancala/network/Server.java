@@ -1,5 +1,7 @@
 package edu.sjsu.cs.cs151.mancala.network;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.concurrent.*;
 import java.io.*;
 import java.net.*;
@@ -28,7 +30,12 @@ public class Server implements Runnable
 	public void run() {
 		try {
 			socket = new ServerSocket(port, 50, InetAddress.getByName(host));
+			JFrame f = new JFrame();
+			f.add(new JLabel("Waiting for client to connect..."));
+			f.setVisible(true);
+			f.setMinimumSize(new Dimension(500, 100));
 			connection = socket.accept();
+			f.dispose();
 			out = new ObjectOutputStream(connection.getOutputStream());
 			in = new ObjectInputStream(connection.getInputStream());
 		}

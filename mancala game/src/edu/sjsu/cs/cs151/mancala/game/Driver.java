@@ -58,10 +58,6 @@ public class Driver {
 		}
 		if (response != ValveResponse.EXIT) 
 			view.displayWinner();
-		if (controller.getGameType() == SetupDialog.CONNECT_TO_GAME)
-			client.close();
-		else if (controller.getGameType() == SetupDialog.NEW_NETWORK_GAME)
-			server.close();
 		view.close();
 		queue.clear();
 		System.exit(0);

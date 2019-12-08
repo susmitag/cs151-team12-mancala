@@ -26,6 +26,7 @@ public class PlayScreen
 	private JPanel board = new JPanel(new BorderLayout()); // entire playing board
 	private VisualHole[] holes;
 	private Client client = null; 		// this is only set on client-side network games
+	private boolean isServer = false;
 	
 	/**
 	 * Private constructor, nobody should create multiple instances. 
@@ -270,11 +271,19 @@ public class PlayScreen
 	 * Sets isServer variable on each of the VisualHoles that aren't a VisualStore. 
 	 */
 	public void setServer() {
+		isServer = true;
 		for (VisualHole h: holes) {
 			if (h instanceof VisualStore)
 				continue;
 			h.setServer(true);
 		}
+	}
+	
+	/**
+	 * @return true is this view belongs to a server
+	 */
+	public boolean isServer() {
+		return isServer;
 	}
 	
 	/**
