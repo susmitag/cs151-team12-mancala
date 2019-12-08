@@ -159,4 +159,12 @@ public class VisualHole extends JLayeredPane
 		public void setDisabled(boolean d) {
 			disabled = d;
 		}
+		
+		/**
+		 * Returns the amount of marbles in this hole
+		 * @return number of marbles in this hole
+		 */
+		public int getCount() {
+			return mg.getCount();
+		}
 }

@@ -6,7 +6,6 @@ import edu.sjsu.cs.cs151.mancala.view.introAnimation.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
 import edu.sjsu.cs.cs151.mancala.network.*;
 
-import javax.swing.*;
 import java.util.concurrent.*;
 
 public class Driver {
@@ -18,6 +17,8 @@ public class Driver {
 		Game model = Game.getGame();
 		Controller controller = new Controller(queue, view, model);
 		IntroAnimation intro = new IntroAnimation(view, controller);
+		Client client = null;
+		Server server = null;
 		
 		int gameType = controller.getGameType();		// until player chooses, the gameType is UNASSIGNED
 		while (gameType == Controller.UNASSIGNED) 
@@ -27,7 +28,7 @@ public class Driver {
 		}
 		
 		else if (gameType == SetupDialog.NEW_NETWORK_GAME) {
-			Server server = controller.getServer();
+			server = controller.getServer();
 			if (server == null) {
 				// complain
 			}
@@ -37,7 +38,7 @@ public class Driver {
 		else if (gameType == SetupDialog.CONNECT_TO_GAME) {
 			model = null; 			// server keeps track of model. this one can be garbage collected
 			view.disablePlayer1Holes();
-			Client client = controller.getClient();
+			client = controller.getClient();
 			if (client == null) {
 				// complain
 			}
@@ -55,8 +56,12 @@ public class Driver {
 				e.printStackTrace();
 			}
 		}
-		if (response != ValveResponse.EXIT)
-			view.displayWinner(model.getWinnerIndex());
+		if (response != ValveResponse.EXIT) 
+			view.displayWinner();
+		if (controller.getGameType() == SetupDialog.CONNECT_TO_GAME)
+			client.close();
+		else if (controller.getGameType() == SetupDialog.NEW_NETWORK_GAME)
+			server.close();
 		view.close();
 		queue.clear();
 		System.exit(0);

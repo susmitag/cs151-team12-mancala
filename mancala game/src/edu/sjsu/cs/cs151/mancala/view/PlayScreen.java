@@ -160,12 +160,12 @@ public class PlayScreen
 	 * Displays the winner of the game in a popup dialog
 	 * @param winnerIndex the store index of the player who won
 	 */
-	public void displayWinner(int winnerIndex) {
+	public void displayWinner() {
 		String winner;
-		if (winnerIndex == Board.PLAYER1_STORE_INDEX)
+		if (holes[Board.PLAYER1_STORE_INDEX].getCount() > holes[Board.PLAYER2_STORE_INDEX].getCount())
 			winner = "Player1";
-		else 
-			winner = "Player2";
+		else
+			winner = "Player1";
 		GameoverDialog go = new GameoverDialog(winner);
 	}
 	
