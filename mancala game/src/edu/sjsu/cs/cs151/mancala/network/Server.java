@@ -7,13 +7,17 @@ import java.io.*;
 import java.net.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
 
+/**
+ * This class represents the serverside socket program for playing mancala over a network
+ * @author user
+ *
+ */
 public class Server implements Runnable 
 {	
 	public static final String DEFAULT_HOST = "localhost";
 	public static final int DEFAULT_PORT = 6666;
 	public static final int BUFFER_SIZE = 20;
 	private LinkedBlockingQueue<Message> queue;
-	private LinkedBlockingQueue<Message> internalQueue;
 	private String host = DEFAULT_HOST;
 	private int port = DEFAULT_PORT;
 	private ServerSocket socket;
@@ -22,11 +26,17 @@ public class Server implements Runnable
 	private ObjectOutputStream out;
 	private boolean done = false;
 	
+	/**
+	 * constructs a server object
+	 * @param q message queue to add new events to
+	 */
 	public Server(LinkedBlockingQueue<Message> q) {
 		queue = q;
-		internalQueue = new LinkedBlockingQueue<Message>();
 	}
 	
+	/**
+	 * Listens for new events and adds them to the message queue
+	 */
 	public void run() {
 		try {
 			socket = new ServerSocket(port, 50, InetAddress.getByName(host));
@@ -53,6 +63,10 @@ public class Server implements Runnable
 		}
 	}
 	
+	/**
+	 * Sends game state to client
+	 * @param m message with game state
+	 */
 	public void updateClient(Message m) {
 		try {
 			out.writeObject(m.getInfo());
@@ -63,6 +77,9 @@ public class Server implements Runnable
 		}
 	}
 	
+	/**
+	 * closes sockets and data streams
+	 */
 	public void close() {
 		try {
 			in.close();

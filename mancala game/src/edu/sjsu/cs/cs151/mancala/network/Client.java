@@ -7,11 +7,13 @@ import java.io.*;
 import java.net.*;
 import javax.swing.*;
 
+/**
+ * This class is the client side socket for playing mancala over a network
+ */
 public class Client implements Runnable
 {
 	private PlayScreen view;
 	private LinkedBlockingQueue<Message> queue;
-	private LinkedBlockingQueue<Message> internalQueue;
 	private String host;
 	private int port;
 	private Socket socket;
@@ -19,13 +21,19 @@ public class Client implements Runnable
 	private ObjectOutputStream out;
 	private boolean done = false;
 	
+	/**
+	 * Constructs a client object
+	 * @param view playscreen for client player
+	 * @param queue message queue to add events to
+	 * @param host server hostname
+	 * @param port port to connect to server with
+	 */
 	public Client(PlayScreen view, LinkedBlockingQueue<Message> queue, String host, int port) 
 	{
 		this.queue = queue;
 		this.view = view;
 		this.host = host;
 		this.port = port;
-		internalQueue = new LinkedBlockingQueue<Message>();
 		try {
 			socket = new Socket(host, port);
 			out = new ObjectOutputStream(socket.getOutputStream());
@@ -38,6 +46,9 @@ public class Client implements Runnable
 		}
 	}
 	
+	/**
+	 * Listens for new gameinfo messages from server and adds them to the queue
+	 */
 	public void run() {
 		GameInfo g;
 		// send to server, get response, return response
@@ -52,6 +63,9 @@ public class Client implements Runnable
 		}
 	}
 	
+	/**
+	 * closes connections and data streams
+	 */
 	public void close() {
 		try {
 			in.close();
@@ -64,6 +78,10 @@ public class Client implements Runnable
 		done = true;
 	}
 	
+	/**
+	 * Sends an event to the server
+	 * @param m message with game information to send
+	 */
 	public void addEvent(Message m) {
 		try {
 			out.writeObject(m.getInfo());
