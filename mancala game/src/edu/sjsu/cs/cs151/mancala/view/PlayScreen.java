@@ -177,6 +177,8 @@ public class PlayScreen
 	{
 		if (!g.getGameEnded()) {
 			for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
+				System.out.println("1"+(holes[i] == null));
+				System.out.println("2"+(g == null));
 				holes[i].setMarbleCount(g.getMarbleCounts()[i]);
 				holes[i].setHoleActive(g.getActiveStates()[i]);
 			}

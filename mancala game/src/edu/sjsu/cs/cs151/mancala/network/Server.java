@@ -26,37 +26,34 @@ public class Server implements Runnable
 	}
 	
 	public void run() {
-		try 
-		{
+		try {
 			socket = new ServerSocket(port, 50, InetAddress.getByName(host));
 			connection = socket.accept();
 			out = new ObjectOutputStream(connection.getOutputStream());
 			in = new ObjectInputStream(connection.getInputStream());
-			Message m;
-			while (!done) {
-				if (!internalQueue.isEmpty()) {
-					m = internalQueue.take();
-					System.out.println(m.getInfo().getChosenHole());
-					out.writeObject(m.getInfo());
-					out.flush();
-					System.out.println("Sent");
-				}
-				if (in.available() > 0) {
-					GameInfo g = (GameInfo) in.readObject();
-					queue.add(new Message(g, false, true));
-				}
-				// check for events to send to client
-				// listen for events from client, add them to queue
-			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
-			// complain
+		}
+		while (!done) {
+			try {
+				GameInfo g = (GameInfo) in.readObject();
+				queue.add(new Message(g, false, true));
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	public void updateClient(Message m) {
-		internalQueue.add(m);
+		try {
+			out.writeObject(m.getInfo());
+			out.flush();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void close() {

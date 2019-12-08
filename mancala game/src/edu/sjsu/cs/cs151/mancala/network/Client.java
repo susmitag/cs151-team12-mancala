@@ -38,30 +38,15 @@ public class Client implements Runnable
 	
 	public void run() {
 		GameInfo g;
-		
 		// send to server, get response, return response
-		try {
-			while (!done) {
-				System.out.println(done);
-				if (!internalQueue.isEmpty()) {
-					System.out.println("sending update");
-					Message m = internalQueue.take();
-					if (m instanceof Message) {
-						out.writeObject(m.getInfo());
-						out.flush();
-					}
-				}
-				if (in.available() > 0) {
-					System.out.println("recieving update");
-					g = (GameInfo) in.readObject();
-					System.out.println("it works!");
-					queue.add(new Message(g, true, false));
-				}
-				g = null;
+		while (!done) {
+			try {
+				g = (GameInfo) in.readObject();
+				queue.add(new Message(g, true, false));
 			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -78,6 +63,12 @@ public class Client implements Runnable
 	}
 	
 	public void addEvent(Message m) {
-		internalQueue.add(m);
+		try {
+			out.writeObject(m.getInfo());
+			out.flush();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
