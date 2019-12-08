@@ -14,6 +14,7 @@ import java.net.Socket;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ServerDriver {
+    static LinkedBlockingQueue<Message> receiveQueue = new LinkedBlockingQueue<Message>();
     static class ServerListener extends Thread {
         public static void main(String... args) throws IOException {
             ServerListener server = new ServerListener();
@@ -21,7 +22,6 @@ public class ServerDriver {
 
             Socket socketToServer = new Socket("localhost", 15000);
             ObjectOutputStream outStream = new ObjectOutputStream(socketToServer.getOutputStream());
-            LinkedBlockingQueue<Message> queue = new LinkedBlockingQueue<Message>();
 
             Game model = Game.getGame();
             ServerController controller = new ServerController(queue, model);
@@ -29,8 +29,10 @@ public class ServerDriver {
             ValveResponse response = ValveResponse.EXECUTED;
             while (response != ValveResponse.FINISHED && response != ValveResponse.EXIT) {
                 try {
-                    Message m = queue.take();
+                    Message m = receiveQueue.take();
                     response = gameValve.execute(m);
+                    Message responseMessage = gameValve.getResponseMessage();
+                    sendQueue.put(responseMessage);
                 }
                 catch (InterruptedException e) {
                     e.printStackTrace();
@@ -75,10 +77,13 @@ public class ServerDriver {
                 try {
                     Object o = inputStream.readObject();
                     System.out.println("Read object: "+o);
+                    receiveQueue.put((Message)o);
                 } catch (IOException e) {
                     e.printStackTrace();
 
                 } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
