@@ -24,13 +24,13 @@ public class PlayScreen
 	private JLayeredPane main= new JLayeredPane(); // consists of board plus options
 	private JPanel board = new JPanel(new BorderLayout()); // entire playing board
 	private VisualHole[] holes;
-	
+	private String serverAddress;
 	/**
 	 * Private constructor, nobody should create multiple instances. 
 	 * This constructor creates the main view window
 	 * @param queue queue to add event Messages to
 	 */
-	private PlayScreen(LinkedBlockingQueue<Message> queue) 
+	private PlayScreen(String serverAddress, LinkedBlockingQueue<Message> queue)
 	{
 		this.queue = queue;
 		frame = new JFrame("Mancala");
@@ -47,12 +47,12 @@ public class PlayScreen
 		
 		// creating holes
 		for (int i = 12; i > 6; i--) {
-			VisualHole vh = new VisualHole(i, queue);		//This is to ensure the holes have the correct index 	
+			VisualHole vh = new VisualHole(serverAddress, i, queue);		//This is to ensure the holes have the correct index
 			holes[i] = vh;									//	corresponding with the index used in the model
 			center.add(vh);
 		}
 		for (int i = 0; i < 6; i++) {
-			VisualHole vh = new VisualHole(i, queue);
+			VisualHole vh = new VisualHole(serverAddress, i, queue);
 			holes[i] = vh;
 			center.add(vh);
 		}
@@ -130,8 +130,9 @@ public class PlayScreen
 	 * @param queue queue to add event messages to
 	 * @return reference to this PlayScreen
 	 */
-	public static PlayScreen init(LinkedBlockingQueue<Message> queue) {
+	public static PlayScreen init(String serverAddress, LinkedBlockingQueue<Message> queue) {
 		PlayScreen ps = new PlayScreen(queue);
+		ps.serverAddress = serverAddress;
 		return ps;
 	}
 		

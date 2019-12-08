@@ -14,8 +14,8 @@ public class MancalaServer {
         try (ServerSocket listener = new ServerSocket(58901)) {
             System.out.println("Tic Tac Toe Server is Running...");
             ExecutorService pool = Executors.newFixedThreadPool(200);
+            Game model = Game.getGame();
             while (true) {
-                Game model = Game.getGame();
                 pool.execute(model.new Player(listener.accept()));
                 pool.execute(model.new Player(listener.accept()));
             }

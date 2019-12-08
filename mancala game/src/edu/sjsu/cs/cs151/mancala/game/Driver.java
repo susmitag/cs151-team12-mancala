@@ -5,6 +5,8 @@ import edu.sjsu.cs.cs151.mancala.view.*;
 import edu.sjsu.cs.cs151.mancala.view.introAnimation.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
 
+import java.util.Scanner;
+
 
 import java.util.concurrent.*;
 
@@ -12,8 +14,11 @@ public class Driver {
 
 	public static void main(String[] args) 
 	{
+		Scanner scanner = new Scanner(System.in);
+		System.out.print("Enter the server name (or IP address):\t");
+		String serverAddress = scanner.nextLine();
         LinkedBlockingQueue<Message> queue = new LinkedBlockingQueue<Message>();
-        PlayScreen view = PlayScreen.init(queue);
+        PlayScreen view = PlayScreen.init(serverAddress, queue);
 		IntroAnimation intro = new IntroAnimation(view);
 
 		Game model = Game.getGame();

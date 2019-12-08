@@ -1,5 +1,9 @@
 package edu.sjsu.cs.cs151.mancala.view;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
 import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.*;
@@ -16,8 +20,11 @@ public class VisualHole extends JLayeredPane
 		private LinkedBlockingQueue<Message> queue;
 		protected JPanel jp;
 		protected JLabel label;
+	    private Socket socket;
+	    private PrintWriter out;
+	    private ObjectOutputStream oos;
 
-		/*
+	/*
 		 * If no arguments, calls JLayeredPane constructor.
 		 */
 		public VisualHole() {
@@ -29,8 +36,11 @@ public class VisualHole extends JLayeredPane
 		 * @param index position on board
 		 * @param queue BlockingQueue to add even messages to
 		 */
-		public VisualHole(int index, LinkedBlockingQueue<Message> queue)
+		public VisualHole(String serverAddress, int index, LinkedBlockingQueue<Message> queue) throws Exception
 		{
+			socket = new Socket(serverAddress, 58901);
+			oos = new ObjectOutputStream(socket.getOutputStream());
+
 			this.queue = queue;
 			this.index = index;
 			isHoleActive = false;
@@ -66,7 +76,14 @@ public class VisualHole extends JLayeredPane
 			// on click, send game state to controller
 			jb.addActionListener(event ->
 					{
-						queue.add(new Message(new GameInfo(index)));
+						Message m = new Message(new GameInfo(index));
+						//queue.add(new Message(new GameInfo(index)));
+						try {
+							oos.writeObject(m);
+							oos.flush();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 					});
 
 			label = new JLabel(""+Board.INITIAL_HOLE_MARBLE_COUNT);

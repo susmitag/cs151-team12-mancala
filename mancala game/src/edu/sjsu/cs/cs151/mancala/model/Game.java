@@ -4,6 +4,8 @@ import edu.sjsu.cs.cs151.mancala.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -17,7 +19,6 @@ public class Game {
 	private static final Game instance = new Game();
 	private int playerWithTurn = 0;
 	private boolean turnChanged = true;
-	Socket socket;
 
 	/**
 	 * Private constructor to prevent creation of multiple games
@@ -191,14 +192,19 @@ public class Game {
 
 	public class Player implements Runnable {
 		Socket socket;
+		ObjectInputStream ois;
 
-		public Player(Socket socket) {
+		public Player(Socket socket) throws IOException {
 			this.socket = socket;
+			ois = new ObjectInputStream(socket.	getInputStream());
 		}
 
 		public void run() {
 			try {
-
+				Message m;
+				while ((m = (Message) ois.readObject()) != null) {
+					queue.add(m);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
@@ -208,7 +214,11 @@ public class Game {
 				}
 
 			}
+		} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
-	}
 
 	}
