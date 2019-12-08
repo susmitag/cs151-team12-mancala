@@ -36,6 +36,7 @@ public class Server implements Runnable
 			f.setMinimumSize(new Dimension(500, 100));
 			connection = socket.accept();
 			f.dispose();
+			JOptionPane.showMessageDialog(null, "Connected to client!");
 			out = new ObjectOutputStream(connection.getOutputStream());
 			in = new ObjectInputStream(connection.getInputStream());
 		}
@@ -48,7 +49,6 @@ public class Server implements Runnable
 				queue.add(new Message(g, false, true));
 			}
 			catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 	}

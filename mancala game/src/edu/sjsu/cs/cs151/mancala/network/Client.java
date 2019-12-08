@@ -5,6 +5,7 @@ import edu.sjsu.cs.cs151.mancala.controller.*;
 import java.util.concurrent.*;
 import java.io.*;
 import java.net.*;
+import javax.swing.*;
 
 public class Client implements Runnable
 {
@@ -31,7 +32,8 @@ public class Client implements Runnable
 			in = new ObjectInputStream(socket.getInputStream());
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error: could not connect", "Error", JOptionPane.ERROR_MESSAGE);
+			queue.add(new Message(new GameInfo(true)));
 			// complain
 		}
 	}
