@@ -39,4 +39,9 @@ public class Client implements Runnable {
             queue.add(new Message(g, false));
         }
     }
+
+    public void sendUserActionToServer(Message m) throws IOException {
+        oos.writeObject(m);
+        oos.flush();
+    }
 }
