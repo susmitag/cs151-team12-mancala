@@ -24,6 +24,7 @@ public class PlayScreen
 	private JLayeredPane main= new JLayeredPane(); // consists of board plus options
 	private JPanel board = new JPanel(new BorderLayout()); // entire playing board
 	private VisualHole[] holes;
+	private boolean isServer = false;
 	
 	/**
 	 * Private constructor, nobody should create multiple instances. 
@@ -124,6 +125,17 @@ public class PlayScreen
 	public void frameSetVisible () {
 	    frame.setVisible(true);
     }
+
+    public boolean getIsServer() {
+		return isServer;
+	}
+
+	public void setIsServer() {
+		isServer = true;
+		for (VisualHole h : holes) {
+			h.setIsServer(true);
+		}
+	}
 	
 	/**
 	 * Given a LinkedBlockingQueue, this method constructs a new view. This should only be called once.

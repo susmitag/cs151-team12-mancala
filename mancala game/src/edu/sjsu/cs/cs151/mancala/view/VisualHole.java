@@ -5,6 +5,8 @@ import java.awt.*;
 import java.util.concurrent.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
 import edu.sjsu.cs.cs151.mancala.model.Board;
+import edu.sjsu.cs.cs151.mancala.network.Client;
+
 /**
  * This class is a visual representation of a Hole.
  */
@@ -16,6 +18,8 @@ public class VisualHole extends JLayeredPane
 		private LinkedBlockingQueue<Message> queue;
 		protected JPanel jp;
 		protected JLabel label;
+	    private Client networkInstance = null;
+		private boolean isServer;
 
 		/*
 		 * If no arguments, calls JLayeredPane constructor.
@@ -66,7 +70,11 @@ public class VisualHole extends JLayeredPane
 			// on click, send game state to controller
 			jb.addActionListener(event ->
 					{
-						queue.add(new Message(new GameInfo(index)));
+						if(networkInstance != null){
+							queue.add(new Message(new GameInfo(index), isServer));
+						} else {
+							queue.add(new Message(new GameInfo(index)));
+						}
 					});
 
 			label = new JLabel(""+Board.INITIAL_HOLE_MARBLE_COUNT);
@@ -81,6 +89,14 @@ public class VisualHole extends JLayeredPane
 			this.setVisible(true);
 			mg = new MarbleGroup(4, index, false);
 			this.add(mg, JLayeredPane.PALETTE_LAYER);
+		}
+
+		public void setIsServer(boolean isServer) {
+			this.isServer = isServer;
+		}
+
+		public boolean getIsServer () {
+			return isServer;
 		}
 		
 		/**

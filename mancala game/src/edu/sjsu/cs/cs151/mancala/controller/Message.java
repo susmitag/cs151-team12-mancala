@@ -16,6 +16,10 @@ public class Message {
 		this.isServer = isServer;
 		this.info = info;
 	}
+
+	public Message(GameInfo info) {
+		this.info = info;
+	}
 	
 	public GameInfo getInfo() {
 		return info;
