@@ -86,6 +86,7 @@ public class Controller
 			model = null; // remove references so it will be garbage collected
 			client =  new Client(view, queue, info.getHost(), info.getPort());    // object to communicate with
 			view.setClient(client);		
+			service.execute(client);
 		}
 		else if (gameType == SetupDialog.NEW_NETWORK_GAME) {
 			server = new Server(queue);
@@ -101,8 +102,8 @@ public class Controller
 	 * @param m message with game state
 	 * @return message with updated game state
 	 */
-	public Message sendEventAsClient(Message m) {
-		return client.addEvent(m);
+	public void sendEventAsClient(Message m) {
+		client.addEvent(m);
 	}
 	
 	/**

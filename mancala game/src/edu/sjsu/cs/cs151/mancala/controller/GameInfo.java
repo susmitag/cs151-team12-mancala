@@ -1,11 +1,13 @@
 package edu.sjsu.cs.cs151.mancala.controller;
 
+import java.io.*;
+
 /**
  * This class contains information about the current state of the game/
  * @author user
  *
  */
-public class GameInfo {
+public class GameInfo implements Serializable {
 	public static final int UNASSIGNED = 15; // outside of hole index range
 	private int chosenHole = UNASSIGNED;
 	private int[] marbleCounts;

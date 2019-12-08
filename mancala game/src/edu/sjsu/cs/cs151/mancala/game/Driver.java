@@ -42,7 +42,7 @@ public class Driver {
 				// complain
 			}
 		}
-		
+
 		view.addActionListeners(); // adds action listeners to all holes that arent disabled
 		UpdateGameStateValve gameValve = new UpdateGameStateValve(controller);
 		ValveResponse response = ValveResponse.EXECUTED;

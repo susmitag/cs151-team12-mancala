@@ -33,15 +33,13 @@ public class Server implements Runnable
 			out = new ObjectOutputStream(connection.getOutputStream());
 			in = new ObjectInputStream(connection.getInputStream());
 			Message m;
-			System.out.println(internalQueue.isEmpty());
 			while (!done) {
-				System.out.println(internalQueue.isEmpty());
 				if (!internalQueue.isEmpty()) {
-					System.out.println("got message");
 					m = internalQueue.take();
-					System.out.println(m.getInfo());
+					System.out.println(m.getInfo().getChosenHole());
 					out.writeObject(m.getInfo());
 					out.flush();
+					System.out.println("Sent");
 				}
 				if (in.available() > 0) {
 					GameInfo g = (GameInfo) in.readObject();

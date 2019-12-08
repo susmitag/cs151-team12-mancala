@@ -29,6 +29,7 @@ public class UpdateGameStateValve implements Valve {
 		if (m.getInfo().getGameEnded() && m.getInfo().isEarly())
 			return ValveResponse.EXIT;
 		try {
+			System.out.println("1 "+m.getInfo().getChosenHole());
 			if (m.isClient()) {
 				if (m.getInfo().getChosenHole() == GameInfo.UNASSIGNED) // chosenHole is unassigned when the message comes from the server
 					controller.updateView(m);
@@ -44,6 +45,7 @@ public class UpdateGameStateValve implements Valve {
 					controller.sendEventAsServer(m);
 				}
 			}
+			System.out.println("2 "+m.getInfo().getChosenHole());
 			controller.updateView(m);
 			isOver = m.getInfo().getGameEnded();
 		}
