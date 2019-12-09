@@ -17,6 +17,8 @@ public class Server implements Runnable {
     private ObjectOutputStream oos; //For sending model updates to client
     private LinkedBlockingQueue<Message> queue;
     private boolean done = false;
+    private String hostname = "localhost";
+    private int port = 1111;
 
     public Server(LinkedBlockingQueue<Message> queue) {
         this.queue = queue;
@@ -58,5 +60,13 @@ public class Server implements Runnable {
     public void sendResponseToClient (Message m) throws IOException {
         oos.writeObject(m.getInfo());
         oos.flush();
+    }
+
+    public void setHostname (String hostname) {
+        this.hostname = hostname;
+    }
+
+    public void setPort (int port) {
+        this.port = port;
     }
 }

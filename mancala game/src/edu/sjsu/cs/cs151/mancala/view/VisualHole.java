@@ -91,6 +91,10 @@ public class VisualHole extends JLayeredPane
 			this.add(mg, JLayeredPane.PALETTE_LAYER);
 		}
 
+		public void setNetworkInstance (Client networkInstance) {
+			this.networkInstance = networkInstance;
+		}
+
 		public void setIsServer(boolean isServer) {
 			this.isServer = isServer;
 		}

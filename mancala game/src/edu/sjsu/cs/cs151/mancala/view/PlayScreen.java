@@ -5,6 +5,7 @@ import java.awt.*;
 import java.util.concurrent.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
 import edu.sjsu.cs.cs151.mancala.model.Board;
+import edu.sjsu.cs.cs151.mancala.network.Client;
 
 /*
  * This class represents the main window for the Mancala game. 
@@ -25,6 +26,7 @@ public class PlayScreen
 	private JPanel board = new JPanel(new BorderLayout()); // entire playing board
 	private VisualHole[] holes;
 	private boolean isServer = false;
+	private Client networkInstance = null;
 	
 	/**
 	 * Private constructor, nobody should create multiple instances. 
@@ -134,6 +136,13 @@ public class PlayScreen
 		isServer = true;
 		for (VisualHole h : holes) {
 			h.setIsServer(true);
+		}
+	}
+
+	public void setNetworkInstance (Client networkInstance) {
+		this.networkInstance = networkInstance;
+		for(VisualHole h:holes){
+			h.setNetworkInstance(networkInstance);
 		}
 	}
 	
