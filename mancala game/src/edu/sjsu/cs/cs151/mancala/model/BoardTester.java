@@ -5,8 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-class BoardTester {
-
+public class BoardTester {
     @Test
     public void testBoard() {
         Board testBoard = new Board();
@@ -39,7 +38,7 @@ class BoardTester {
         Hole h = testBoard.getHoleAt(6);
         assertEquals(testBoard.checkIfStore(h), true); // should pass
     }
-    
+
     //This functionality has been removed
 /*
     @Test
@@ -49,7 +48,6 @@ class BoardTester {
         assertTrue("Last index is less than 0", 0 < index);
         assertTrue("Last index is greater than 13", 13 > index);
     }
-
     @Test
     void testSetLastHoleIndex() {
         Board b = new Board();

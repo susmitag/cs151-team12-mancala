@@ -3,6 +3,9 @@ package edu.sjsu.cs.cs151.mancala.model;
 import edu.sjsu.cs.cs151.mancala.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
 
+import java.io.IOException;
+import java.net.Socket;
+
 /**
  * A Game object represents a single mancala game between two players.
  * Currently incomplete due to GUI and network problems needed to solve first
@@ -14,6 +17,7 @@ public class Game {
 	private static final Game instance = new Game();
 	private int playerWithTurn = 0;
 	private boolean turnChanged = true;
+	Socket socket;
 
 	/**
 	 * Private constructor to prevent creation of multiple games
@@ -184,4 +188,27 @@ public class Game {
 		int numberOfHoles = Board.AMOUNT_OF_HOLES;
 		return (checkSideEmpty(0, numberOfHoles/2 - 1)) || (checkSideEmpty(numberOfHoles/2, numberOfHoles));
 	}
-}
+
+	public class Player implements Runnable {
+		Socket socket;
+
+		public Player(Socket socket) {
+			this.socket = socket;
+		}
+
+		public void run() {
+			try {
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					socket.close();
+				} catch (IOException e) {
+				}
+
+			}
+		}
+	}
+
+	}

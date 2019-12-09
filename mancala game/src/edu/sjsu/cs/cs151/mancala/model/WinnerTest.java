@@ -4,13 +4,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class winnerTest {
+public class WinnerTest {
 
-	@Test
-	void test() {
-		Player test = new Player();
-		boolean output = test.winner();
-		assertEquals(false, output);
-	}
+    @Test
+    void test() {
+        Player test = new Player();
+        boolean output = test.winner();
+        assertEquals(false, output);
+    }
 
 }
