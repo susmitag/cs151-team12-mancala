@@ -1,7 +1,8 @@
 package edu.sjsu.cs.cs151.mancala.view.introAnimation;
 
 import edu.sjsu.cs.cs151.mancala.view.PlayScreen;
-
+import edu.sjsu.cs.cs151.mancala.view.SetupDialog;
+import edu.sjsu.cs.cs151.mancala.controller.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,7 +35,7 @@ public class IntroAnimation {
 	 * Constructs a new IntroAnimation
 	 * @param ps view to start after
 	 */
-	public IntroAnimation(PlayScreen ps) 
+	public IntroAnimation(PlayScreen ps, Controller controller) 
 	{
 		frame = new JFrame();
 		main = new JPanel();
@@ -80,8 +81,9 @@ public class IntroAnimation {
 		JButton startButton = new JButton("Start Game");
 		startButton.addActionListener(event ->
 		{
-			close();
-			ps.frameSetVisible();
+			controller.setup(SetupDialog.question());		// must give setup info to controller
+			close();											// closes intro animation
+			ps.setFrameVisible();								// sets view visible		
 		});
 		startButton.setBackground(Color.DARK_GRAY);
 		startButton.setForeground(Color.WHITE);

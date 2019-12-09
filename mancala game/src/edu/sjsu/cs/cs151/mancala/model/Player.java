@@ -1,9 +1,13 @@
 package edu.sjsu.cs.cs151.mancala.model;
+
 import edu.sjsu.cs.cs151.mancala.*;
 
 public class Player {
 
-    private static int INITIAL_HOLE_MARBLE_COUNT = 4;
+	public static final int PLAYER1_START_INDEX = 0;
+	public static final int PLAYER1_END_INDEX = 5;
+	public static final int PLAYER2_START_INDEX = 7;
+	public static final int PLAYER2_END_INDEX = 12;
     private Store store;
     
     /**

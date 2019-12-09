@@ -1,5 +1,7 @@
 package edu.sjsu.cs.cs151.mancala.controller;
 
+import javax.swing.JOptionPane;
+
 import edu.sjsu.cs.cs151.mancala.MancalaException;
 
 /**
@@ -25,11 +27,49 @@ public class UpdateGameStateValve implements Valve {
 	 */
 	public ValveResponse execute(Message m) {
 		boolean isOver;
-		if (m.getInfo().getGameEnded() && m.getInfo().isEarly())
+		boolean server = false;
+		if (m.getInfo().getGameEnded() && m.getInfo().isEarly()) 
+		{
+			boolean quit = m.getInfo().didQuit();
+			if (m.isClient()) {
+				if (!quit) {
+					GameInfo g = new GameInfo(true);
+					g.setQuit(true);
+					controller.sendEventAsClient(new Message(g));
+				}
+				else
+					JOptionPane.showMessageDialog(null, "The other player quit the game. That means you win!");
+			}
+			else if (m.isServer()) {
+				if (!quit) {
+					GameInfo g = new GameInfo(true);
+					g.setQuit(true);
+					controller.sendEventAsServer(new Message(g));
+				}
+				else
+					JOptionPane.showMessageDialog(null, "The other player quit the game. That means you win!");
+			}
+			controller.disconnect();
 			return ValveResponse.EXIT;
+		}
 		try {
-			m = controller.updateModel(m);
-			controller.updateView(m);
+			if (m.isClient()) {
+				if (m.getInfo().getChosenHole() == GameInfo.UNASSIGNED) // chosenHole is unassigned when the message comes from the server
+					controller.updateView(m);
+				else  // if message not from server, it must be from view
+					controller.sendEventAsClient(m);
+			}
+			else {
+				if (m.isServer())
+					server = true;
+				m = controller.updateModel(m);
+				m.setServer(server);
+				if (m.isServer()) {
+					controller.sendEventAsServer(m);
+				}
+			}
+			if (!m.isClient())
+				controller.updateView(m);
 			isOver = m.getInfo().getGameEnded();
 		}
 		catch (MancalaException e) {

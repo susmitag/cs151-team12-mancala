@@ -5,6 +5,8 @@ import java.awt.*;
 import java.util.concurrent.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
 import edu.sjsu.cs.cs151.mancala.model.Board;
+import edu.sjsu.cs.cs151.mancala.network.*;
+
 /**
  * This class is a visual representation of a Hole.
  */
@@ -13,9 +15,13 @@ public class VisualHole extends JLayeredPane
 		protected int index;
 		protected boolean isHoleActive;
 		protected MarbleGroup mg;
-		private LinkedBlockingQueue<Message> queue;
 		protected JPanel jp;
 		protected JLabel label;
+		protected JButton jb;
+		private LinkedBlockingQueue<Message> queue;
+		private Client client = null;
+		private boolean isServer = false;
+		private boolean disabled = false;
 
 		/*
 		 * If no arguments, calls JLayeredPane constructor.
@@ -40,7 +46,7 @@ public class VisualHole extends JLayeredPane
 			jp.setBackground(Color.GRAY);
 			
 			// draw circle on button to represent hole
-			JButton jb = new JButton(new Icon()
+			jb = new JButton(new Icon()
 				{
 					public void paintIcon(Component c, Graphics g, int x, int y) {
 						Graphics2D g2 = (Graphics2D)g;
@@ -62,12 +68,6 @@ public class VisualHole extends JLayeredPane
 			jb.setFocusPainted(false);
 			jb.setBackground(Color.GRAY);
 			jb.setFocusable(false);
-			
-			// on click, send game state to controller
-			jb.addActionListener(event ->
-					{
-						queue.add(new Message(new GameInfo(index)));
-					});
 
 			label = new JLabel(""+Board.INITIAL_HOLE_MARBLE_COUNT);
 			label.setHorizontalTextPosition(JLabel.CENTER);
@@ -107,7 +107,64 @@ public class VisualHole extends JLayeredPane
 		 * Sets Hole's active state
 		 * @param state state to set
 		 */
-		public void setHoleActive (boolean state) {
+		public void setHoleActive(boolean state) {
 		    isHoleActive = state;
         }
+		
+		/**
+		 * Sets client variable for client in a network game
+		 * @param client Client object to communicate with the Server with
+		 */
+		public void setClient(Client client) {
+			this.client = client;
+		}
+		/**
+		 * Sets isServer value
+		 * @param p true if this Hole belongs to server
+		 */
+		public void setServer(boolean p) {
+			isServer = p;
+		}
+		
+		/**
+		 * Returns this holes's button status
+		 * @return true if this hole is disabled
+		 */
+		public boolean isDisabled() {
+			return disabled;
+		}
+		
+		/**
+		 * Adds an action listener to jb that add messaged to the queue
+		 */
+		public void addActionListener() {
+			// on click, send game state to controller
+			if (!disabled) {
+				jb.addActionListener(event ->
+						{
+							if (client instanceof Client) 		 // client is initialized only in client's view
+									queue.add(new Message(new GameInfo(index), true, false));
+							else if (isServer)  // server is only initialized in server's view
+									queue.add(new Message(new GameInfo(index), false, true));						
+							else
+								queue.add(new Message(new GameInfo(index)));
+						});
+			}
+		}
+		
+		/**
+		 * Sets the disabled variable
+		 * @param hole's disabled state
+		 */
+		public void setDisabled(boolean d) {
+			disabled = d;
+		}
+		
+		/**
+		 * Returns the amount of marbles in this hole
+		 * @return number of marbles in this hole
+		 */
+		public int getCount() {
+			return mg.getCount();
+		}
 }

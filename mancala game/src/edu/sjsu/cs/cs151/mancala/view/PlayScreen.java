@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
-import edu.sjsu.cs.cs151.mancala.model.Board;
+import edu.sjsu.cs.cs151.mancala.model.*; // only used for constants
+import edu.sjsu.cs.cs151.mancala.network.*;
 
 /*
  * This class represents the main window for the Mancala game. 
@@ -24,6 +25,8 @@ public class PlayScreen
 	private JLayeredPane main= new JLayeredPane(); // consists of board plus options
 	private JPanel board = new JPanel(new BorderLayout()); // entire playing board
 	private VisualHole[] holes;
+	private Client client = null; 		// this is only set on client-side network games
+	private boolean isServer = false;
 	
 	/**
 	 * Private constructor, nobody should create multiple instances. 
@@ -45,10 +48,10 @@ public class PlayScreen
 		options = new JPanel();
 		center.setLayout(new GridLayout(2,6));
 		
-		// creating holes
+		// creating holes, two loops to ensure indices match
 		for (int i = 12; i > 6; i--) {
-			VisualHole vh = new VisualHole(i, queue);		//This is to ensure the holes have the correct index 	
-			holes[i] = vh;									//	corresponding with the index used in the model
+			VisualHole vh = new VisualHole(i, queue); 
+			holes[i] = vh;								
 			center.add(vh);
 		}
 		for (int i = 0; i < 6; i++) {
@@ -98,7 +101,7 @@ public class PlayScreen
 		instructions.setPreferredSize(new Dimension(55,55));
 		instructions.setBackground(Color.lightGray);
 		instructions.addActionListener(event -> 
-			new JOptionPane().showMessageDialog(null, new RulesDialog(), "Mancala Rules", JOptionPane.INFORMATION_MESSAGE));
+			JOptionPane.showMessageDialog(null, new RulesDialog(), "Mancala Rules", JOptionPane.INFORMATION_MESSAGE));
 		JButton quit = new JButton("X");
 		quit.setPreferredSize(new Dimension(55,55));		
 		quit.setBackground(Color.lightGray);
@@ -119,9 +122,13 @@ public class PlayScreen
 		frame.setMinimumSize(new Dimension(800, 550));
 		frame.setMaximumSize(new Dimension(1100, 800));
 		frame.pack();
+
 	}
 
-	public void frameSetVisible () {
+	/**
+	 * Sets the main window's visibility
+	 */
+	public void setFrameVisible () {
 	    frame.setVisible(true);
     }
 	
@@ -154,12 +161,15 @@ public class PlayScreen
 	 * Displays the winner of the game in a popup dialog
 	 * @param winnerIndex the store index of the player who won
 	 */
-	public void displayWinner(int winnerIndex) {
+	public void displayWinner() {
 		String winner;
-		if (winnerIndex == Board.PLAYER1_STORE_INDEX)
+		if (holes[Board.PLAYER1_STORE_INDEX].getCount() > holes[Board.PLAYER2_STORE_INDEX].getCount())
 			winner = "Player1";
-		else 
+		else if (holes[Board.PLAYER2_STORE_INDEX].getCount() > holes[Board.PLAYER1_STORE_INDEX].getCount())
 			winner = "Player2";
+		else
+			winner = "Nobody";
+		System.out.println("p1: "+  holes[Board.PLAYER1_STORE_INDEX].getCount() +"\np2: " +  holes[Board.PLAYER2_STORE_INDEX].getCount());
 		GameoverDialog go = new GameoverDialog(winner);
 	}
 	
@@ -198,6 +208,31 @@ public class PlayScreen
 	}
 
 	/**
+	 * Disables action listeners on player1's holes
+	 */
+	public void disablePlayer1Holes() {
+		disableHoles(Player.PLAYER1_START_INDEX, Player.PLAYER1_END_INDEX);
+	}
+
+	/**
+	 * Disables action listeners on player1's holes
+	 */
+	public void disablePlayer2Holes() {
+		disableHoles(Player.PLAYER2_START_INDEX, Player.PLAYER2_END_INDEX);	
+	}
+
+	/**
+	 * Disables action listeners on holes in the given range
+	 * @param start first hole to disable 
+	 * @param end last hole to disable
+	 */
+	private void disableHoles(int start, int end) {
+		for (int i = start; i <= end; i++) {
+			holes[i].setDisabled(true);
+		}
+	}
+	
+	/**
 	 * Changes color of player JLabel depending on whose turn it is
 	 * @param g GameInfo with turn information
 	 */
@@ -211,8 +246,66 @@ public class PlayScreen
 		}
 	}
 	
+	/**
+	 * Returns a reference to queue
+	 * @return queue
+	 */
 	public LinkedBlockingQueue<Message> getQueue() {
 		return queue;
+	}
+	
+	/**
+	 * Sets client variable and passes reference to each of the VisualHoles that aren't a VisualStore. 
+	 * 	removes action listeners on player1 buttons to prevent cheating
+	 * @param client client to add events to
+	 */
+	public void setClient(Client client) {
+		this.client = client;
+		for (VisualHole h: holes) {
+			if (h instanceof VisualStore)
+				continue;
+			h.setClient(client);
+		}
+	}
+	
+	/**
+	 * Sets isServer variable on each of the VisualHoles that aren't a VisualStore. 
+	 */
+	public void setServer() {
+		isServer = true;
+		for (VisualHole h: holes) {
+			if (h instanceof VisualStore)
+				continue;
+			h.setServer(true);
+		}
+	}
+	
+	/**
+	 * @return true is this view belongs to a server
+	 */
+	public boolean isServer() {
+		return isServer;
+	}
+	
+	/**
+	 * Adds actionListeners to all of the Holes
+	 */
+	public void addActionListeners() {
+		for (int i = 0; i < Board.AMOUNT_OF_HOLES; i++) {
+			if (i == Board.PLAYER1_STORE_INDEX || i == Board.PLAYER2_STORE_INDEX) 
+				continue;		// no action listeners on stores
+			else
+				holes[i].addActionListener();
+		}
+	}
+	
+	/**
+	 * Returns a reference to client (Warning: this is null if this 
+	 * 	view is running on a server or local instance of the game)
+	 * @return the client this view communicates with 
+	 */
+	public Client getClient() {
+		return client;
 	}
 	
 }

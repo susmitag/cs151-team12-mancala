@@ -42,16 +42,6 @@ public class Game {
 	}
 	
 	/**
-	 * Returns the index of the winning player's store
-	 * @return index of store with the most marbles
-	 */
-	public int getWinnerIndex() {
-		if (board.getPlayer1Store().getMarblecount() > board.getPlayer2Store().getMarblecount())
-			return Board.PLAYER1_STORE_INDEX;
-		else 
-			return Board.PLAYER2_STORE_INDEX;
-	}
-	/**
 	 * Gives a Message containing info about the number of marbles in each hole,
 	 * whether the current player changed and the changed current player
 	 * 	The index of the array corresponds with the index of the Hole

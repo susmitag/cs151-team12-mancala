@@ -1,18 +1,22 @@
 package edu.sjsu.cs.cs151.mancala.controller;
 
+import java.io.*;
+
 /**
  * This class contains information about the current state of the game/
  * @author user
  *
  */
-public class GameInfo {
-	private int chosenHole;
+public class GameInfo implements Serializable {
+	public static final int UNASSIGNED = 15; // outside of hole index range
+	private int chosenHole = UNASSIGNED;
 	private int[] marbleCounts;
 	public boolean[] activeStates;
 	private boolean turnChanged;
 	private int playerWithTurn;
-	private boolean gameEnded;
+	private boolean gameEnded = false;
 	private boolean exitEarly = false;
+	private boolean quit = false;
 	
 	/**
 	 * Constructed by view, contains information about which hole has been chosen.
@@ -20,7 +24,6 @@ public class GameInfo {
 	 */
 	public GameInfo(int chosenHole) {
 		this.chosenHole = chosenHole;
-		marbleCounts = null;
 	}
 	
 	/**
@@ -46,7 +49,6 @@ public class GameInfo {
 		this.turnChanged = turnChanged;
 		this.playerWithTurn = playerWithTurn;
 		this.gameEnded = gameEnded;
-		chosenHole = -1;
 	}
 	
 	public int getChosenHole() {
@@ -57,13 +59,31 @@ public class GameInfo {
 		return marbleCounts;
 	}
 
-	public boolean[] getActiveStates() { return activeStates; }
+	public boolean[] getActiveStates() { 
+		return activeStates; 
+	}
 
-	public boolean getTurnChanged() { return turnChanged; }
+	public boolean getTurnChanged() { 
+		return turnChanged; 
+	}
 
-	public int getPlayerWithTurn() { return playerWithTurn; }
+	public int getPlayerWithTurn() { 
+		return playerWithTurn; 
+	}
 
-	public boolean getGameEnded() { return gameEnded; }
+	public boolean getGameEnded() { 
+		return gameEnded; 
+	}
 	
-	public boolean isEarly() { return exitEarly; }
+	public boolean isEarly() { 
+		return exitEarly; 
+	}
+	
+	public boolean didQuit() {
+		return quit;
+	}
+	
+	public void setQuit(boolean p) {
+		quit = p;
+	}
 }

@@ -4,6 +4,7 @@ import edu.sjsu.cs.cs151.mancala.model.*;
 import edu.sjsu.cs.cs151.mancala.view.*;
 import edu.sjsu.cs.cs151.mancala.view.introAnimation.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
+import edu.sjsu.cs.cs151.mancala.network.*;
 
 
 import java.util.concurrent.*;
@@ -14,10 +15,37 @@ public class Driver {
 	{
         LinkedBlockingQueue<Message> queue = new LinkedBlockingQueue<Message>();
         PlayScreen view = PlayScreen.init(queue);
-		IntroAnimation intro = new IntroAnimation(view);
-
 		Game model = Game.getGame();
 		Controller controller = new Controller(queue, view, model);
+		IntroAnimation intro = new IntroAnimation(view, controller);
+		Client client = null;
+		Server server = null;
+		
+		int gameType = controller.getGameType();		// until player chooses, the gameType is UNASSIGNED
+		while (gameType == Controller.UNASSIGNED) 
+			gameType = controller.getGameType();
+		
+		if (gameType == SetupDialog.NEW_LOCAL_GAME) {
+		}
+		
+		else if (gameType == SetupDialog.NEW_NETWORK_GAME) {
+			server = controller.getServer();
+			if (server == null) {
+				// complain
+			}
+			view.disablePlayer2Holes(); // disable other players holes to prevent cheating
+		}
+		
+		else if (gameType == SetupDialog.CONNECT_TO_GAME) {
+			model = null; 			// server keeps track of model. this one can be garbage collected
+			view.disablePlayer1Holes();
+			client = controller.getClient();
+			if (client == null) {
+				// complain
+			}
+		}
+
+		view.addActionListeners(); // adds action listeners to all holes that arent disabled
 		UpdateGameStateValve gameValve = new UpdateGameStateValve(controller);
 		ValveResponse response = ValveResponse.EXECUTED;
 		while (response != ValveResponse.FINISHED && response != ValveResponse.EXIT) {
@@ -29,8 +57,8 @@ public class Driver {
 				e.printStackTrace();
 			}
 		}
-		if (response != ValveResponse.EXIT)
-			view.displayWinner(model.getWinnerIndex());
+		if (response != ValveResponse.EXIT) 
+			view.displayWinner();
 		view.close();
 		queue.clear();
 		System.exit(0);
