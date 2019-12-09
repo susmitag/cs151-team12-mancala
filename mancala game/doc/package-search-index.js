@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"edu.sjsu.cs.cs151.mancala"},{"l":"edu.sjsu.cs.cs151.mancala.controller"},{"l":"edu.sjsu.cs.cs151.mancala.game"},{"l":"edu.sjsu.cs.cs151.mancala.model"},{"l":"edu.sjsu.cs.cs151.mancala.network"},{"l":"edu.sjsu.cs.cs151.mancala.view"},{"l":"edu.sjsu.cs.cs151.mancala.view.introAnimation"}]
