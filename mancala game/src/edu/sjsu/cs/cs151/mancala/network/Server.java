@@ -70,8 +70,8 @@ public class Server implements Runnable
 	 */
 	public void updateClient(Message m) {
 		try {
-			while (out == null ) {}
-			out.writeObject(m.getInfo());
+			while (out == null ) {} // only null in beginning of game. This validates moves
+			out.writeObject(m.getInfo()); // taken by the server before the client connects 
 			out.flush();
 		}
 		catch (Exception e) {
