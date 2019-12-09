@@ -95,10 +95,18 @@ public class Server implements Runnable
 		done = true;
 	}
 	
+	/**
+	 * Sets host variable
+	 * @param host hostname of socket (should be localhost)
+	 */
 	public void setHost(String host) {
 		this.host = host;
 	}
 	
+	/**
+	 * Sets port variable
+	 * @param port used in socket
+	 */
 	public void setPort(int port) {
 		this.port = port;
 	}

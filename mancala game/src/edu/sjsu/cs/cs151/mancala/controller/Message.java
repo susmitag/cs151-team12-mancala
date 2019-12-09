@@ -28,18 +28,31 @@ public class Message {
 		this.isServer = isServer;
 	}
 	
+	/**
+	 * @return true if this message belongs to a client instance of the game
+	 */
 	public boolean isClient() {
 		return isClient;
 	}
 	
+	/**
+	 * @return true if this message belongs to a server instance of the game
+	 */
 	public boolean isServer() {
 		return isServer;
 	}
 	
+	/**
+	 * @return GameInfo that this message carries
+	 */
 	public GameInfo getInfo() {
 		return info;
 	}
 	
+	/**
+	 * Sets the isServer field
+	 * @param t true if this is a server
+	 */
 	public void setServer(boolean t) {
 		isServer = t;
 	}

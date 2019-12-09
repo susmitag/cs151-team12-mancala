@@ -142,9 +142,9 @@ public class Controller
 	 * Disconnects server and client sockets
 	 */
 	public void disconnect() {
-	//	if (client instanceof Client)
-	//		client.close();
-	//	if (server instanceof Server)
-	//		server.close();
+		if (client instanceof Client)
+			client.close();
+		if (server instanceof Server)
+			server.close();
 	}
 }

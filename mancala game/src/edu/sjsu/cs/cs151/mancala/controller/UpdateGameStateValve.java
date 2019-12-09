@@ -28,6 +28,9 @@ public class UpdateGameStateValve implements Valve {
 	public ValveResponse execute(Message m) {
 		boolean isOver;
 		boolean server = false;
+		/*
+		 * This section is to handle when a player quit the game early
+		 */
 		if (m.getInfo().getGameEnded() && m.getInfo().isEarly()) 
 		{
 			boolean quit = m.getInfo().didQuit();
@@ -52,6 +55,9 @@ public class UpdateGameStateValve implements Valve {
 			controller.disconnect();
 			return ValveResponse.EXIT;
 		}
+		/*
+		 * This section is the actual processing of messages
+		 */
 		try {
 			if (m.isClient()) {
 				if (m.getInfo().getChosenHole() == GameInfo.UNASSIGNED) // chosenHole is unassigned when the message comes from the server

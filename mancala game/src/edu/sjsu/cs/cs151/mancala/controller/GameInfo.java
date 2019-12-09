@@ -51,38 +51,66 @@ public class GameInfo implements Serializable {
 		this.gameEnded = gameEnded;
 	}
 	
+	/**
+	 * @return chosenHole variable if set, UNASSIGNED otherwise
+	 */
 	public int getChosenHole() {
 		return chosenHole;
 	}
 	
+	/**
+	 * @return marbleCounts variable if set, null otherwise
+	 */
 	public int[] getMarbleCounts() {
 		return marbleCounts;
 	}
 
+	/**
+	 * @return activeStates variable if set, null otherwise
+	 */
 	public boolean[] getActiveStates() { 
 		return activeStates; 
 	}
 
+	/**
+	 * @return true if turn has changed
+	 */
 	public boolean getTurnChanged() { 
 		return turnChanged; 
 	}
 
+	/**
+	 * @return 1 if player1 has the turn, 2 for player2
+	 */
 	public int getPlayerWithTurn() { 
 		return playerWithTurn; 
 	}
 
+	/**
+	 * @return true if the game is over
+	 */
 	public boolean getGameEnded() { 
 		return gameEnded; 
 	}
 	
+	/**
+	 * @return true if a player quit the game early
+	 */
 	public boolean isEarly() { 
 		return exitEarly; 
 	}
 	
+	/**
+	 * @return return true if the other player quit the game
+	 */
 	public boolean didQuit() {
 		return quit;
 	}
 	
+	/**
+	 * Sets quit variable
+	 * @param p true if this player quit the game
+	 */
 	public void setQuit(boolean p) {
 		quit = p;
 	}
