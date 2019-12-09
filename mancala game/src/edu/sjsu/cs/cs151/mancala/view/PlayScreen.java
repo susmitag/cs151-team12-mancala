@@ -165,8 +165,11 @@ public class PlayScreen
 		String winner;
 		if (holes[Board.PLAYER1_STORE_INDEX].getCount() > holes[Board.PLAYER2_STORE_INDEX].getCount())
 			winner = "Player1";
+		else if (holes[Board.PLAYER2_STORE_INDEX].getCount() > holes[Board.PLAYER1_STORE_INDEX].getCount())
+			winner = "Player2";
 		else
-			winner = "Player1";
+			winner = "Nobody";
+		System.out.println("p1: "+  holes[Board.PLAYER1_STORE_INDEX].getCount() +"\np2: " +  holes[Board.PLAYER2_STORE_INDEX].getCount());
 		GameoverDialog go = new GameoverDialog(winner);
 	}
 	

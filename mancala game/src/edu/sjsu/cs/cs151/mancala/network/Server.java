@@ -45,9 +45,10 @@ public class Server implements Runnable
 			f.setVisible(true);
 			f.setMinimumSize(new Dimension(500, 100));
 			connection = socket.accept();
+			out = new ObjectOutputStream(connection.getOutputStream());
+			out.flush();
 			f.dispose();
 			JOptionPane.showMessageDialog(null, "Connected to client!");
-			out = new ObjectOutputStream(connection.getOutputStream());
 			in = new ObjectInputStream(connection.getInputStream());
 		}
 		catch (Exception e) {
@@ -69,6 +70,7 @@ public class Server implements Runnable
 	 */
 	public void updateClient(Message m) {
 		try {
+			while (out == null ) {}
 			out.writeObject(m.getInfo());
 			out.flush();
 		}
