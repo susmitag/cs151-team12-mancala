@@ -25,4 +25,7 @@ public class Message {
 		return info;
 	}
 
+	public boolean getIsServer() { return isServer; }
+
+	public void setIsServer(boolean isServer) { this.isServer = isServer; }
 }

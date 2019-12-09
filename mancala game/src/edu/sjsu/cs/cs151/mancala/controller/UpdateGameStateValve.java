@@ -2,6 +2,8 @@ package edu.sjsu.cs.cs151.mancala.controller;
 
 import edu.sjsu.cs.cs151.mancala.MancalaException;
 
+import java.io.IOException;
+
 /**
  * This class is an abstraction for events that occur during the game
  */
@@ -28,11 +30,22 @@ public class UpdateGameStateValve implements Valve {
 		if (m.getInfo().getGameEnded() && m.getInfo().isEarly())
 			return ValveResponse.EXIT;
 		try {
-			m = controller.updateModel(m);
-			controller.updateView(m);
+			if(m.getIsServer()){
+				m = controller.updateModel(m);
+				m.setIsServer(true);
+				controller.sendResponseFromServerToClient(m);
+				controller.updateView(m);
+			} else {
+				if (m.getInfo().getChosenHole() == GameInfo.NOT_USED){
+					controller.updateView(m);
+				} else {
+					controller.sendUserActionFromClientToServer(m);
+				}
+			}
+
 			isOver = m.getInfo().getGameEnded();
 		}
-		catch (MancalaException e) {
+		catch (MancalaException | IOException e) {
 			e.printStackTrace();
 			//error dialog?
 			return ValveResponse.MISS;

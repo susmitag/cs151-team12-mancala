@@ -13,6 +13,7 @@ public class GameInfo {
 	private int playerWithTurn;
 	private boolean gameEnded;
 	private boolean exitEarly = false;
+	public static final int NOT_USED = -1;
 	
 	/**
 	 * Constructed by view, contains information about which hole has been chosen.
@@ -46,7 +47,7 @@ public class GameInfo {
 		this.turnChanged = turnChanged;
 		this.playerWithTurn = playerWithTurn;
 		this.gameEnded = gameEnded;
-		chosenHole = -1;
+		chosenHole = NOT_USED;
 	}
 	
 	public int getChosenHole() {
