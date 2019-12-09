@@ -1,58 +1,74 @@
-package edu.sjsu.cs.cs151.mancala;
+package edu.sjsu.cs.cs151.mancala.networkTester;
+
+import edu.sjsu.cs.cs151.mancala.view.*;
+import edu.sjsu.cs.cs151.mancala.controller.*;
+import edu.sjsu.cs.cs151.mancala.game.*;
 
 import java.net.*;
 import java.io.*;
-import java.util.Scanner;
+import java.util.*;
+import javax.swing.*;
+
 
 public class Client{
-    static Socket socket;
-    static DataInputStream in;
-    static DataOutputStream out;
-    public static void main(String[] args) throws IOException{
+    private static final String DEFAULT_IP = "localhost";
+    private static final int DEFAULT_PORT = 7777;
+
+    private final String ip = DEFAULT_IP;
+    private final int port = DEFAULT_PORT;
+    private final Scanner sc = new Scanner(System.in);
+
+    private Socket socket;
+    private DataInputStream in;
+    private DataOutputStream out;
+
+    private boolean done = false;
+    private Client clientSideConnection;
+    private int playerID;
+    private int otherPlayer;
+
+    public Client(){
+
+        System.out.println("____Client____");
+        try {
+            socket = new Socket("localhost", 51734);
+            in = new DataInputStream(socket.getInputStream());
+            out = new DataOutputStream(socket.getOutputStream());
+            playerID = in.readInt();
+            System.out.println("Connected to server as Player # "+ playerID);
+            
+        } 
+        catch (final IOException e) {
+            System.out.println("Client-side IOException");
+        }
+    }
+
+    public void connectToServer(){
+        clientSideConnection = new Client();
+    }
+
+    public void close(){
+        try {
+			in.close();
+			out.close();
+			socket.close();
+		}
+		catch (final Exception e) {
+			e.printStackTrace();
+		}
+		done = true;
+    }
+
+    public static void main(final String[] args) throws IOException{
+        final Driver game = new Driver();
         System.out.println("Connecting...");
-        socket = new Socket("localhost",7777);
-
+        game.connectToServer();
         System.out.println("Connect successful");
-        in = new DataInputStream(socket.getInputStream());
-        out = new DataOutputStream(socket.getOutputStream());
-        
-        Input input = new Input(in);
-        Thread thread = new Thread(input);
-        thread.start();
-        Scanner sc = new Scanner(System.in);
-        while(true){
-            String str = sc.nextLine();
-            out.writeUTF(str);
-
-        }
-        
-
-        //System.out.println("Recieving information...");
-        //String test = in.readUTF();
-
-        //System.out.println("Message from Connection: " + test);
     }
     
-    
-}
-class Input implements Runnable{
-    public Input(DataInputStream in){
-        this.in = in;
-    }
-    public void run(){
-        while(true){
-            String message;
-            try{    
-                message = in.readUTF();
-                for(int i = 0; i<2; i++){
-                    if(user[i] != null){
-                        user[i].out.writeUTF(message);
-                    }
-                }
-            }
-            catch(IOException e){
-                e.printStackTrace();
-            }
-        }
+    public String getPlayerName(){
+        System.out.println("Please enter a player name: ");
+        final String playerName = sc.nextLine();
+        return playerName;
     }
 }
