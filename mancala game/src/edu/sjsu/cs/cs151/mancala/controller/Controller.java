@@ -100,7 +100,6 @@ public class Controller
 	/**
 	 * Sends the message to Client object so it can communicate with the server
 	 * @param m message with game state
-	 * @return message with updated game state
 	 */
 	public void sendEventAsClient(Message m) {
 		client.addEvent(m);

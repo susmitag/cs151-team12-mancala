@@ -159,7 +159,6 @@ public class PlayScreen
 	
 	/**
 	 * Displays the winner of the game in a popup dialog
-	 * @param winnerIndex the store index of the player who won
 	 */
 	public void displayWinner() {
 		String winner;

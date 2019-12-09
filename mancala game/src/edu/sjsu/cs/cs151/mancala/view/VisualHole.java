@@ -154,7 +154,7 @@ public class VisualHole extends JLayeredPane
 		
 		/**
 		 * Sets the disabled variable
-		 * @param hole's disabled state
+		 * @param d true if this hole is disabled
 		 */
 		public void setDisabled(boolean d) {
 			disabled = d;
