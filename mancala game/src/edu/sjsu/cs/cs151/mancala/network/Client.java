@@ -1,4 +1,4 @@
-package edu.sjsu.cs.cs151.mancala.networkTester;
+package edu.sjsu.cs.cs151.mancala.network;
 
 import edu.sjsu.cs.cs151.mancala.view.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
