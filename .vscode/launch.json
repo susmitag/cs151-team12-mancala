@@ -2,6 +2,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Client",
+            "request": "launch",
+            "mainClass": "edu.sjsu.cs.cs151.mancala.network.Client",
+            "projectName": "mancala"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Server",
+            "request": "launch",
+            "mainClass": "edu.sjsu.cs.cs151.mancala.network.Server",
+            "projectName": "mancala"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Driver",
+            "request": "launch",
+            "mainClass": "edu.sjsu.cs.cs151.mancala.game.Driver",
+            "projectName": "mancala"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - LetterTester",
             "request": "launch",
             "mainClass": "edu.sjsu.cs.cs151.mancala.view.introAnimation.LetterTester",

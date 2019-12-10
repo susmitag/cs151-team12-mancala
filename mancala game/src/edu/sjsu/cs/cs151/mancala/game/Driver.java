@@ -4,9 +4,11 @@ import edu.sjsu.cs.cs151.mancala.model.*;
 import edu.sjsu.cs.cs151.mancala.view.*;
 import edu.sjsu.cs.cs151.mancala.view.introAnimation.*;
 import edu.sjsu.cs.cs151.mancala.controller.*;
+import edu.sjsu.cs.cs151.mancala.network.*;
 
 
 import java.util.concurrent.*;
+
 
 public class Driver {
 
@@ -34,6 +36,12 @@ public class Driver {
 		view.close();
 		queue.clear();
 		System.exit(0);
+	}
+
+	
+	private Client clientSideConnection;
+	public void connectToServer() {
+		clientSideConnection = new Client();
 	}		
 }
 	
