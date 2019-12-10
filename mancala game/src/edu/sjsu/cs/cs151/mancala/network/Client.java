@@ -64,6 +64,7 @@ public class Client{
         System.out.println("Connecting...");
         game.connectToServer();
         System.out.println("Connect successful");
+        game.main(args);
     }
     
     public String getPlayerName(){
