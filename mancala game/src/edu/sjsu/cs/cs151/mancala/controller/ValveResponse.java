@@ -5,5 +5,6 @@ public enum ValveResponse {
 	EXECUTED,	// successfully processed Message
 	FINISHED,	// Game has ended
 	EXIT		// exiting the game early
-};
+	;
+}
 
