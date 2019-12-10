@@ -91,4 +91,11 @@ public class Client implements Runnable
 			e.printStackTrace();
 		}
 	}
+
+	public String getPlayerName(){
+        System.out.println("Please enter a player name: ");
+        final String playerName = sc.nextLine();
+        return playerName;
+    }
+
 }
