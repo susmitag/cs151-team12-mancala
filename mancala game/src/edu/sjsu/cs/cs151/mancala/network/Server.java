@@ -25,6 +25,8 @@ public class Server implements Runnable
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	private boolean done = false;
+
+	private int numPlayers;
 	
 	/**
 	 * constructs a server object
@@ -36,6 +38,7 @@ public class Server implements Runnable
 	
 	/**
 	 * Listens for new events and adds them to the message queue
+	 * Checks for a maximum of 2 server-side connected players
 	 */
 	public void run() {
 		try {
@@ -44,15 +47,22 @@ public class Server implements Runnable
 			f.add(new JLabel("Waiting for client to connect..."));
 			f.setVisible(true);
 			f.setMinimumSize(new Dimension(500, 100));
-			connection = socket.accept();
+			/**
+			 * Checks to make sure only 2 players are connected
+			 */
+            while (numPlayers < 2){
+				connection = socket.accept();
+				numPlayers++;
+                System.out.println("Player # "+ numPlayers + " have connected");
+			}
 			out = new ObjectOutputStream(connection.getOutputStream());
 			out.flush();
 			f.dispose();
 			JOptionPane.showMessageDialog(null, "Connected to client!");
 			in = new ObjectInputStream(connection.getInputStream());
 		}
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (IOException ex) {
+			System.out.println("IOException from acceptConnection()");
 		}
 		while (!done) {
 			try {

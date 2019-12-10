@@ -6,6 +6,7 @@ import java.util.concurrent.*;
 import java.io.*;
 import java.net.*;
 import javax.swing.*;
+import java.util.*;
 
 /**
  * This class is the client side socket for playing mancala over a network
@@ -20,7 +21,10 @@ public class Client implements Runnable
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	private boolean done = false;
-	
+	private Scanner sc;
+	private int playerID;
+
+
 	/**
 	 * Constructs a client object
 	 * @param view playscreen for client player
@@ -38,11 +42,12 @@ public class Client implements Runnable
 			socket = new Socket(host, port);
 			out = new ObjectOutputStream(socket.getOutputStream());
 			in = new ObjectInputStream(socket.getInputStream());
+			playerID = in.readInt();
+            System.out.println("Connected to server as Player # "+ playerID); //
 		}
 		catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error: could not connect", "Error", JOptionPane.ERROR_MESSAGE);
 			queue.add(new Message(new GameInfo(true)));
-			// complain
 		}
 	}
 	
